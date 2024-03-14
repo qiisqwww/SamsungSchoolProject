@@ -3,8 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="textColor">#FFFFFFFF</color>
-    <color name="darkThemeBackgroundHeaderColor">#1f2024</color>
+    <color name="darkThemeStatusBarColor">#2e2f34</color>
     <color name="darkThemeBackgroundColor">#2e2f34</color>
-    <color name="additionalFieldsColor">#3f4047</color>
+    <color name="additionalButtonsColor">#3f4047</color>
     <color name="startAlarmButtonColor">#d4212d</color>
 </resources>
