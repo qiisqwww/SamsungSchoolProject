@@ -35,7 +35,7 @@ public class MainMenuFragment extends Fragment {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SettingsMenuActivity.class);
+                Intent intent = new Intent(v.getContext(), SettingsMenuActivity.class);
                 startActivity(intent);
             }
         });

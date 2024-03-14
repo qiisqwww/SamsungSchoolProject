@@ -7,4 +7,5 @@
     <string name="color_plug">Station color</string>
     <string name="settings_button">Настройки</string>
     <string name="chose_stations_buttons">Выбрать станцию</string>
+    <string name="back_to_main_menu">Назад</string>
 </resources>
