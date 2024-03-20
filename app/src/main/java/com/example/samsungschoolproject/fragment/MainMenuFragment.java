@@ -32,24 +32,16 @@ public class MainMenuFragment extends Fragment {
 
         Button settingsButton = (Button) view.findViewById(R.id.settings_button);
         Button chooseStationButton = (Button) view.findViewById(R.id.choose_station_button) ;
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), SettingsMenuActivity.class);
-                startActivity(intent);
-            }
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), SettingsMenuActivity.class);
+            startActivity(intent);
         });
 
-        chooseStationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StationsListFragment stationsListFragment = new StationsListFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.container, stationsListFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        chooseStationButton.setOnClickListener(v -> {
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container, new StationsListFragment());
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         return view;

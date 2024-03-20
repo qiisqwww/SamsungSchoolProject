@@ -20,14 +20,7 @@ public class SettingsMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_menu);
         Button goBackButton = (Button) findViewById(R.id.back_to_main_menu);
-        goBackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                startActivity(intent);
-
-            }
-        });
+        goBackButton.setOnClickListener(v -> finish());
 
 
     };
