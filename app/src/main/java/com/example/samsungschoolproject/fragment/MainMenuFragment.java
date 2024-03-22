@@ -1,6 +1,5 @@
 package com.example.samsungschoolproject.fragment;
 
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -31,19 +30,10 @@ public class MainMenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
         Button settingsButton = (Button) view.findViewById(R.id.settings_button);
-        Button chooseStationButton = (Button) view.findViewById(R.id.choose_station_button) ;
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), SettingsMenuActivity.class);
             startActivity(intent);
         });
-
-        chooseStationButton.setOnClickListener(v -> {
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.container, new StationsListFragment());
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });
-
         return view;
     }
 }

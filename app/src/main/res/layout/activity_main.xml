@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
-    <FrameLayout
-        android:id="@id/container"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:background="@color/darkThemeBackgroundColor"
+        android:layout_width="match_parent"
+        android:layout_height="675dp" />
 
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
+        android:background="@color/darkThemeBackgroundColor"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:background="@color/darkThemeBackgroundColor"
+            android:backgroundTint="@color/white"
+            android:layout_height="wrap_content"
+            android:text="Calendar"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:background="@color/darkThemeBackgroundColor"
+            android:backgroundTint="@color/white"
+            android:layout_height="wrap_content"
+            android:text="Main"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:backgroundTint="@color/white"
+            android:layout_height="wrap_content"
+            android:text="Templates"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+</LinearLayout>
