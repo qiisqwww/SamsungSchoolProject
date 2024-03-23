@@ -38,7 +38,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
     @Override
     public int getItemCount() {
-        return 0;
+        return daysOfMonth.size();
     }
 
     public interface OnItemListener{

@@ -1,13 +1,11 @@
 package com.example.samsungschoolproject.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
-import com.example.samsungschoolproject.activity.SettingsMenuActivity;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 
 import java.time.LocalDate;
@@ -71,7 +68,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 7);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
@@ -83,12 +80,12 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
 
-        for (int i = 1; i <= 42; i++){
+        for (int i = 2; i <= 41; i++){
             if (i <= dayOfWeek || i > daysInMonth + dayOfWeek){
                 daysInMonthArray.add("");
             }
             else{
-                daysInMonthArray.add(String.valueOf(i + dayOfWeek));
+                daysInMonthArray.add(String.valueOf(i - dayOfWeek));
             }
         }
 

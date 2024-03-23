@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">Планировщик тренировок</string>
-    <string name="set_alarm_button_text">Запустить будильник</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name_plug">Station name</string>
     <string name="line_plug">Station line</string>
     <string name="color_plug">Station color</string>
     <string name="settings_button">Настройки</string>
-    <string name="chose_stations_buttons">Выбрать станцию</string>
     <string name="back_to_main_menu">Назад</string>
+    <string name="get_previous_month">&lt;-</string>
+    <string name="get_next_month"&gt;</string>
+    <string name="MON">ПН</string>
+    <string name="TUE">ВТ</string>
+    <string name="WED">СР</string>
+    <string name="THU">ЧТ</string>
+    <string name="FRI">ПТ</string>
+    <string name="SAT">СБ</string>
+    <string name="SUN">ВС</string>
+
 </resources>

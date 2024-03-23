@@ -20,7 +20,7 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="--"
+            android:text="@string/get_previous_month"
             android:textColor="@color/white"
             android:backgroundTint="@color/darkThemeBackgroundColor"
             android:textStyle="bold"
@@ -31,7 +31,6 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Март 2024"
             android:textSize="20sp"
             android:textAlignment="center"
             android:textColor="@color/white"/>
@@ -41,7 +40,7 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="--"
+            android:text="@string/get_next_month"
             android:backgroundTint="@color/darkThemeBackgroundColor"
             android:textColor="@color/white"
             android:background="@null"
@@ -59,7 +58,7 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ВТ"
+            android:text="@string/MON"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -67,7 +66,7 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="СР"
+            android:text="@string/TUE"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -75,7 +74,7 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ЧТ"
+            android:text="@string/WED"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -83,7 +82,7 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ПТ"
+            android:text="@string/THU"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -91,7 +90,7 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="СБ"
+            android:text="@string/FRI"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -99,7 +98,7 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ВС"
+            android:text="@string/SAT"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="16sp"/>
@@ -107,7 +106,7 @@
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ПН"
+            android:text="@string/SUN"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="16sp"/>
