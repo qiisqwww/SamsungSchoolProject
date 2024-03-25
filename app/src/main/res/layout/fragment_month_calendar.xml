@@ -6,8 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/darkThemeBackgroundColor"
-    tools:context=".fragment.CalendarFragment">
-    
+    tools:context=".fragment.MonthCalendarFragment">
+
+    <Button
+        android:id="@+id/weekModeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/darkThemeBackgroundColor"
+        android:text="@string/week"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +36,7 @@
             android:backgroundTint="@color/darkThemeBackgroundColor"
             android:textStyle="bold"
             android:textSize="20sp"/>
-        
+
         <TextView
             android:id="@+id/monthYearTV"
             android:layout_width="8dp"
@@ -48,12 +59,12 @@
             android:textSize="20sp" />
 
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        
+
         <TextView
             android:layout_width="8dp"
             android:layout_height="wrap_content"
@@ -110,13 +121,13 @@
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="16sp"/>
-        
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

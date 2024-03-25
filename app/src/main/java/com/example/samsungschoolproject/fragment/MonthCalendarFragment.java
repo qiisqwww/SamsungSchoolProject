@@ -2,7 +2,10 @@ package com.example.samsungschoolproject.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
+import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -22,11 +26,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
-public class CalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
+public class MonthCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
+    public ViewPagerAdapter viewPagerAdapter;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private LocalDate selectedDate;
-    private Button backButton, nextButton;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,15 +39,21 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_calendar, container, false);
+        return inflater.inflate(R.layout.fragment_month_calendar, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         initWidgets(view);
 
         selectedDate = LocalDate.now();
         setMonthView();
 
-        backButton = view.findViewById(R.id.backButton);
-        nextButton = view.findViewById(R.id.nextButton);
+        Button backButton = view.findViewById(R.id.backButton);
+        Button nextButton = view.findViewById(R.id.nextButton);
+        Button weekModeButton = view.findViewById(R.id.weekModeButton);
 
         backButton.setOnClickListener(v -> {
             selectedDate = selectedDate.minusMonths(1);
@@ -55,7 +65,9 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
             setMonthView();
         });
 
-        return view;
+        weekModeButton.setOnClickListener(v -> {
+            viewPagerAdapter.changeFragment(new MainMenuFragment());
+        });
     }
 
     private void initWidgets(View view){
@@ -99,8 +111,8 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
     @Override
     public void onItemClick(int position, String dayText) {
-        if (dayText.equals("")) {
-            String message = "Selected Date" + dayText + " " + monthYearFromDate(selectedDate);
+        if (!dayText.equals("")) {
+            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
             Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
         }
     }
