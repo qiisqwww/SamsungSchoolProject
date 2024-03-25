@@ -14,15 +14,19 @@ import com.example.samsungschoolproject.R;
 
 
 public class SettingsMenuActivity extends AppCompatActivity {
+    Button goBackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_menu);
-        Button goBackButton = (Button) findViewById(R.id.back_to_main_menu);
-        goBackButton.setOnClickListener(v -> finish());
 
-
+        initButtonListeners();
     };
+
+    private void initButtonListeners(){
+        goBackButton = (Button) findViewById(R.id.back_to_main_menu);
+        goBackButton.setOnClickListener(v -> finish());
+    }
 
 }

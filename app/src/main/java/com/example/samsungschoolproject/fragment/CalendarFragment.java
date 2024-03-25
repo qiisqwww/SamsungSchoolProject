@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,11 +25,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
-public class MonthCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
-    public ViewPagerAdapter viewPagerAdapter;
+public class CalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
+    private ViewPagerAdapter viewPagerAdapter;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private LocalDate selectedDate;
+
+    public CalendarFragment(ViewPagerAdapter viewPagerAdapter){
+        this.viewPagerAdapter = viewPagerAdapter;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +43,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_month_calendar, container, false);
+        return inflater.inflate(R.layout.fragment_calendar, container, false);
     }
 
     @Override
@@ -53,7 +57,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         Button backButton = view.findViewById(R.id.backButton);
         Button nextButton = view.findViewById(R.id.nextButton);
-        Button weekModeButton = view.findViewById(R.id.weekModeButton);
+        Button weekModeButton = view.findViewById(R.id.showModeButton);
 
         backButton.setOnClickListener(v -> {
             selectedDate = selectedDate.minusMonths(1);

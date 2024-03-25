@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/darkThemeBackgroundColor"
-    tools:context=".fragment.MonthCalendarFragment">
+    tools:context=".fragment.CalendarFragment">
 
     <Button
-        android:id="@+id/weekModeButton"
+        android:id="@+id/showModeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

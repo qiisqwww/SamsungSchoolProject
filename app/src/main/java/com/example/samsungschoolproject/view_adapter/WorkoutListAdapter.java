@@ -8,32 +8,32 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.samsungschoolproject.R;
-import com.example.samsungschoolproject.databinding.StantionItemBinding;
+import com.example.samsungschoolproject.databinding.WorkoutItemBinding;
 import com.example.samsungschoolproject.model.Training;
 
 import java.util.List;
 
-public class TrainListAdapter extends RecyclerView.Adapter<TrainListAdapter.TrainViewHolder> {
+public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.WorkoutViewHolder> {
 
     private final List<Training> trainings;
 
-    public TrainListAdapter(List<Training> items) {
+    public WorkoutListAdapter(List<Training> items) {
         trainings = items;
     }
 
     @NonNull
     @Override
-    public TrainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public WorkoutViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.stantion_item,
+                R.layout.workout_item,
                 parent,
                 false
         );
-        return new TrainViewHolder(view);
+        return new WorkoutViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final TrainViewHolder holder, int position) {
+    public void onBindViewHolder(final WorkoutViewHolder holder, int position) {
         holder.bind(trainings.get(position));
     }
 
@@ -42,18 +42,18 @@ public class TrainListAdapter extends RecyclerView.Adapter<TrainListAdapter.Trai
         return trainings.size();
     }
 
-    public class TrainViewHolder extends RecyclerView.ViewHolder {
-        private StantionItemBinding stantionsItemBinding;
+    public class WorkoutViewHolder extends RecyclerView.ViewHolder {
+        private WorkoutItemBinding workoutItemBinding;
 
-        public TrainViewHolder(@NonNull View itemView) {
+        public WorkoutViewHolder(@NonNull View itemView) {
             super(itemView);
-            stantionsItemBinding = StantionItemBinding.bind(itemView);
+            workoutItemBinding = WorkoutItemBinding.bind(itemView);
         }
 
         public void bind(Training training){
-            stantionsItemBinding.name.setText(training.name);
-            stantionsItemBinding.line.setText(training.line);
-            stantionsItemBinding.color.setText(training.color);
+            workoutItemBinding.name.setText(training.name);
+            workoutItemBinding.line.setText(training.line);
+            workoutItemBinding.color.setText(training.color);
             // MUST BE ADDED A LOGIC !!! (cuz now idk how to make it correctly lol)
         }
     }
