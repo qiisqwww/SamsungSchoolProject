@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.enums.Mode;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
 
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 public class CalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
     private ViewPagerAdapter viewPagerAdapter;
     private TextView monthYearText;
+    private String mode;
     private RecyclerView calendarRecyclerView;
     private LocalDate selectedDate;
 
@@ -51,9 +53,18 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         super.onViewCreated(view, savedInstanceState);
 
         initWidgets(view);
+        setButtonListeners(view);
 
         selectedDate = LocalDate.now();
         setMonthView();
+    }
+
+    private void initWidgets(View view){
+        calendarRecyclerView = view.findViewById(R.id.calendarRecyclerView);
+        monthYearText = view.findViewById(R.id.monthYearTV);
+    }
+
+    private void setButtonListeners(View view){
 
         Button backButton = view.findViewById(R.id.backButton);
         Button nextButton = view.findViewById(R.id.nextButton);
@@ -70,13 +81,17 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         });
 
         weekModeButton.setOnClickListener(v -> {
-            viewPagerAdapter.changeFragment(new MainMenuFragment());
+            if (mode.equals(Mode.MONTHLY)){
+                mode = Mode.WEEKLY;
+                setWeekView();
+            }
+            else{
+                mode = Mode.MONTHLY;
+                setMonthView();
+            }
+            weekModeButton.setText(mode);
         });
-    }
 
-    private void initWidgets(View view){
-        calendarRecyclerView = view.findViewById(R.id.calendarRecyclerView);
-        monthYearText = view.findViewById(R.id.monthYearTV);
     }
 
     private void setMonthView(){
@@ -111,6 +126,10 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private String monthYearFromDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
         return date.format(formatter);
+    }
+
+    private void setWeekView(){
+
     }
 
     @Override
