@@ -8,8 +8,9 @@ import android.os.Bundle;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.enums.PagesEnum;
+import com.example.samsungschoolproject.fragment.WeekCalendarFragment;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
-import com.example.samsungschoolproject.fragment.CalendarFragment;
+import com.example.samsungschoolproject.fragment.MonthCalendarFragment;
 import com.example.samsungschoolproject.fragment.MainMenuFragment;
 import com.example.samsungschoolproject.fragment.WorkoutTemplatesFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         );
 
-        viewPagerAdapter.Add(new CalendarFragment(viewPagerAdapter), PagesEnum.calendar);
+        viewPagerAdapter.Add(new MonthCalendarFragment(viewPagerAdapter), PagesEnum.calendar);
         viewPagerAdapter.Add(new MainMenuFragment(), PagesEnum.menu);
-        viewPagerAdapter.Add(new WorkoutTemplatesFragment(), PagesEnum.calendar);
+        viewPagerAdapter.Add(new WorkoutTemplatesFragment(), PagesEnum.templates);
     }
 
     private void connectWidgetsWithAdapter(){

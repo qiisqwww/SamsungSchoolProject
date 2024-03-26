@@ -8,6 +8,7 @@
     <string name="get_previous_month">&lt;-</string>
     <string name="get_next_month">-&gt;</string>
     <string name="week">Неделя</string>
+    <string name="month">Месяц</string>
     <string name="MON">ПН</string>
     <string name="TUE">ВТ</string>
     <string name="WED">СР</string>

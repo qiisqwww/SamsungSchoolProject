@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/darkThemeBackgroundColor"
-    tools:context=".fragment.CalendarFragment">
+    tools:context=".fragment.MonthCalendarFragment">
 
     <Button
-        android:id="@+id/showModeButton"
+        android:id="@+id/switchToWeekButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -27,7 +27,7 @@
         android:layout_marginTop="20dp">
 
         <Button
-            android:id="@+id/backButton"
+            android:id="@+id/monthBackButton"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -38,7 +38,7 @@
             android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/monthYearTV"
+            android:id="@+id/monthMonthYearTV"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -47,7 +47,7 @@
             android:textColor="@color/white"/>
 
         <Button
-            android:id="@+id/nextButton"
+            android:id="@+id/monthNextButton"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -125,7 +125,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/calendarRecyclerView"
+        android:id="@+id/monthCalendarRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

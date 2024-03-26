@@ -38,7 +38,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         notifyDataSetChanged();
     }
 
-    public void changeFragment(Fragment fragment){
+    public void changeCalendarMode(Fragment fragment){
         fragmentList.set(0, fragment);
         notifyDataSetChanged();
     }
