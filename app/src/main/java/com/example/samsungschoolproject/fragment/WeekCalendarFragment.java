@@ -51,7 +51,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         setButtonListeners(view);
 
         CalendarUtils.selectedDate = LocalDate.now();
-        //setWeekView();
+        setWeekView();
     }
 
     private void initWidgets(View view){

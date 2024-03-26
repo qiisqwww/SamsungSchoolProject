@@ -53,7 +53,7 @@ public class CalendarUtils {
             if (current.getDayOfWeek() == DayOfWeek.MONDAY){
                 return current;
             }
-            current.minusDays(1);
+            current = current.minusDays(1);
         }
 
         return null;
