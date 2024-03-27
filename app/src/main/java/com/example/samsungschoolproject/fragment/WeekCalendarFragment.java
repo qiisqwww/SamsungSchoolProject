@@ -27,6 +27,7 @@ import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 
 public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
@@ -57,8 +58,11 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         initWidgets(view);
         setButtonListeners(view);
 
+        if (CalendarUtils.dateToScroll == null){
+            CalendarUtils.dateToScroll = LocalDate.now();
+        }
         if (CalendarUtils.selectedDate == null){
-            CalendarUtils.selectedDate = LocalDate.now();
+            CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
         }
         setWeekView();
     }
@@ -76,12 +80,12 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private void setButtonListeners(View view){
 
         backButton.setOnClickListener(v -> {
-            CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusWeeks(1);
+            CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.minusWeeks(1);
             setWeekView();
         });
 
         nextButton.setOnClickListener(v -> {
-            CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusWeeks(1);
+            CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.plusWeeks(1);
             setWeekView();
         });
 
@@ -93,8 +97,8 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     }
 
     private void setWeekView(){
-        monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.selectedDate));
-        ArrayList<LocalDate> daysInWeek = CalendarUtils.daysInWeekArray(CalendarUtils.selectedDate);
+        monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));
+        ArrayList<LocalDate> daysInWeek = CalendarUtils.daysInWeekArray(CalendarUtils.dateToScroll);
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInWeek, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);

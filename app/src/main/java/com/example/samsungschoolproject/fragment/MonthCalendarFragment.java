@@ -54,8 +54,11 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         initWidgets(view);
         setButtonListeners(view);
 
+        if (CalendarUtils.dateToScroll == null){
+            CalendarUtils.dateToScroll = LocalDate.now();
+        }
         if (CalendarUtils.selectedDate == null){
-            CalendarUtils.selectedDate = LocalDate.now();
+            CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
         }
         setMonthView();
     }
@@ -71,12 +74,12 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
     private void setButtonListeners(View view){
         backButton.setOnClickListener(v -> {
-            CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
+            CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.minusMonths(1);
             setMonthView();
         });
 
         nextButton.setOnClickListener(v -> {
-            CalendarUtils.selectedDate = CalendarUtils.selectedDate.plusMonths(1);
+            CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.plusMonths(1);
             setMonthView();
         });
 
@@ -87,8 +90,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     }
 
     private void setMonthView(){
-        monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.selectedDate));
-        ArrayList<LocalDate> daysInMonth = CalendarUtils.daysInMonthArray(CalendarUtils.selectedDate);
+        monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));
+        ArrayList<LocalDate> daysInMonth = CalendarUtils.daysInMonthArray(CalendarUtils.dateToScroll);
 
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);

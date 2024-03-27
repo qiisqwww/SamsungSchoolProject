@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CalendarUtils {
-    public static LocalDate selectedDate;
+    public static LocalDate selectedDate, dateToScroll;
 
     private static HashMap<String, String> parseMonth = new HashMap<String, String>() {{
             put("января", "Январь");
@@ -35,15 +35,15 @@ public class CalendarUtils {
         ArrayList<LocalDate> daysInMonthArray = new ArrayList<>();
         YearMonth yearMonth = YearMonth.from(date);
         int daysInMonth = yearMonth.lengthOfMonth();
-        LocalDate firstOfMonth = CalendarUtils.selectedDate.withDayOfMonth(1);
+        LocalDate firstOfMonth = CalendarUtils.dateToScroll.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
 
         for (int i = 2; i <= 41; i++){
             if (i <= dayOfWeek || i > daysInMonth + dayOfWeek){
                 daysInMonthArray.add(null);
             }
-            else{
-                daysInMonthArray.add(LocalDate.of(selectedDate.getYear(), selectedDate.getMonth(), i-dayOfWeek));
+            else {
+                daysInMonthArray.add(LocalDate.of(dateToScroll.getYear(), dateToScroll.getMonth(), i - dayOfWeek));
             }
         }
 
@@ -52,7 +52,7 @@ public class CalendarUtils {
 
     public static ArrayList<LocalDate> daysInWeekArray(LocalDate date){
         ArrayList<LocalDate> days = new ArrayList<>();
-        LocalDate current = mondayForDate(selectedDate);
+        LocalDate current = mondayForDate(dateToScroll);
         LocalDate endDate = current.plusWeeks(1);
 
         while (current.isBefore(endDate)){
