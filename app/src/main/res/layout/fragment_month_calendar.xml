@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="@color/darkThemeBackgroundColor"
-        android:text="@string/week"
+        android:text="@string/month"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"/>

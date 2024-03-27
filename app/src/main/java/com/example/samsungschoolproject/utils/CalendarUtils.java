@@ -5,13 +5,30 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CalendarUtils {
     public static LocalDate selectedDate;
 
+    private static HashMap<String, String> parseMonth = new HashMap<String, String>() {{
+            put("января", "Январь");
+            put("февраля", "Февраль");
+            put("марта", "Март");
+            put("апреля", "Апрель");
+            put("мая", "Май");
+            put("июня", "Июнь");
+            put("июля", "Июль");
+            put("августа", "Август");
+            put("сентября", "Сентябрь");
+            put("октября", "Октябрь");
+            put("ноября", "Ноябрь");
+            put("декабря", "Декабрь");
+    }};
+
     public static String monthYearFromDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-        return date.format(formatter);
+        String[] unparsedDate = date.format(formatter).split(" ");
+        return parseMonth.get(unparsedDate[0]) + " " + unparsedDate[1];
     }
 
     public static ArrayList<LocalDate> daysInMonthArray(LocalDate date){

@@ -67,7 +67,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         weekModeButton = view.findViewById(R.id.switchToWeekButton);
     }
 
-    private void setButtonListeners(View view){g
+    private void setButtonListeners(View view){
         backButton.setOnClickListener(v -> {
             CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
             setMonthView();
