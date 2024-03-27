@@ -57,7 +57,9 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         initWidgets(view);
         setButtonListeners(view);
 
-        CalendarUtils.selectedDate = LocalDate.now();
+        if (CalendarUtils.selectedDate == null){
+            CalendarUtils.selectedDate = LocalDate.now();
+        }
         setWeekView();
     }
 
@@ -102,7 +104,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
     @Override
     public void onItemClick(int position, String dayText) {
-        String message = "Selected Date " + dayText + " " + CalendarUtils.monthYearFromDate(CalendarUtils.selectedDate);
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+
     }
 }

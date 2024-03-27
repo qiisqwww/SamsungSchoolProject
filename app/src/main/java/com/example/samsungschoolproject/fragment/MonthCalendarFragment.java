@@ -54,7 +54,9 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         initWidgets(view);
         setButtonListeners(view);
 
-        CalendarUtils.selectedDate = LocalDate.now();
+        if (CalendarUtils.selectedDate == null){
+            CalendarUtils.selectedDate = LocalDate.now();
+        }
         setMonthView();
     }
 
@@ -97,8 +99,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     @Override
     public void onItemClick(int position, String dayText) {
         if (!dayText.equals("")) {
-            String message = "Selected Date " + dayText + " " + CalendarUtils.monthYearFromDate(CalendarUtils.selectedDate);
-            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+
         }
     }
 }
