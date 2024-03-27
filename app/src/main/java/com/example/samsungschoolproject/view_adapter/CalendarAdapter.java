@@ -14,7 +14,6 @@ import com.example.samsungschoolproject.utils.CalendarUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
     private final ArrayList<LocalDate> days;

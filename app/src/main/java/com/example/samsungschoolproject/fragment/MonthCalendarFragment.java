@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.utils.CalendarUtils;
@@ -21,8 +20,6 @@ import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
@@ -53,6 +50,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         initWidgets(view);
         setButtonListeners(view);
+
+        CalendarUtils.justSwitchedFromMonth = false;
 
         if (CalendarUtils.dateToScroll == null){
             CalendarUtils.dateToScroll = LocalDate.now();

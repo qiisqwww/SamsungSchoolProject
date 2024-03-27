@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 public class CalendarUtils {
     public static LocalDate selectedDate, dateToScroll;
+    public static boolean justSwitchedFromMonth;
 
     private static HashMap<String, String> parseMonth = new HashMap<String, String>() {{
             put("января", "Январь");
@@ -52,12 +53,19 @@ public class CalendarUtils {
 
     public static ArrayList<LocalDate> daysInWeekArray(LocalDate date){
         ArrayList<LocalDate> days = new ArrayList<>();
-        LocalDate current = mondayForDate(dateToScroll);
-        LocalDate endDate = current.plusWeeks(1);
+        LocalDate startDate;
+        if (justSwitchedFromMonth && selectedDate.getMonth().equals(dateToScroll.getMonth())) {
+            startDate = mondayForDate(selectedDate);
+            justSwitchedFromMonth = false;
+        }
+        else{
+            startDate = mondayForDate(dateToScroll);
+        }
+        LocalDate endDate = startDate.plusWeeks(1);
 
-        while (current.isBefore(endDate)){
-            days.add(current);
-            current = current.plusDays(1);
+        while (startDate.isBefore(endDate)){
+            days.add(startDate);
+            startDate = startDate.plusDays(1);
         }
 
         return days;

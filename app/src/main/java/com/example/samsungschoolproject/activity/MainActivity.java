@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.enums.PagesEnum;
-import com.example.samsungschoolproject.fragment.WeekCalendarFragment;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
 import com.example.samsungschoolproject.fragment.MonthCalendarFragment;
 import com.example.samsungschoolproject.fragment.MainMenuFragment;

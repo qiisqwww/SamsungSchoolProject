@@ -1,14 +1,9 @@
 package com.example.samsungschoolproject.fragment;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
+import androidx.annotation.Nullable;;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.noificator.ExampleNotificator;
@@ -27,7 +21,6 @@ import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 
 public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
@@ -57,6 +50,11 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
         initWidgets(view);
         setButtonListeners(view);
+
+        if (!CalendarUtils.justSwitchedFromMonth){
+            CalendarUtils.justSwitchedFromMonth = true;
+            CalendarUtils.dateToScroll = CalendarUtils.selectedDate;
+        }
 
         if (CalendarUtils.dateToScroll == null){
             CalendarUtils.dateToScroll = LocalDate.now();
