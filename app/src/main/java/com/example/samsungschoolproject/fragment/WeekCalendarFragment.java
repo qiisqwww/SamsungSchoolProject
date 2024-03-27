@@ -1,9 +1,14 @@
 package com.example.samsungschoolproject.fragment;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.noificator.ExampleNotificator;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
@@ -64,6 +70,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         Button backButton = view.findViewById(R.id.weekBackButton);
         Button nextButton = view.findViewById(R.id.weekNextButton);
         Button weekModeButton = view.findViewById(R.id.switchToMonthButton);
+        Button newWorkoutButton = view.findViewById(R.id.newWorkoutButton);
 
         backButton.setOnClickListener(v -> {
             CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusWeeks(1);
@@ -76,6 +83,10 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         });
 
         weekModeButton.setOnClickListener(v -> viewPagerAdapter.changeCalendarMode(new MonthCalendarFragment(viewPagerAdapter)));
+
+        newWorkoutButton.setOnClickListener(v -> {
+            ExampleNotificator.scheduleNotification(requireContext().getApplicationContext());
+        });
     }
 
     private void setWeekView(){
