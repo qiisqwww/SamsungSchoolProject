@@ -21,11 +21,15 @@ public class SettingsMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_menu);
 
+        initWidgets();
         initButtonListeners();
     };
 
-    private void initButtonListeners(){
+    private void initWidgets(){
         goBackButton = (Button) findViewById(R.id.back_to_main_menu);
+    }
+
+    private void initButtonListeners(){
         goBackButton.setOnClickListener(v -> finish());
     }
 

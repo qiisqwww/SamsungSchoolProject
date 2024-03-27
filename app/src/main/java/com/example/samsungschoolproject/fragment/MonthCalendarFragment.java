@@ -30,6 +30,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     private ViewPagerAdapter viewPagerAdapter;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
+    private Button backButton, nextButton, weekModeButton;
 
     public MonthCalendarFragment(ViewPagerAdapter viewPagerAdapter){
         this.viewPagerAdapter = viewPagerAdapter;
@@ -60,14 +61,13 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     private void initWidgets(View view){
         calendarRecyclerView = view.findViewById(R.id.monthCalendarRecyclerView);
         monthYearText = view.findViewById(R.id.monthMonthYearTV);
+
+        backButton = view.findViewById(R.id.monthBackButton);
+        nextButton = view.findViewById(R.id.monthNextButton);
+        weekModeButton = view.findViewById(R.id.switchToWeekButton);
     }
 
-    private void setButtonListeners(View view){
-
-        Button backButton = view.findViewById(R.id.monthBackButton);
-        Button nextButton = view.findViewById(R.id.monthNextButton);
-        Button weekModeButton = view.findViewById(R.id.switchToWeekButton);
-
+    private void setButtonListeners(View view){g
         backButton.setOnClickListener(v -> {
             CalendarUtils.selectedDate = CalendarUtils.selectedDate.minusMonths(1);
             setMonthView();
