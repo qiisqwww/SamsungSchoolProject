@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.noificator.ExampleNotificator;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
@@ -51,10 +52,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         initWidgets(view);
         setButtonListeners(view);
 
-        if (!CalendarUtils.justSwitchedFromMonth){
-            CalendarUtils.justSwitchedFromMonth = true;
-            CalendarUtils.dateToScroll = CalendarUtils.selectedDate;
-        }
+        CalendarUtils.state = SwitchToWeekStates.JUST_SWITCHED_TO_WEEK_MODE;
 
         if (CalendarUtils.dateToScroll == null){
             CalendarUtils.dateToScroll = LocalDate.now();

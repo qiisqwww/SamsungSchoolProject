@@ -1,5 +1,7 @@
 package com.example.samsungschoolproject.utils;
 
+import com.example.samsungschoolproject.enums.SwitchToWeekStates;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -9,7 +11,7 @@ import java.util.HashMap;
 
 public class CalendarUtils {
     public static LocalDate selectedDate, dateToScroll;
-    public static boolean justSwitchedFromMonth;
+    public static SwitchToWeekStates state;
 
     private static HashMap<String, String> parseMonth = new HashMap<String, String>() {{
             put("января", "Январь");
@@ -54,9 +56,10 @@ public class CalendarUtils {
     public static ArrayList<LocalDate> daysInWeekArray(LocalDate date){
         ArrayList<LocalDate> days = new ArrayList<>();
         LocalDate startDate;
-        if (justSwitchedFromMonth && selectedDate.getMonth().equals(dateToScroll.getMonth())) {
+        if (state == SwitchToWeekStates.JUST_SWITCHED_TO_WEEK_MODE && selectedDate.getMonth().equals(dateToScroll.getMonth())) {
             startDate = mondayForDate(selectedDate);
-            justSwitchedFromMonth = false;
+            dateToScroll = selectedDate;
+            state = SwitchToWeekStates.NOT_JUST_SWITCHED_TO_WEEK_MODE;
         }
         else{
             startDate = mondayForDate(dateToScroll);
