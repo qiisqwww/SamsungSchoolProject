@@ -108,6 +108,9 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
     @Override
     public void onItemClick(int position, String dayText) {
-
+        if (!dayText.equals("")) {
+            CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth(), Integer.parseInt(dayText));
+            viewPagerAdapter.notifyDataSetChanged();
+        }
     }
 }
