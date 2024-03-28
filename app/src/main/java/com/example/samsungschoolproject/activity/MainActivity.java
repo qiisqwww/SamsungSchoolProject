@@ -9,7 +9,6 @@ import android.os.Bundle;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.fragment.CalendarFragment;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
-import com.example.samsungschoolproject.fragment.MonthCalendarFragment;
 import com.example.samsungschoolproject.fragment.MainMenuFragment;
 import com.example.samsungschoolproject.fragment.WorkoutTemplatesFragment;
 import com.google.android.material.tabs.TabLayout;

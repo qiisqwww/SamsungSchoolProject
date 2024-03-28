@@ -31,6 +31,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private RecyclerView calendarRecyclerView;
     private Button nextButton, backButton, newWorkoutButton;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +91,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     }
 
     private void setWeekView(){
-        monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));
+        monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll)) ;
         ArrayList<LocalDate> daysInWeek = CalendarUtils.daysInWeekArray(CalendarUtils.dateToScroll);
 
         calendarAdapter = new CalendarAdapter(daysInWeek, this);

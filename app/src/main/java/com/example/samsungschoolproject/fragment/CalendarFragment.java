@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
 
 public class CalendarFragment extends Fragment {
     public static Button switchModeButton;
     public static Fragment nextFragment;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
