@@ -94,12 +94,11 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onItemClick(int position, String dayText) {
         if (!dayText.equals("")) {
             CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth(), Integer.parseInt(dayText));
-            calendarAdapter.notifyDataSetChanged();
+            setMonthView();
         }
     }
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,12 +101,11 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onItemClick(int position, String dayText) {
         if (!dayText.equals("")) {
             CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth(), Integer.parseInt(dayText));
-            calendarAdapter.notifyDataSetChanged();
+            setWeekView();
         }
     }
 }
