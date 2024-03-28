@@ -1,5 +1,6 @@
 package com.example.samsungschoolproject.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,14 +26,11 @@ import java.util.ArrayList;
 
 
 public class MonthCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
-    private ViewPagerAdapter viewPagerAdapter;
+    private CalendarAdapter calendarAdapter;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
-    private Button backButton, nextButton, weekModeButton;
+    private Button backButton, nextButton;
 
-    public MonthCalendarFragment(ViewPagerAdapter viewPagerAdapter){
-        this.viewPagerAdapter = viewPagerAdapter;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +59,9 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
         }
         setMonthView();
+
+        CalendarFragment.nextFragment = new WeekCalendarFragment();
+        CalendarFragment.switchModeButton.setText(getResources().getString(R.string.month));
     }
 
     private void initWidgets(View view){
@@ -69,7 +70,6 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         backButton = view.findViewById(R.id.monthBackButton);
         nextButton = view.findViewById(R.id.monthNextButton);
-        weekModeButton = view.findViewById(R.id.switchToWeekButton);
     }
 
     private void setButtonListeners(View view){
@@ -82,28 +82,24 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.plusMonths(1);
             setMonthView();
         });
-
-        weekModeButton.setOnClickListener(v -> {
-            viewPagerAdapter.changeCalendarMode(new WeekCalendarFragment(viewPagerAdapter));
-        });
-
     }
 
     private void setMonthView(){
         monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));
         ArrayList<LocalDate> daysInMonth = CalendarUtils.daysInMonthArray(CalendarUtils.dateToScroll);
 
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
+        calendarAdapter = new CalendarAdapter(daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onItemClick(int position, String dayText) {
         if (!dayText.equals("")) {
             CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth(), Integer.parseInt(dayText));
-            viewPagerAdapter.notifyDataSetChanged();
+            calendarAdapter.notifyDataSetChanged();
         }
     }
 }

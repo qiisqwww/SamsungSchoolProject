@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.fragment.CalendarFragment;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
 import com.example.samsungschoolproject.fragment.MonthCalendarFragment;
 import com.example.samsungschoolproject.fragment.MainMenuFragment;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         );
 
-        viewPagerAdapter.Add(new MonthCalendarFragment(viewPagerAdapter), getResources().getString(R.string.calendar));
+        viewPagerAdapter.Add(new CalendarFragment() , getResources().getString(R.string.calendar));
         viewPagerAdapter.Add(new MainMenuFragment(), getResources().getString(R.string.menu));
         viewPagerAdapter.Add(new WorkoutTemplatesFragment(), getResources().getString(R.string.templates));
     }

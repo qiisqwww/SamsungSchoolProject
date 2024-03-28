@@ -1,5 +1,6 @@
 package com.example.samsungschoolproject.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,14 +26,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
-    private ViewPagerAdapter viewPagerAdapter;
+    private CalendarAdapter calendarAdapter;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
-    private Button nextButton, weekModeButton, backButton, newWorkoutButton;
-
-    public WeekCalendarFragment(ViewPagerAdapter viewPagerAdapter){
-        this.viewPagerAdapter = viewPagerAdapter;
-    }
+    private Button nextButton, backButton, newWorkoutButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +58,9 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
             CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
         }
         setWeekView();
+
+        CalendarFragment.nextFragment = new MonthCalendarFragment();
+        CalendarFragment.switchModeButton.setText(getResources().getString(R.string.week));
     }
 
     private void initWidgets(View view){
@@ -69,7 +69,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
         backButton = view.findViewById(R.id.weekBackButton);
         nextButton = view.findViewById(R.id.weekNextButton);
-        weekModeButton = view.findViewById(R.id.switchToMonthButton);
         newWorkoutButton = view.findViewById(R.id.newWorkoutButton);
     }
 
@@ -85,8 +84,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
             setWeekView();
         });
 
-        weekModeButton.setOnClickListener(v -> viewPagerAdapter.changeCalendarMode(new MonthCalendarFragment(viewPagerAdapter)));
-
         newWorkoutButton.setOnClickListener(v -> {
             ExampleNotificator.scheduleNotification(requireContext().getApplicationContext());
         });
@@ -96,17 +93,18 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));
         ArrayList<LocalDate> daysInWeek = CalendarUtils.daysInWeekArray(CalendarUtils.dateToScroll);
 
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInWeek, this);
+        calendarAdapter = new CalendarAdapter(daysInWeek, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onItemClick(int position, String dayText) {
         if (!dayText.equals("")) {
             CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth(), Integer.parseInt(dayText));
-            viewPagerAdapter.notifyDataSetChanged();
+            calendarAdapter.notifyDataSetChanged();
         }
     }
 }
