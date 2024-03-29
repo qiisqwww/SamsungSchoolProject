@@ -62,8 +62,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         CalendarFragment.nextFragment = new WeekCalendarFragment();
 
-        Button changeModeButton = getView().findViewById(R.id.switchModeButton);
-        changeModeButton.setText(getResources().getString(R.string.month));
+        CalendarFragment.switchModeButton.setText(getResources().getString(R.string.month));
     }
 
     private void initWidgets(View view){

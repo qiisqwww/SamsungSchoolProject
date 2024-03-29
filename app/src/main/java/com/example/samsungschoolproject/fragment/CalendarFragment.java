@@ -51,7 +51,6 @@ public class CalendarFragment extends Fragment {
     private void setOnclickListeners(){
         switchModeButton.setOnClickListener(v -> {
             switchCalendarMode();
-
         });
     }
 
