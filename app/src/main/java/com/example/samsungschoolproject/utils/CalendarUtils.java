@@ -38,6 +38,7 @@ public class CalendarUtils {
     public static ArrayList<LocalDate> daysInMonthArray(LocalDate date){
         ArrayList<LocalDate> daysInMonthArray = new ArrayList<>();
         YearMonth yearMonth = YearMonth.from(date);
+
         int daysInMonth = yearMonth.lengthOfMonth();
         LocalDate firstOfMonth = CalendarUtils.dateToScroll.withDayOfMonth(1);
         int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
@@ -57,6 +58,7 @@ public class CalendarUtils {
     public static ArrayList<LocalDate> daysInWeekArray(LocalDate date){
         ArrayList<LocalDate> days = new ArrayList<>();
         LocalDate startDate;
+
         if (state == SwitchToWeekStates.JUST_SWITCHED_TO_WEEK_MODE && selectedDate.getMonth().equals(dateToScroll.getMonth())) {
             startDate = mondayForDate(selectedDate);
             dateToScroll = selectedDate;

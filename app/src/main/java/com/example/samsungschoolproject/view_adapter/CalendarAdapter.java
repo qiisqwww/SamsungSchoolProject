@@ -1,7 +1,6 @@
 package com.example.samsungschoolproject.view_adapter;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             layoutParams.height = (int) (parent.getHeight() * 0.166666666);
         }
         else{
-            layoutParams.height = (int) (parent.getHeight());
+            layoutParams.height = (parent.getHeight());
         }
         return new CalendarViewHolder(view, onItemListener);
     }
@@ -50,7 +49,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             holder.day.setText(String.valueOf(date.getDayOfMonth()));
             if (date.equals(CalendarUtils.selectedDate)){
                 holder.itemView.setBackgroundColor(Color.GRAY);
-                CalendarUtils.selectedDatePosition = position;
+                CalendarUtils.selectedDatePosition = holder.getAdapterPosition();
                 return;
             }
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
