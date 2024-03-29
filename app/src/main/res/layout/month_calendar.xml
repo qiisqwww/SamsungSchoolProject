@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/darkThemeBackgroundColor"
-    tools:context=".fragment.WeekCalendarFragment">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +12,7 @@
         android:layout_marginTop="20dp">
 
         <Button
-            android:id="@+id/weekBackButton"
+            android:id="@+id/monthBackButton"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -27,7 +23,7 @@
             android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/weekMonthYearTV"
+            android:id="@+id/monthMonthYearTV"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -36,7 +32,7 @@
             android:textColor="@color/white"/>
 
         <Button
-            android:id="@+id/weekNextButton"
+            android:id="@+id/monthNextButton"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -52,26 +48,8 @@
     <include layout="@layout/days_of_week"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/weekCalendarRecyclerView"
+        android:id="@+id/monthCalendarRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="368dp"
-        android:layout_weight="1" />
-
-    <Button
-        android:id="@+id/newWorkoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/darkThemeBackgroundColor"
-        android:text="@string/add_new_workout"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"/>
-
+        android:layout_height="634dp" />
 
 </LinearLayout>
