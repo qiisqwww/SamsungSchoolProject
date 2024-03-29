@@ -20,6 +20,7 @@ import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         initWidgets(view);
         setButtonListeners(view);
+        initBottomSheetFragment(view);
 
         CalendarUtils.state = SwitchToWeekStates.NOT_JUST_SWITCHED_TO_WEEK_MODE;
 
@@ -83,6 +85,13 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.plusMonths(1);
             setMonthView();
         });
+    }
+
+    private void initBottomSheetFragment(View view){
+        final BottomSheetFragment bottomFragment = new BottomSheetFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.containerBottomSheet, bottomFragment)
+                .commit();
     }
 
     private void setMonthView(){
