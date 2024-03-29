@@ -104,7 +104,15 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     @Override
     public void onItemClick(int position, String dayText) {
         if (!dayText.equals("")) {
-            CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth(), Integer.parseInt(dayText));
+            int shift = 0;
+            if (Integer.parseInt(dayText) < CalendarUtils.dateToScroll.getDayOfMonth() - 15){
+                shift = 1;
+            }
+            if (Integer.parseInt(dayText) - 15 > CalendarUtils.dateToScroll.getDayOfMonth()){
+                shift = -1;
+            }
+
+            CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth().plus(shift), Integer.parseInt(dayText));
             calendarAdapter.resetBacklitItem(position);
         }
     }
