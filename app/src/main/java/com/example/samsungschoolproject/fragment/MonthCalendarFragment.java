@@ -98,7 +98,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     public void onItemClick(int position, String dayText) {
         if (!dayText.equals("")) {
             CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth(), Integer.parseInt(dayText));
-            setMonthView();
+            calendarAdapter.resetBacklitItem(position);
         }
     }
 }

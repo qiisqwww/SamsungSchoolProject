@@ -50,13 +50,21 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
             holder.day.setText(String.valueOf(date.getDayOfMonth()));
             if (date.equals(CalendarUtils.selectedDate)){
                 holder.itemView.setBackgroundColor(Color.GRAY);
+                CalendarUtils.selectedDatePosition = position;
+                return;
             }
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
     @Override
     public int getItemCount() {
         return days.size();
+    }
+
+    public void resetBacklitItem(int new_position){
+        notifyItemChanged(new_position);
+        notifyItemChanged(CalendarUtils.selectedDatePosition);
     }
 
     public interface OnItemListener{

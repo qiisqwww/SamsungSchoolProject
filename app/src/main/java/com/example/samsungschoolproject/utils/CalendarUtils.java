@@ -12,6 +12,7 @@ import java.util.HashMap;
 public class CalendarUtils {
     public static LocalDate selectedDate, dateToScroll;
     public static SwitchToWeekStates state;
+    public static int selectedDatePosition;
 
     private static HashMap<String, String> parseMonth = new HashMap<String, String>() {{
             put("января", "Январь");
