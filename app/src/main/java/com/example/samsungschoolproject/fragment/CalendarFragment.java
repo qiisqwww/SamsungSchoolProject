@@ -41,7 +41,7 @@ public class CalendarFragment extends Fragment {
         setOnclickListeners();
 
         startMonthFragment();
-        initBottomSheetFragment(view);
+        // initBottomSheetFragment(view);
     }
 
     private void initWidgets(View view){
@@ -68,13 +68,13 @@ public class CalendarFragment extends Fragment {
         transaction.commit();
     }
 
-    private void initBottomSheetFragment(View view){
-        final BottomSheetFragment bottomFragment = new BottomSheetFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.containerBottomSheet, bottomFragment)
-                .commit();
-
-        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.containerBottomSheet));
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-    }
+//    private void initBottomSheetFragment(View view){
+//        final BottomSheetFragment bottomFragment = new BottomSheetFragment();
+//        getActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.containerBottomSheet, bottomFragment)
+//                .commit();
+//
+//        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.containerBottomSheet));
+//        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//    }
 }

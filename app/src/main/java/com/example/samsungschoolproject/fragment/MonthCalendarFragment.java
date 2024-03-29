@@ -31,6 +31,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private Button backButton, nextButton;
+    private BottomSheetBehavior bottomSheetBehavior;
 
 
     @Override
@@ -64,6 +65,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         CalendarFragment.nextFragment = new WeekCalendarFragment();
 
         CalendarFragment.switchModeButton.setText(getResources().getString(R.string.month));
+
+        initBottomSheetFragment(view);
     }
 
     private void initWidgets(View view){
@@ -96,6 +99,16 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
+    }
+
+    private void initBottomSheetFragment(View view){
+        final BottomSheetFragment bottomFragment = new BottomSheetFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.containerBottomSheet, bottomFragment)
+                .commit();
+
+        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.containerBottomSheet));
+        //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
     @Override
