@@ -50,7 +50,6 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         initWidgets(view);
         setButtonListeners(view);
-        initBottomSheetFragment(view);
 
         CalendarUtils.state = SwitchToWeekStates.NOT_JUST_SWITCHED_TO_WEEK_MODE;
 
@@ -87,12 +86,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         });
     }
 
-    private void initBottomSheetFragment(View view){
-        final BottomSheetFragment bottomFragment = new BottomSheetFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.containerBottomSheet, bottomFragment)
-                .commit();
-    }
+
 
     private void setMonthView(){
         monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));

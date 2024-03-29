@@ -15,10 +15,12 @@ import android.widget.Button;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 public class CalendarFragment extends Fragment {
     public static Button switchModeButton;
     public static Fragment nextFragment;
+    private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,8 @@ public class CalendarFragment extends Fragment {
         initWidgets(view);
         setOnclickListeners();
 
-        FragmentManager manager = getActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.container, new MonthCalendarFragment());
-        transaction.commit();
+        startMonthFragment();
+        initBottomSheetFragment(view);
     }
 
     private void initWidgets(View view){
@@ -54,10 +54,27 @@ public class CalendarFragment extends Fragment {
         });
     }
 
+    private void startMonthFragment(){
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.container, new MonthCalendarFragment());
+        transaction.commit();
+    }
+
     private void switchCalendarMode(){
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container, nextFragment);
         transaction.commit();
+    }
+
+    private void initBottomSheetFragment(View view){
+        final BottomSheetFragment bottomFragment = new BottomSheetFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.containerBottomSheet, bottomFragment)
+                .commit();
+
+        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.containerBottomSheet));
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 }
