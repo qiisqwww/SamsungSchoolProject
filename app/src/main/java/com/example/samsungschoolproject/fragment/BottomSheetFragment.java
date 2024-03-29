@@ -22,7 +22,7 @@ public class BottomSheetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
+        return inflater.inflate(R.layout.day_info, container, false);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.samsungschoolproject.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,8 +18,7 @@ import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
-import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,9 +27,10 @@ import java.util.ArrayList;
 public class MonthCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
     private CalendarAdapter calendarAdapter;
     private TextView monthYearText;
+    private ModalBottomSheetFragment modalBottomSheet;
     private RecyclerView calendarRecyclerView;
     private Button backButton, nextButton;
-    private BottomSheetBehavior bottomSheetBehavior;
+
 
 
     @Override
@@ -63,10 +62,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         setMonthView();
 
         CalendarFragment.nextFragment = new WeekCalendarFragment();
-
         CalendarFragment.switchModeButton.setText(getResources().getString(R.string.month));
-
-        initBottomSheetFragment(view);
     }
 
     private void initWidgets(View view){
@@ -101,14 +97,11 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
-    private void initBottomSheetFragment(View view){
-        final BottomSheetFragment bottomFragment = new BottomSheetFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.containerBottomSheet, bottomFragment)
-                .commit();
+    private void initBottomSheetFragment(){
+        modalBottomSheet = new ModalBottomSheetFragment();
+        ModalBottomSheetFragment.TAG = "New Instance";
 
-        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.containerBottomSheet));
-        //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        modalBottomSheet.show(getActivity().getSupportFragmentManager(), ModalBottomSheetFragment.TAG);
     }
 
     @Override
@@ -116,6 +109,17 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         if (!dayText.equals("")) {
             CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth(), Integer.parseInt(dayText));
             calendarAdapter.resetBacklitItem(position);
+        }
+
+        initBottomSheetFragment();
+    }
+
+    public static class ModalBottomSheetFragment extends BottomSheetDialogFragment {
+        public static String TAG;
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.day_info, container, false);
         }
     }
 }
