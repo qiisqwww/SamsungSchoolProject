@@ -54,24 +54,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/weekCalendarRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="368dp"
-        android:layout_weight="1" />
+        android:layout_height="80dp" />
 
-    <Button
-        android:id="@+id/newWorkoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/darkThemeBackgroundColor"
-        android:text="@string/add_new_workout"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"/>
+    <include layout="@layout/day_info"></include>
 
 
 </LinearLayout>

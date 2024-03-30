@@ -143,9 +143,9 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         private void loadWorkouts(){
             ArrayList<Workout> workouts = new ArrayList<>();
-            workouts.add(new Workout("First", LocalDate.now(), 120)); // Here must be a logic of filling a workout list from db
-            workouts.add(new Workout("Second", LocalDate.now(), 70));
-            workouts.add(new Workout("Third", LocalDate.now(), 85));
+            workouts.add(new Workout("КАЧАЕМ СИСЕЧЬКИ))0)", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
+            workouts.add(new Workout("КАЧАЕМ ПРЕССИК)))0)))", LocalDate.now().toString(), 70, "TRUE"));
+            workouts.add(new Workout("ЗАВТРА Я НЕ ВСТАНУ)))))", LocalDate.now().toString(), 85, "TRUE"));
 
             workoutListAdapter = new WorkoutListAdapter(workouts);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);

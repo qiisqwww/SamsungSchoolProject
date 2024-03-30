@@ -52,7 +52,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
 
         public void bind(Workout workout){
             workoutItemBinding.name.setText(workout.name);
-            workoutItemBinding.date.setText(workout.date.toString());
+            workoutItemBinding.date.setText(workout.date);
             workoutItemBinding.approximateLength.setText("~ " + workout.approximate_length + "m");
             // MUST BE ADDED A LOGIC !!! (cuz now idk how to make it correctly lol)
         }

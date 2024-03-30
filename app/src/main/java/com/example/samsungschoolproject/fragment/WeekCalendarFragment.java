@@ -18,19 +18,22 @@ import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
+import com.example.samsungschoolproject.model.Workout;
 import com.example.samsungschoolproject.noificator.ExampleNotificator;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
+import com.example.samsungschoolproject.view_adapter.WorkoutListAdapter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
     private CalendarAdapter calendarAdapter;
+    private WorkoutListAdapter workoutListAdapter;
     private TextView monthYearText;
-    private RecyclerView calendarRecyclerView;
-    private Button nextButton, backButton, newWorkoutButton;
+    private RecyclerView calendarRecyclerView, workoutsList;
+    private Button nextButton, backButton;
 
 
     @Override
@@ -63,15 +66,17 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
         CalendarFragment.nextFragment = new MonthCalendarFragment();
         CalendarFragment.switchModeButton.setText(getResources().getString(R.string.week));
+
+        loadWorkouts();
     }
 
     private void initWidgets(View view){
         calendarRecyclerView = view.findViewById(R.id.weekCalendarRecyclerView);
+        workoutsList = view.findViewById(R.id.workoutList);
         monthYearText = view.findViewById(R.id.weekMonthYearTV);
 
         backButton = view.findViewById(R.id.weekBackButton);
         nextButton = view.findViewById(R.id.weekNextButton);
-        newWorkoutButton = view.findViewById(R.id.newWorkoutButton);
     }
 
     private void setButtonListeners(View view){
@@ -85,10 +90,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.plusWeeks(1);
             setWeekView();
         });
-
-        newWorkoutButton.setOnClickListener(v -> {
-            ExampleNotificator.scheduleNotification(requireContext().getApplicationContext());
-        });
     }
 
     private void setWeekView(){
@@ -99,6 +100,18 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
+    }
+
+    private void loadWorkouts(){
+        ArrayList<Workout> workouts = new ArrayList<>();
+        workouts.add(new Workout("1234", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
+        workouts.add(new Workout("4321", LocalDate.now().toString(), 70, "TRUE"));
+        workouts.add(new Workout("12344", LocalDate.now().toString(), 85, "TRUE"));
+
+        workoutListAdapter = new WorkoutListAdapter(workouts);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        workoutsList.setLayoutManager(layoutManager);
+        workoutsList.setAdapter(workoutListAdapter);
     }
 
     @Override
