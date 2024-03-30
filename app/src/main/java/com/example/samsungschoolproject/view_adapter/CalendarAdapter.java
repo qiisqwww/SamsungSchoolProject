@@ -30,10 +30,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         View view = inflater.inflate(R.layout.calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
 
-        if (days.size() > 15){
+        if (days.size() > 15){ // Задает размер для "месячного" режима (в нем количество дней > 15)
             layoutParams.height = (int) (parent.getHeight() * 0.166666666);
         }
-        else{
+        else{ // Задает размер для "недельного" режима
             layoutParams.height = (parent.getHeight());
         }
         return new CalendarViewHolder(view, onItemListener);
@@ -47,12 +47,12 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         }
         else{
             holder.day.setText(String.valueOf(date.getDayOfMonth()));
-            if (date.equals(CalendarUtils.selectedDate)){
+            if (date.equals(CalendarUtils.selectedDate)){ // Устанавливает серый цвет, если элемент был выбран
                 holder.itemView.setBackgroundColor(Color.GRAY);
                 CalendarUtils.selectedDatePosition = holder.getAdapterPosition();
                 return;
             }
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT); // Очищает цвет, если элемент не должен быть подсвечен
         }
     }
 
@@ -61,6 +61,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         return days.size();
     }
 
+    // Обновляет две ячейки календаря: новую выбранную и предыдущую
     public void resetBacklitItem(int new_position){
         notifyItemChanged(new_position);
         notifyItemChanged(CalendarUtils.selectedDatePosition);

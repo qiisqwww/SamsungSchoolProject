@@ -37,14 +37,14 @@ public class MainMenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initWidgets(view);
-        initButtonListeners(view);
+        initButtonListeners();
     }
 
     private void initWidgets(View view){
         settingsButton = (Button) view.findViewById(R.id.settings_button);
     }
 
-    private void initButtonListeners(View view){
+    private void initButtonListeners(){
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), SettingsMenuActivity.class);
             startActivity(intent);

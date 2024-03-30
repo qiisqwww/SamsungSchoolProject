@@ -48,6 +48,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(1); // Устанавливает MainMenuFragment при открытии MainActivity
     }
 }

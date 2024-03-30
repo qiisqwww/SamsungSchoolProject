@@ -11,8 +11,15 @@ import java.util.HashMap;
 
 public class CalendarUtils {
     public static LocalDate selectedDate, dateToScroll;
+    // selectedDate - выбранная при нажатии дата;
+    // dateToScroll - дата, относительно которой будет "прокрутка";
     public static SwitchToWeekStates state;
+    // Необходимо чтобы уловить первый вход в WeekFragment.
+    // Используется чтобы отобразить неделю, включающую в себя именно выбранный нажатием день,
+    // при первом переходе во фрагмент переходе.
     public static int selectedDatePosition;
+    // Позиция position выбранного нажатием дня в массиве days CalendarAdapter'а.
+    // Необходимо для обновления окраса ячейки
 
     private static HashMap<String, String> parseMonth = new HashMap<String, String>() {{
             put("января", "Январь");
@@ -29,12 +36,14 @@ public class CalendarUtils {
             put("декабря", "Декабрь");
     }};
 
+    // Возвращает строку в формате "Месяц Год", чтобы отобразить ее вверху CalendarFragment
     public static String monthYearFromDate(LocalDate date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
         String[] unparsedDate = date.format(formatter).split(" ");
         return parseMonth.get(unparsedDate[0]) + " " + unparsedDate[1];
     }
 
+    // Возвращает набор дней для месяца
     public static ArrayList<LocalDate> daysInMonthArray(LocalDate date){
         ArrayList<LocalDate> daysInMonthArray = new ArrayList<>();
         YearMonth yearMonth = YearMonth.from(date);
@@ -55,6 +64,7 @@ public class CalendarUtils {
         return daysInMonthArray;
     }
 
+    // Возвращает массив дней LocalDate для необходимой недели
     public static ArrayList<LocalDate> daysInWeekArray(LocalDate date){
         ArrayList<LocalDate> days = new ArrayList<>();
         LocalDate startDate;
@@ -77,6 +87,7 @@ public class CalendarUtils {
         return days;
     }
 
+    // Возвращает понедельник для текущего dateToScroll
     private static LocalDate mondayForDate(LocalDate current) {
         LocalDate oneWeekAgo = current.minusWeeks(1);
 

@@ -52,8 +52,9 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         super.onViewCreated(view, savedInstanceState);
 
         initWidgets(view);
-        setButtonListeners(view);
+        setButtonListeners();
 
+        // Устанавливается состояние об переходе на "недельныЙ" фрагмент
         CalendarUtils.state = SwitchToWeekStates.JUST_SWITCHED_TO_WEEK_MODE;
 
         if (CalendarUtils.dateToScroll == null){
@@ -67,7 +68,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         CalendarFragment.nextFragment = new MonthCalendarFragment();
         CalendarFragment.switchModeButton.setText(getResources().getString(R.string.week));
 
-        loadWorkouts();
+        loadWorkouts(); // Загружает список тренировок из базы данных
     }
 
     private void initWidgets(View view){
@@ -79,7 +80,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         nextButton = view.findViewById(R.id.weekNextButton);
     }
 
-    private void setButtonListeners(View view){
+    private void setButtonListeners(){
 
         backButton.setOnClickListener(v -> {
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.minusWeeks(1);
@@ -92,6 +93,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         });
     }
 
+    // Отрисовка "недельного" режима календаря
     private void setWeekView(){
         monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll)) ;
         ArrayList<LocalDate> daysInWeek = CalendarUtils.daysInWeekArray(CalendarUtils.dateToScroll);
@@ -102,6 +104,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
 
+    // Загружает список тренировок из БД. Пока что логика работы с БД не реализована
     private void loadWorkouts(){
         ArrayList<Workout> workouts = new ArrayList<>();
         workouts.add(new Workout("1234", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
@@ -117,6 +120,10 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     @Override
     public void onItemClick(int position, String dayText) {
         if (!dayText.equals("")) {
+            // Логика ниже необходима для избежания багов, возникающих с выбором дня при отображении
+            // недели, лежащей на стыке двух месяцев.
+            // shift - сдвиг, который необходимо учесть в selectedDate, чтобы правильно отрисовать
+            // изменения
             int shift = 0;
             if (Integer.parseInt(dayText) < CalendarUtils.dateToScroll.getDayOfMonth() - 15){
                 shift = 1;

@@ -20,6 +20,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 public class CalendarFragment extends Fragment {
     public static Button switchModeButton;
     public static Fragment nextFragment;
+    // nextFragment содержит фрагмент, который необходимо открыть следующим
+    // при нажатии switchModeButton
     private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
@@ -41,7 +43,6 @@ public class CalendarFragment extends Fragment {
         setOnclickListeners();
 
         startMonthFragment();
-        // initBottomSheetFragment(view);
     }
 
     private void initWidgets(View view){
@@ -67,14 +68,4 @@ public class CalendarFragment extends Fragment {
         transaction.replace(R.id.container, nextFragment);
         transaction.commit();
     }
-
-//    private void initBottomSheetFragment(View view){
-//        final BottomSheetFragment bottomFragment = new BottomSheetFragment();
-//        getActivity().getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.containerBottomSheet, bottomFragment)
-//                .commit();
-//
-//        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.containerBottomSheet));
-//        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-//    }
 }

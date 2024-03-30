@@ -51,7 +51,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         super.onViewCreated(view, savedInstanceState);
 
         initWidgets(view);
-        setButtonListeners(view);
+        setButtonListeners();
 
         CalendarUtils.state = SwitchToWeekStates.NOT_JUST_SWITCHED_TO_WEEK_MODE;
 
@@ -75,7 +75,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         nextButton = view.findViewById(R.id.monthNextButton);
     }
 
-    private void setButtonListeners(View view){
+    private void setButtonListeners(){
         backButton.setOnClickListener(v -> {
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.minusMonths(1);
             setMonthView();
@@ -87,8 +87,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         });
     }
 
-
-
+    // Отрисовка "месячного" режима календаря
     private void setMonthView(){
         monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));
         ArrayList<LocalDate> daysInMonth = CalendarUtils.daysInMonthArray(CalendarUtils.dateToScroll);
@@ -132,7 +131,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             super.onViewCreated(view, savedInstanceState);
 
             initWidgets(view);
-            loadWorkouts();
+            loadWorkouts(); // Загружает список тренировок из базы данных
         }
 
         private void initWidgets(View view){
@@ -141,6 +140,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             addNewWorkout = view.findViewById(R.id.addNewWorkout);
         }
 
+        // Загружает список тренировок из БД. Пока что логика работы с БД не реализована
         private void loadWorkouts(){
             ArrayList<Workout> workouts = new ArrayList<>();
             workouts.add(new Workout("КАЧАЕМ СИСЕЧЬКИ))0)", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
