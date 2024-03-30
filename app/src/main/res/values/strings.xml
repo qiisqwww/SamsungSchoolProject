@@ -16,6 +16,8 @@
     <string name="FRI">ПТ</string>
     <string name="SAT">СБ</string>
     <string name="SUN">ВС</string>
+    <string name ="channel_name">Название канала</string>
+    <string name ="channel_description">Описание канала</string>
     <string name="new_workout_template_button">Создать новый шаблон тренировки</string>
     <string name="add_new_workout">Добавить новую тренировку</string>
 

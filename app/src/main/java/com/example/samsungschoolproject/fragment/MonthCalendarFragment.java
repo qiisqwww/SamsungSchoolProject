@@ -16,8 +16,10 @@ import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
+import com.example.samsungschoolproject.model.Workout;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
+import com.example.samsungschoolproject.view_adapter.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.time.LocalDate;
@@ -116,10 +118,39 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
     public static class ModalBottomSheetFragment extends BottomSheetDialogFragment {
         public static String TAG;
+        private RecyclerView workoutsList;
+        private Button createNewTemplateButton, addNewWorkout;
+        private WorkoutListAdapter workoutListAdapter;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             return inflater.inflate(R.layout.day_info, container, false);
+        }
+
+        @Override
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+
+            initWidgets(view);
+            loadWorkouts();
+        }
+
+        private void initWidgets(View view){
+            workoutsList = view.findViewById(R.id.workoutList);
+            createNewTemplateButton = view.findViewById(R.id.createNewTemplateButton);
+            addNewWorkout = view.findViewById(R.id.addNewWorkout);
+        }
+
+        private void loadWorkouts(){
+            ArrayList<Workout> workouts = new ArrayList<>();
+            workouts.add(new Workout("First", LocalDate.now(), 120)); // Here must be a logic of filling a workout list from db
+            workouts.add(new Workout("Second", LocalDate.now(), 70));
+            workouts.add(new Workout("Third", LocalDate.now(), 85));
+
+            workoutListAdapter = new WorkoutListAdapter(workouts);
+            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+            workoutsList.setLayoutManager(layoutManager);
+            workoutsList.setAdapter(workoutListAdapter);
         }
     }
 }
