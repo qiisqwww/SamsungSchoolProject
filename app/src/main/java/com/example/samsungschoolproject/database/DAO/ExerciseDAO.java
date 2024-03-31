@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.DAO;
+package com.example.samsungschoolproject.database.DAO;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.samsungschoolproject.model.Exercise;
+import com.example.samsungschoolproject.database.model.Exercise;
 
 import java.util.List;
 

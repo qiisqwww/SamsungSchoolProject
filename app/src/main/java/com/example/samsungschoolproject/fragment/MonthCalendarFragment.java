@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
-import com.example.samsungschoolproject.model.Workout;
+import com.example.samsungschoolproject.database.model.Workout;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.WorkoutListAdapter;
