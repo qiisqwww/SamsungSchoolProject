@@ -31,9 +31,9 @@ import java.util.ArrayList;
 public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
     private CalendarAdapter calendarAdapter;
     private WorkoutListAdapter workoutListAdapter;
-    private TextView monthYearText;
-    private RecyclerView calendarRecyclerView, workoutsList;
-    private Button nextButton, backButton;
+    private TextView monthYearTV;
+    private RecyclerView calendarRecycler, workoutsList;
+    private Button weekBackButton, weekNextButton;
 
 
     @Override
@@ -72,22 +72,22 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     }
 
     private void initWidgets(View view){
-        calendarRecyclerView = view.findViewById(R.id.weekCalendarRecyclerView);
-        workoutsList = view.findViewById(R.id.workoutList);
-        monthYearText = view.findViewById(R.id.weekMonthYearTV);
+        calendarRecycler = view.findViewById(R.id.weekCalendar);
+        workoutsList = view.findViewById(R.id.workoutsRecycler);
+        monthYearTV = view.findViewById(R.id.wMonthYearTV);
 
-        backButton = view.findViewById(R.id.weekBackButton);
-        nextButton = view.findViewById(R.id.weekNextButton);
+        weekBackButton = view.findViewById(R.id.weekBack);
+        weekNextButton = view.findViewById(R.id.weekNext);
     }
 
     private void setButtonListeners(){
 
-        backButton.setOnClickListener(v -> {
+        weekBackButton.setOnClickListener(v -> {
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.minusWeeks(1);
             setWeekView();
         });
 
-        nextButton.setOnClickListener(v -> {
+        weekNextButton.setOnClickListener(v -> {
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.plusWeeks(1);
             setWeekView();
         });
@@ -95,13 +95,13 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
     // Отрисовка "недельного" режима календаря
     private void setWeekView(){
-        monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll)) ;
+        monthYearTV.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll)) ;
         ArrayList<LocalDate> daysInWeek = CalendarUtils.daysInWeekArray(CalendarUtils.dateToScroll);
 
         calendarAdapter = new CalendarAdapter(daysInWeek, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
-        calendarRecyclerView.setLayoutManager(layoutManager);
-        calendarRecyclerView.setAdapter(calendarAdapter);
+        calendarRecycler.setLayoutManager(layoutManager);
+        calendarRecycler.setAdapter(calendarAdapter);
     }
 
     // Загружает список тренировок из БД. Пока что логика работы с БД не реализована

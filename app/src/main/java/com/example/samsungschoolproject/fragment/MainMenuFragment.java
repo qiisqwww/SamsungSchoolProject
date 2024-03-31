@@ -19,7 +19,7 @@ import com.example.samsungschoolproject.activity.SettingsMenuActivity;
 
 
 public class MainMenuFragment extends Fragment {
-    Button settingsButton;
+    Button toSettingsButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,11 +41,11 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void initWidgets(View view){
-        settingsButton = (Button) view.findViewById(R.id.settings_button);
+        toSettingsButton = (Button) view.findViewById(R.id.toSettings);
     }
 
     private void initButtonListeners(){
-        settingsButton.setOnClickListener(v -> {
+        toSettingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), SettingsMenuActivity.class);
             startActivity(intent);
         });

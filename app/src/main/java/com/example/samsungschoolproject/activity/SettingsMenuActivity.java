@@ -11,7 +11,7 @@ import com.example.samsungschoolproject.R;
 
 
 public class SettingsMenuActivity extends AppCompatActivity {
-    Button goBackButton;
+    Button backToMenuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +23,11 @@ public class SettingsMenuActivity extends AppCompatActivity {
     };
 
     private void initWidgets(){
-        goBackButton = (Button) findViewById(R.id.back_to_main_menu);
+        backToMenuButton = findViewById(R.id.backToMenu);
     }
 
     private void initButtonListeners(){
-        goBackButton.setOnClickListener(v -> finish());
+        backToMenuButton.setOnClickListener(v -> finish());
     }
 
 }

@@ -7,7 +7,7 @@
     tools:context=".fragment.MainMenuFragment">
 
     <Button
-        android:id="@+id/settings_button"
+        android:id="@+id/toSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"

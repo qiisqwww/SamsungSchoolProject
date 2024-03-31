@@ -14,8 +14,8 @@ import com.example.samsungschoolproject.fragment.WorkoutTemplatesFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+    private ViewPager mainViewPager;
+    private TabLayout tabNavigation;
     private ViewPagerAdapter viewPagerAdapter;
 
     @Override
@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initWidgets(){
-        viewPager = findViewById(R.id.viewpager);
-        tabLayout = findViewById(R.id.tablayout);
+        mainViewPager = findViewById(R.id.mainViewPager);
+        tabNavigation = findViewById(R.id.tabNavigation);
     }
 
     private void initPagerAdapter(){
@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void connectWidgetsWithAdapter(){
-        viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        mainViewPager.setAdapter(viewPagerAdapter);
+        tabNavigation.setupWithViewPager(mainViewPager);
 
-        viewPager.setCurrentItem(1); // Устанавливает MainMenuFragment при открытии MainActivity
+        mainViewPager.setCurrentItem(1); // Устанавливает MainMenuFragment при открытии MainActivity
     }
 }

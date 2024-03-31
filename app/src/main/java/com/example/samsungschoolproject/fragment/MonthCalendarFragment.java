@@ -28,10 +28,10 @@ import java.util.ArrayList;
 
 public class MonthCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
     private CalendarAdapter calendarAdapter;
-    private TextView monthYearText;
+    private TextView monthYearTV;
     private ModalBottomSheetFragment modalBottomSheet;
-    private RecyclerView calendarRecyclerView;
-    private Button backButton, nextButton;
+    private RecyclerView calendarRecycler;
+    private Button monthBackButton, monthNextButton;
 
 
 
@@ -68,20 +68,20 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     }
 
     private void initWidgets(View view){
-        calendarRecyclerView = view.findViewById(R.id.monthCalendarRecyclerView);
-        monthYearText = view.findViewById(R.id.monthMonthYearTV);
+        calendarRecycler = view.findViewById(R.id.monthCalendar);
+        monthYearTV = view.findViewById(R.id.mMonthYearTV);
 
-        backButton = view.findViewById(R.id.monthBackButton);
-        nextButton = view.findViewById(R.id.monthNextButton);
+        monthBackButton = view.findViewById(R.id.monthBack);
+        monthNextButton = view.findViewById(R.id.monthNext);
     }
 
     private void setButtonListeners(){
-        backButton.setOnClickListener(v -> {
+        monthBackButton.setOnClickListener(v -> {
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.minusMonths(1);
             setMonthView();
         });
 
-        nextButton.setOnClickListener(v -> {
+        monthNextButton.setOnClickListener(v -> {
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.plusMonths(1);
             setMonthView();
         });
@@ -89,13 +89,13 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
     // Отрисовка "месячного" режима календаря
     private void setMonthView(){
-        monthYearText.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));
+        monthYearTV.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));
         ArrayList<LocalDate> daysInMonth = CalendarUtils.daysInMonthArray(CalendarUtils.dateToScroll);
 
         calendarAdapter = new CalendarAdapter(daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
-        calendarRecyclerView.setLayoutManager(layoutManager);
-        calendarRecyclerView.setAdapter(calendarAdapter);
+        calendarRecycler.setLayoutManager(layoutManager);
+        calendarRecycler.setAdapter(calendarAdapter);
     }
 
     private void initBottomSheetFragment(){
@@ -117,8 +117,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
     public static class ModalBottomSheetFragment extends BottomSheetDialogFragment {
         public static String TAG;
-        private RecyclerView workoutsList;
-        private Button createNewTemplateButton, addNewWorkout;
+        private RecyclerView workoutsRecycler;
+        private Button createNewTemplateButton, addNewWorkoutButton;
         private WorkoutListAdapter workoutListAdapter;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -135,9 +135,9 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         }
 
         private void initWidgets(View view){
-            workoutsList = view.findViewById(R.id.workoutList);
-            createNewTemplateButton = view.findViewById(R.id.createNewTemplateButton);
-            addNewWorkout = view.findViewById(R.id.addNewWorkout);
+            workoutsRecycler = view.findViewById(R.id.workoutsRecycler);
+            createNewTemplateButton = view.findViewById(R.id.createNewTemplate);
+            addNewWorkoutButton = view.findViewById(R.id.addNewWorkout);
         }
 
         // Загружает список тренировок из БД. Пока что логика работы с БД не реализована
@@ -149,8 +149,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
             workoutListAdapter = new WorkoutListAdapter(workouts);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
-            workoutsList.setLayoutManager(layoutManager);
-            workoutsList.setAdapter(workoutListAdapter);
+            workoutsRecycler.setLayoutManager(layoutManager);
+            workoutsRecycler.setAdapter(workoutListAdapter);
         }
     }
 }

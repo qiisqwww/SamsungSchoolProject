@@ -46,7 +46,7 @@ public class CalendarFragment extends Fragment {
     }
 
     private void initWidgets(View view){
-        switchModeButton = view.findViewById(R.id.switchModeButton);
+        switchModeButton = view.findViewById(R.id.switchMode);
     }
 
     private void setOnclickListeners(){

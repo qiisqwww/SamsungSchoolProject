@@ -12,7 +12,7 @@
         android:layout_marginTop="20dp">
 
         <Button
-            android:id="@+id/monthBackButton"
+            android:id="@+id/monthBack"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -23,7 +23,7 @@
             android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/monthMonthYearTV"
+            android:id="@+id/mMonthYearTV"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -32,7 +32,7 @@
             android:textColor="@color/white"/>
 
         <Button
-            android:id="@+id/monthNextButton"
+            android:id="@+id/monthNext"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -48,7 +48,7 @@
     <include layout="@layout/days_of_week"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/monthCalendarRecyclerView"
+        android:id="@+id/monthCalendar"
         android:layout_width="match_parent"
         android:layout_height="634dp" />
 

@@ -16,7 +16,7 @@
         android:layout_marginTop="20dp">
 
         <Button
-            android:id="@+id/weekBackButton"
+            android:id="@+id/weekBack"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -27,7 +27,7 @@
             android:textSize="20sp"/>
 
         <TextView
-            android:id="@+id/weekMonthYearTV"
+            android:id="@+id/wMonthYearTV"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -36,7 +36,7 @@
             android:textColor="@color/white"/>
 
         <Button
-            android:id="@+id/weekNextButton"
+            android:id="@+id/weekNext"
             android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -52,7 +52,7 @@
     <include layout="@layout/days_of_week"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/weekCalendarRecyclerView"
+        android:id="@+id/weekCalendar"
         android:layout_width="match_parent"
         android:layout_height="80dp" />
 
