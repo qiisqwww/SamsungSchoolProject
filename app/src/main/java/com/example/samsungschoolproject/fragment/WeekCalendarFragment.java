@@ -35,7 +35,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private TextView monthYearTV;
     private RecyclerView calendarRecycler, workoutsList;
     private Button weekBackButton, weekNextButton;
-    private RoomDatabase.Callback callback;
     private WorkoutHelperDatabase database;
 
     @Override
@@ -70,7 +69,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         CalendarFragment.nextFragment = new MonthCalendarFragment();
         CalendarFragment.switchModeButton.setText(getResources().getString(R.string.week));
 
-        initDBCallback();
         loadWorkouts(); // Загружает список тренировок из базы данных
     }
 
@@ -107,24 +105,11 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         calendarRecycler.setAdapter(calendarAdapter);
     }
 
-    private void initDBCallback(){
-        callback = new RoomDatabase.Callback() {
-            @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                super.onCreate(db);
-            }
-
-            @Override
-            public void onOpen(@NonNull SupportSQLiteDatabase db) {
-                super.onOpen(db);
-            }
-        };
-    }
-
     // Загружает список тренировок из БД.
     private void loadWorkouts(){
-        database = Room.databaseBuilder(getContext().getApplicationContext(), WorkoutHelperDatabase.class, "workouthelper")
-                .addCallback(callback).createFromAsset("database/workouthelper.db").build();
+        database = Room.databaseBuilder(getContext().getApplicationContext(), WorkoutHelperDatabase.class, "workout_helper")
+                //.createFromAsset("database/workouthelper.db")
+                .build();
 
         ArrayList<Workout   > workouts = new ArrayList<>();
         workouts.add(new Workout("1234", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db

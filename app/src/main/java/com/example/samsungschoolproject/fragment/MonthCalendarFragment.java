@@ -124,7 +124,6 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         private RecyclerView workoutsRecycler;
         private Button createNewTemplateButton, addNewWorkoutButton;
         private WorkoutListAdapter workoutListAdapter;
-        private RoomDatabase.Callback callback;
         private WorkoutHelperDatabase database;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -137,34 +136,20 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             super.onViewCreated(view, savedInstanceState);
 
             initWidgets(view);
-            initDBCallback();
             loadWorkouts(); // Загружает список тренировок из базы данных
         }
 
-        private void initWidgets(View view){
+        private void initWidgets(View view) {
             workoutsRecycler = view.findViewById(R.id.workoutsRecycler);
             createNewTemplateButton = view.findViewById(R.id.createNewTemplate);
             addNewWorkoutButton = view.findViewById(R.id.addNewWorkout);
         }
 
-        private void initDBCallback(){
-            callback = new RoomDatabase.Callback() {
-                @Override
-                public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                    super.onCreate(db);
-                }
-
-                @Override
-                public void onOpen(@NonNull SupportSQLiteDatabase db) {
-                    super.onOpen(db);
-                }
-            };
-        }
-
         // Загружает список тренировок из БД.
         private void loadWorkouts(){
-            database = Room.databaseBuilder(getContext().getApplicationContext(), WorkoutHelperDatabase.class, "workouthelper")
-                    .addCallback(callback).createFromAsset("database/workouthelper.db").build();
+            database = Room.databaseBuilder(getContext().getApplicationContext(), WorkoutHelperDatabase.class, "workout_helper")
+                    //.createFromAsset("database/workouthelper.db")
+                    .build();
 
             ArrayList<Workout> workouts = new ArrayList<>();
             workouts.add(new Workout("КАЧАЕМ СИСЕЧЬКИ))0)", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
