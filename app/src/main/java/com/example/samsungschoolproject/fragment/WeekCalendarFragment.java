@@ -123,7 +123,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
     // Загружает список тренировок из БД.
     private void loadWorkouts(){
-        database = Room.databaseBuilder(getContext().getApplicationContext(), WorkoutHelperDatabase.class, "workout_helper")
+        database = Room.databaseBuilder(getContext().getApplicationContext(), WorkoutHelperDatabase.class, "workouthelper")
                 .addCallback(callback).createFromAsset("database/workouthelper.db").build();
 
         ArrayList<Workout   > workouts = new ArrayList<>();
