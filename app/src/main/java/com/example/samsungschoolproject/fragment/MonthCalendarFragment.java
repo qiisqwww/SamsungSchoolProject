@@ -147,9 +147,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         // Загружает список тренировок из БД.
         private void loadWorkouts(){
-            database = Room.databaseBuilder(getContext().getApplicationContext(), WorkoutHelperDatabase.class, "workout_helper")
-                    //.createFromAsset("database/workouthelper.db")
-                    .build();
+            database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
 
             ArrayList<Workout> workouts = new ArrayList<>();
             workouts.add(new Workout("КАЧАЕМ СИСЕЧЬКИ))0)", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
