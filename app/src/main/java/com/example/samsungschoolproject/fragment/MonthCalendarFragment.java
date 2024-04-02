@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
+import com.example.samsungschoolproject.database.model.Exercise;
+import com.example.samsungschoolproject.database.model.WorkoutExercise;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.database.model.Workout;
 import com.example.samsungschoolproject.utils.CalendarUtils;
@@ -28,6 +30,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MonthCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
