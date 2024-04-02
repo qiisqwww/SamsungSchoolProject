@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.model;
+package com.example.samsungschoolproject.database.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -9,7 +9,8 @@ import androidx.room.PrimaryKey;
         @ForeignKey(
                 entity = Workout.class,
                 parentColumns = "id",
-                childColumns = "workout_id"),
+                childColumns = "workout_id",
+                onDelete = ForeignKey.CASCADE),
         @ForeignKey(
                 entity = Exercise.class,
                 parentColumns = "id",
@@ -30,11 +31,15 @@ public class WorkoutExercise {
     @ColumnInfo(name = "approaches")
     public int approaches;
 
-    public WorkoutExercise(int id, int workout_id, int exercise_id, int repeats, int approaches) {
+    @ColumnInfo(name = "number_in_query")
+    public int number_in_query;
+
+    public WorkoutExercise(int id, int workout_id, int exercise_id, int repeats, int approaches, int number_in_query) {
         this.id = id;
         this.workout_id = workout_id;
         this.exercise_id = exercise_id;
         this.repeats = repeats;
         this.approaches = approaches;
+        this.number_in_query = number_in_query;
     }
 }

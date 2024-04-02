@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.databinding.WorkoutItemBinding;
-import com.example.samsungschoolproject.model.Workout;
+import com.example.samsungschoolproject.database.model.Workout;
 
 import java.util.List;
 

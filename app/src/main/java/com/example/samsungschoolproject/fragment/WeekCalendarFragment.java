@@ -1,6 +1,5 @@
 package com.example.samsungschoolproject.fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +16,10 @@ import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
-import com.example.samsungschoolproject.model.Workout;
-import com.example.samsungschoolproject.noificator.ExampleNotificator;
+import com.example.samsungschoolproject.database.model.Workout;
+
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
-import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
 import com.example.samsungschoolproject.view_adapter.WorkoutListAdapter;
 
 import java.time.LocalDate;

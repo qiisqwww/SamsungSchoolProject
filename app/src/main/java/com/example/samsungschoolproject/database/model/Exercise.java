@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.model;
+package com.example.samsungschoolproject.database.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
