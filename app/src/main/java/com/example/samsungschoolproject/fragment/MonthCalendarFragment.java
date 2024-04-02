@@ -7,6 +7,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.database.model.Workout;
 import com.example.samsungschoolproject.utils.CalendarUtils;
@@ -120,6 +124,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         private RecyclerView workoutsRecycler;
         private Button createNewTemplateButton, addNewWorkoutButton;
         private WorkoutListAdapter workoutListAdapter;
+        private RoomDatabase.Callback callback;
+        private WorkoutHelperDatabase database;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -131,6 +137,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             super.onViewCreated(view, savedInstanceState);
 
             initWidgets(view);
+            initDBCallback();
             loadWorkouts(); // Загружает список тренировок из базы данных
         }
 
@@ -140,8 +147,25 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             addNewWorkoutButton = view.findViewById(R.id.addNewWorkout);
         }
 
-        // Загружает список тренировок из БД. Пока что логика работы с БД не реализована
+        private void initDBCallback(){
+            callback = new RoomDatabase.Callback() {
+                @Override
+                public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                    super.onCreate(db);
+                }
+
+                @Override
+                public void onOpen(@NonNull SupportSQLiteDatabase db) {
+                    super.onOpen(db);
+                }
+            };
+        }
+
+        // Загружает список тренировок из БД.
         private void loadWorkouts(){
+            database = Room.databaseBuilder(getContext().getApplicationContext(), WorkoutHelperDatabase.class, "workout_helper")
+                    .addCallback(callback).createFromAsset("database/workouthelper.db").build();
+
             ArrayList<Workout> workouts = new ArrayList<>();
             workouts.add(new Workout("КАЧАЕМ СИСЕЧЬКИ))0)", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
             workouts.add(new Workout("КАЧАЕМ ПРЕССИК)))0)))", LocalDate.now().toString(), 70, "TRUE"));

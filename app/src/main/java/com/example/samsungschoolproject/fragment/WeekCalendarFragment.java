@@ -7,6 +7,9 @@ import androidx.annotation.Nullable;;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.database.model.Workout;
 
@@ -31,7 +35,8 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private TextView monthYearTV;
     private RecyclerView calendarRecycler, workoutsList;
     private Button weekBackButton, weekNextButton;
-
+    private RoomDatabase.Callback callback;
+    private WorkoutHelperDatabase database;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         CalendarFragment.nextFragment = new MonthCalendarFragment();
         CalendarFragment.switchModeButton.setText(getResources().getString(R.string.week));
 
+        initDBCallback();
         loadWorkouts(); // Загружает список тренировок из базы данных
     }
 
@@ -101,9 +107,26 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         calendarRecycler.setAdapter(calendarAdapter);
     }
 
-    // Загружает список тренировок из БД. Пока что логика работы с БД не реализована
+    private void initDBCallback(){
+        callback = new RoomDatabase.Callback() {
+            @Override
+            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                super.onCreate(db);
+            }
+
+            @Override
+            public void onOpen(@NonNull SupportSQLiteDatabase db) {
+                super.onOpen(db);
+            }
+        };
+    }
+
+    // Загружает список тренировок из БД.
     private void loadWorkouts(){
-        ArrayList<Workout> workouts = new ArrayList<>();
+        database = Room.databaseBuilder(getContext().getApplicationContext(), WorkoutHelperDatabase.class, "workout_helper")
+                .addCallback(callback).createFromAsset("database/workouthelper.db").build();
+
+        ArrayList<Workout   > workouts = new ArrayList<>();
         workouts.add(new Workout("1234", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
         workouts.add(new Workout("4321", LocalDate.now().toString(), 70, "TRUE"));
         workouts.add(new Workout("12344", LocalDate.now().toString(), 85, "TRUE"));
