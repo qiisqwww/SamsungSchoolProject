@@ -110,8 +110,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
     // Загружает список тренировок из БД.
     private void loadWorkouts(){
-        database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
-
         ArrayList<Workout> workouts = new ArrayList<>();
         workouts.add(new Workout("1234", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
         workouts.add(new Workout("4321", LocalDate.now().toString(), 70, "TRUE"));

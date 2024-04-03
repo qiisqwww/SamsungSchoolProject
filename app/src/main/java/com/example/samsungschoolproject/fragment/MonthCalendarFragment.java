@@ -28,6 +28,7 @@ import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -150,12 +151,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         // Загружает список тренировок из БД.
         private void loadWorkouts(){
-            database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
-
-            ArrayList<Workout> workouts = new ArrayList<>();
-            workouts.add(new Workout("КАЧАЕМ СИСЕЧЬКИ))0)", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
-            workouts.add(new Workout("КАЧАЕМ ПРЕССИК)))0)))", LocalDate.now().toString(), 70, "TRUE"));
-            workouts.add(new Workout("ЗАВТРА Я НЕ ВСТАНУ)))))", LocalDate.now().toString(), 85, "TRUE"));
+            WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
+            List<Workout> workouts = database.getWorkoutDAO().getAllWorkouts();
 
             workoutListAdapter = new WorkoutListAdapter(workouts);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
