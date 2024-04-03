@@ -11,13 +11,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/workoutsRecycler"
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
+        <ViewSwitcher
+            android:id="@+id/viewSwitcher"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_weight="0.9"
-            tools:listitem="@android:layout/list_content"/>
+            android:inAnimation="@android:anim/slide_in_left">
+
+            <TextView
+                android:id="@+id/noPlannedWorkouts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_gravity="top|center"
+                android:text="@string/no_planned_workouts"
+                android:padding="25dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/workoutsRecycler"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@android:layout/list_content"/>
+
+        </ViewSwitcher>
 
         <LinearLayout
             android:layout_width="match_parent"

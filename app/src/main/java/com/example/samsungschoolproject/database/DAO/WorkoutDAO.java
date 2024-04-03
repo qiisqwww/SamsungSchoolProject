@@ -24,6 +24,6 @@ public interface WorkoutDAO {
     @Query("SELECT * FROM workouts")
     public List<Workout> getAllWorkouts();
 
-    @Query("SELECT * FROM workouts WHERE id==:workoutId")
-    public Workout getWorkoutById(int workoutId);
+    @Query("SELECT * FROM workouts WHERE date==:date")
+    public List<Workout> getWorkoutsByDate(String date);
 }

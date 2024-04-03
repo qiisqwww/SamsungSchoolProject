@@ -11,11 +11,13 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
@@ -38,7 +40,8 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private TextView monthYearTV;
     private RecyclerView calendarRecycler, workoutsList;
     private Button weekBackButton, weekNextButton;
-    private WorkoutHelperDatabase database;
+    private TextView noPlannedWorkouts;
+    private ViewSwitcher viewSwitcher;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,9 +82,12 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         calendarRecycler = view.findViewById(R.id.weekCalendar);
         workoutsList = view.findViewById(R.id.workoutsRecycler);
         monthYearTV = view.findViewById(R.id.wMonthYearTV);
+        noPlannedWorkouts = view.findViewById(R.id.noPlannedWorkouts);
 
         weekBackButton = view.findViewById(R.id.weekBack);
         weekNextButton = view.findViewById(R.id.weekNext);
+
+        viewSwitcher = view.findViewById(R.id.viewSwitcher);
     }
 
     private void setButtonListeners(){
@@ -110,10 +116,19 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
     // Загружает список тренировок из БД.
     private void loadWorkouts(){
-        ArrayList<Workout> workouts = new ArrayList<>();
-        workouts.add(new Workout("1234", LocalDate.now().toString(), 120, "TRUE")); // Here must be a logic of filling a workout list from db
-        workouts.add(new Workout("4321", LocalDate.now().toString(), 70, "TRUE"));
-        workouts.add(new Workout("12344", LocalDate.now().toString(), 85, "TRUE"));
+        WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
+        List<Workout> workouts = database.getWorkoutDAO().getWorkoutsByDate(CalendarUtils.selectedDate.toString());
+
+        if (workouts.size() == 0){
+            if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
+                viewSwitcher.showNext();
+            }
+            return;
+        }
+
+        if (viewSwitcher.getCurrentView() == noPlannedWorkouts){
+            viewSwitcher.showNext();
+        }
 
         workoutListAdapter = new WorkoutListAdapter(workouts);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
@@ -138,6 +153,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
             CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth().plus(shift), Integer.parseInt(dayText));
             calendarAdapter.resetBacklitItem(position);
+            loadWorkouts();
         }
     }
 }

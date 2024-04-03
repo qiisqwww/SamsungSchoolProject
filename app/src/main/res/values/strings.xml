@@ -20,7 +20,6 @@
     <string name="channel_description">Описание канала</string>
     <string name="new_workout_template_button">Создать новый шаблон тренировки</string>
     <string name="add_new_workout">Добавить новую тренировку</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_planned_workouts">На этот день нет запланированных тренировок</string>
 
 </resources>

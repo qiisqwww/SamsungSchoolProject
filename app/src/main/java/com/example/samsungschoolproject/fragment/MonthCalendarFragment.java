@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
@@ -127,8 +128,9 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         public static String TAG;
         private RecyclerView workoutsRecycler;
         private Button createNewTemplateButton, addNewWorkoutButton;
+        private ViewSwitcher viewSwitcher;
         private WorkoutListAdapter workoutListAdapter;
-        private WorkoutHelperDatabase database;
+        private TextView noPlannedWorkouts;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -145,14 +147,29 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         private void initWidgets(View view) {
             workoutsRecycler = view.findViewById(R.id.workoutsRecycler);
+
             createNewTemplateButton = view.findViewById(R.id.createNewTemplate);
             addNewWorkoutButton = view.findViewById(R.id.addNewWorkout);
+            noPlannedWorkouts = view.findViewById(R.id.noPlannedWorkouts);
+
+            viewSwitcher = view.findViewById(R.id.viewSwitcher);
         }
 
         // Загружает список тренировок из БД.
         private void loadWorkouts(){
             WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
-            List<Workout> workouts = database.getWorkoutDAO().getAllWorkouts();
+            List<Workout> workouts = database.getWorkoutDAO().getWorkoutsByDate(CalendarUtils.selectedDate.toString());
+
+            if (workouts.size() == 0){
+                if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
+                    viewSwitcher.showNext();
+                }
+                return;
+            }
+
+            if (viewSwitcher.getCurrentView() == noPlannedWorkouts){
+                viewSwitcher.showNext();
+            }
 
             workoutListAdapter = new WorkoutListAdapter(workouts);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
