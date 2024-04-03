@@ -7,11 +7,7 @@ import androidx.annotation.Nullable;;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +17,6 @@ import android.widget.ViewSwitcher;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.model.Exercise;
-import com.example.samsungschoolproject.database.model.WorkoutExercise;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.database.model.Workout;
 
@@ -38,8 +32,8 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private CalendarAdapter calendarAdapter;
     private WorkoutListAdapter workoutListAdapter;
     private TextView monthYearTV;
-    private RecyclerView calendarRecycler, workoutsList;
-    private Button weekBackButton, weekNextButton;
+    private RecyclerView calendarRecycler, workoutsRecycler;
+    private Button weekBackButton, weekNextButton, createNewTemplateButton, addNewWorkoutButton;;
     private TextView noPlannedWorkouts;
     private ViewSwitcher viewSwitcher;
 
@@ -80,26 +74,35 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
     private void initWidgets(View view){
         calendarRecycler = view.findViewById(R.id.weekCalendar);
-        workoutsList = view.findViewById(R.id.workoutsRecycler);
+        workoutsRecycler = view.findViewById(R.id.workoutsRecycler);
         monthYearTV = view.findViewById(R.id.wMonthYearTV);
         noPlannedWorkouts = view.findViewById(R.id.noPlannedWorkouts);
 
-        weekBackButton = view.findViewById(R.id.weekBack);
         weekNextButton = view.findViewById(R.id.weekNext);
+        weekBackButton = view.findViewById(R.id.weekBack);
+        createNewTemplateButton = view.findViewById(R.id.createNewTemplate);
+        addNewWorkoutButton = view.findViewById(R.id.addNewWorkout);
 
         viewSwitcher = view.findViewById(R.id.viewSwitcher);
     }
 
     private void setButtonListeners(){
+        weekNextButton.setOnClickListener(v -> {
+            CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.plusWeeks(1);
+            setWeekView();
+        });
 
         weekBackButton.setOnClickListener(v -> {
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.minusWeeks(1);
             setWeekView();
         });
 
-        weekNextButton.setOnClickListener(v -> {
-            CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.plusWeeks(1);
-            setWeekView();
+        createNewTemplateButton.setOnClickListener(v -> { // Логика должна быть добавлена
+
+        });
+
+        addNewWorkoutButton.setOnClickListener(v -> { // Логика должна быть добавлена
+
         });
     }
 
@@ -119,21 +122,27 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
         List<Workout> workouts = database.getWorkoutDAO().getWorkoutsByDate(CalendarUtils.selectedDate.toString());
 
-        if (workouts.size() == 0){
+        if (workouts.size() == 0){ // Если нет тренировок на этот день, то нужно выйти из метода
+            // Если не установлено сообщение о том, что нет тренировок, то установить его
             if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
                 viewSwitcher.showNext();
             }
             return;
         }
 
+        // Если установлено сообщение о том, что нет тренировок, но предыдущие условия не выполнились, то нужно переключить view
         if (viewSwitcher.getCurrentView() == noPlannedWorkouts){
             viewSwitcher.showNext();
         }
 
+        setCalendarRecycler(workouts);
+    }
+
+    private void setCalendarRecycler(List<Workout> workouts){
         workoutListAdapter = new WorkoutListAdapter(workouts);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
-        workoutsList.setLayoutManager(layoutManager);
-        workoutsList.setAdapter(workoutListAdapter);
+        workoutsRecycler.setLayoutManager(layoutManager);
+        workoutsRecycler.setAdapter(workoutListAdapter);
     }
 
     @Override
@@ -141,8 +150,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         if (!dayText.equals("")) {
             // Логика ниже необходима для избежания багов, возникающих с выбором дня при отображении
             // недели, лежащей на стыке двух месяцев.
-            // shift - сдвиг, который необходимо учесть в selectedDate, чтобы правильно отрисовать
-            // изменения
+            // shift - сдвиг, который необходимо учесть в selectedDate, чтобы правильно отрисовать изменения
             int shift = 0;
             if (Integer.parseInt(dayText) < CalendarUtils.dateToScroll.getDayOfMonth() - 15){
                 shift = 1;

@@ -142,17 +142,28 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             super.onViewCreated(view, savedInstanceState);
 
             initWidgets(view);
+            initButtonListeners();
             loadWorkouts(); // Загружает список тренировок из базы данных
         }
 
         private void initWidgets(View view) {
             workoutsRecycler = view.findViewById(R.id.workoutsRecycler);
+            noPlannedWorkouts = view.findViewById(R.id.noPlannedWorkouts);
 
             createNewTemplateButton = view.findViewById(R.id.createNewTemplate);
             addNewWorkoutButton = view.findViewById(R.id.addNewWorkout);
-            noPlannedWorkouts = view.findViewById(R.id.noPlannedWorkouts);
 
             viewSwitcher = view.findViewById(R.id.viewSwitcher);
+        }
+
+        private void initButtonListeners(){
+            createNewTemplateButton.setOnClickListener(v -> { // Логика должна быть добавлена
+
+            });
+
+            addNewWorkoutButton.setOnClickListener(v -> { // Логика должна быть добавлена
+
+            });
         }
 
         // Загружает список тренировок из БД.
@@ -160,17 +171,23 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
             List<Workout> workouts = database.getWorkoutDAO().getWorkoutsByDate(CalendarUtils.selectedDate.toString());
 
-            if (workouts.size() == 0){
+            if (workouts.size() == 0){// Если нет тренировок на этот день, то нужно выйти из метода
+                // Если не установлено сообщение о том, что нет тренировок, то установить его
                 if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
                     viewSwitcher.showNext();
                 }
                 return;
             }
 
+            // Если установлено сообщение о том, что нет тренировок, но предыдущие условия не выполнились, то нужно переключить view
             if (viewSwitcher.getCurrentView() == noPlannedWorkouts){
                 viewSwitcher.showNext();
             }
 
+            setCalendarRecycler(workouts);
+        }
+
+        private void setCalendarRecycler(List<Workout> workouts){
             workoutListAdapter = new WorkoutListAdapter(workouts);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
             workoutsRecycler.setLayoutManager(layoutManager);
