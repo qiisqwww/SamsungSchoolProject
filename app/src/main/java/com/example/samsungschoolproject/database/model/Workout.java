@@ -6,16 +6,11 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "workouts")
 public class Workout {
-    @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     public int id;
-    @ColumnInfo(name = "name")
     public String name;
-    @ColumnInfo(name = "date")
     public String date;
-    @ColumnInfo(name = "approximate_length")
     public int approximate_length;
-    @ColumnInfo(name = "is_completed")
     public String is_completed;
 
     public Workout(String name, String date, int approximate_length, String is_completed){

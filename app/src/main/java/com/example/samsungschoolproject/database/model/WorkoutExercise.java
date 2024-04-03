@@ -19,19 +19,17 @@ import androidx.room.PrimaryKey;
         tableName = "workout_exercises"
 )
 public class WorkoutExercise {
-    @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     public int id;
-    @ColumnInfo(name = "workout_id")
+
     public int workout_id;
-    @ColumnInfo(name = "exercise_id")
+
     public int exercise_id;
-    @ColumnInfo(name = "repeats")
+
     public int repeats;
-    @ColumnInfo(name = "approaches")
+
     public int approaches;
 
-    @ColumnInfo(name = "number_in_query")
     public int number_in_query;
 
     public WorkoutExercise(int id, int workout_id, int exercise_id, int repeats, int approaches, int number_in_query) {
