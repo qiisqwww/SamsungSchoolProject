@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initDatabase(){
-        WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(getApplicationContext());
+        WorkoutHelperDatabase.getInstance(getApplicationContext());
     }
 
     private void connectWidgetsWithAdapter(){
