@@ -9,14 +9,12 @@ public class Workout {
     @PrimaryKey(autoGenerate = true)
     public int id;
     public String name;
-    public String date;
     public int approximate_length;
-    public String is_completed;
+    public String is_template;
 
-    public Workout(String name, String date, int approximate_length, String is_completed){
+    public Workout(String name, int approximate_length, String is_template){
         this.name = name;
-        this.date = date;
         this.approximate_length = approximate_length;
-        this.is_completed = is_completed;
+        this.is_template = is_template;
     }
 }

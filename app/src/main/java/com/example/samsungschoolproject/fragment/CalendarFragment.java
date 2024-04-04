@@ -22,7 +22,6 @@ public class CalendarFragment extends Fragment {
     public static Fragment nextFragment;
     // nextFragment содержит фрагмент, который необходимо открыть следующим
     // при нажатии switchModeButton
-    private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

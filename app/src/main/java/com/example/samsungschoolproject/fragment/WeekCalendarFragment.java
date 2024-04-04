@@ -17,6 +17,7 @@ import android.widget.ViewSwitcher;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
+import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.database.model.Workout;
 
@@ -120,9 +121,9 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     // Загружает список тренировок из БД.
     private void loadWorkouts(){
         WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
-        List<Workout> workouts = database.getWorkoutDAO().getWorkoutsByDate(CalendarUtils.selectedDate.toString());
+        List<PlannedWorkout> planned_workouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
 
-        if (workouts.size() == 0){ // Если нет тренировок на этот день, то нужно выйти из метода
+        if (planned_workouts.size() == 0){ // Если нет тренировок на этот день, то нужно выйти из метода
             // Если не установлено сообщение о том, что нет тренировок, то установить его
             if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
                 viewSwitcher.showNext();
@@ -133,6 +134,13 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         // Если установлено сообщение о том, что нет тренировок, но предыдущие условия не выполнились, то нужно переключить view
         if (viewSwitcher.getCurrentView() == noPlannedWorkouts){
             viewSwitcher.showNext();
+        }
+
+        List<Workout> workouts = null;
+        for (int i = 0; i < planned_workouts.size(); i++){
+            PlannedWorkout plannedWorkout = planned_workouts.get(i);
+            Workout workout = database.getWorkoutDAO().getWorkoutById(plannedWorkout.workout_id);
+            workouts.add(workout);
         }
 
         setCalendarRecycler(workouts);
@@ -161,6 +169,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
             CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth().plus(shift), Integer.parseInt(dayText));
             calendarAdapter.resetBacklitItem(position);
+
             loadWorkouts();
         }
     }
