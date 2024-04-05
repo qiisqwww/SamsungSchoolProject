@@ -8,7 +8,6 @@ public class WorkoutInfo {
     public String name;
     public String date;
     public int approximate_length;
-    public String is_template;
     public String is_completed;
 
     public WorkoutInfo(Workout workout, PlannedWorkout plannedWorkout){
@@ -16,7 +15,6 @@ public class WorkoutInfo {
         name = workout.name;
         date = plannedWorkout.date;
         approximate_length = workout.approximate_length;
-        is_template = workout.is_template;
         is_completed = plannedWorkout.is_completed;
     }
 

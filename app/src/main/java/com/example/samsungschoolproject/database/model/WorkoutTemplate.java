@@ -4,14 +4,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "workouts")
-public class Workout {
+@Entity(tableName = "workout_templates")
+public class WorkoutTemplate {
     @PrimaryKey(autoGenerate = true)
     public int id;
     public String name;
     public int approximate_length;
 
-    public Workout(String name, int approximate_length){
+    public WorkoutTemplate(String name, int approximate_length){
         this.name = name;
         this.approximate_length = approximate_length;
     }
