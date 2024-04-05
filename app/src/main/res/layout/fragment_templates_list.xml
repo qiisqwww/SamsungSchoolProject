@@ -5,12 +5,6 @@
     android:background="@color/darkThemeBackgroundColor"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/workoutTemplatesContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/workoutTemplatesRecycler"
         android:layout_width="match_parent"
