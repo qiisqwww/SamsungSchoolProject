@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.fragment;
+package com.example.samsungschoolproject.fragment.main;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

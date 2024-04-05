@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/darkThemeBackgroundColor"
-    tools:context=".fragment.MonthCalendarFragment">
+    tools:context=".fragment.сalendar.MonthCalendarFragment">
 
     <include layout="@layout/month_calendar"/>
 

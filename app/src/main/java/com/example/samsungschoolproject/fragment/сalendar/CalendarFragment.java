@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.fragment;
+package com.example.samsungschoolproject.fragment.сalendar;
 
 import android.os.Bundle;
 
@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.samsungschoolproject.R;
-import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 public class CalendarFragment extends Fragment {
     public static Button switchModeButton;

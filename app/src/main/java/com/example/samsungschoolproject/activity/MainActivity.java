@@ -5,18 +5,14 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.model.Workout;
-import com.example.samsungschoolproject.fragment.CalendarFragment;
+import com.example.samsungschoolproject.fragment.сalendar.CalendarFragment;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
-import com.example.samsungschoolproject.fragment.MainMenuFragment;
-import com.example.samsungschoolproject.fragment.WorkoutTemplatesFragment;
+import com.example.samsungschoolproject.fragment.main.MainMenuFragment;
+import com.example.samsungschoolproject.fragment.templates.WorkoutTemplatesFragment;
 import com.google.android.material.tabs.TabLayout;
-
-import java.time.LocalDate;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager mainViewPager;

@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.fragment;
+package com.example.samsungschoolproject.fragment.сalendar;
 
 import android.os.Bundle;
 
@@ -7,9 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,17 +18,16 @@ import android.widget.ViewSwitcher;
 import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
-import com.example.samsungschoolproject.database.model.WorkoutExercise;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.database.model.Workout;
+import com.example.samsungschoolproject.fragment.сalendar.CalendarFragment;
+import com.example.samsungschoolproject.fragment.сalendar.WeekCalendarFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
