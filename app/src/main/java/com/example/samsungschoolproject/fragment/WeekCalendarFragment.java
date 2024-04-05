@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
@@ -136,18 +138,19 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
             viewSwitcher.showNext();
         }
 
-        List<Workout> workouts = null;
+        ArrayList<WorkoutInfo> workoutsInfo = new ArrayList<WorkoutInfo>(){};
         for (int i = 0; i < planned_workouts.size(); i++){
             PlannedWorkout plannedWorkout = planned_workouts.get(i);
             Workout workout = database.getWorkoutDAO().getWorkoutById(plannedWorkout.workout_id);
-            workouts.add(workout);
+            WorkoutInfo workoutInfo = WorkoutInfo.fromMapper(workout, plannedWorkout);
+            workoutsInfo.add(workoutInfo);
         }
 
-        setCalendarRecycler(workouts);
+        setCalendarRecycler(workoutsInfo);
     }
 
-    private void setCalendarRecycler(List<Workout> workouts){
-        workoutListAdapter = new WorkoutListAdapter(workouts);
+    private void setCalendarRecycler(List<WorkoutInfo> workoutsInfo){
+        workoutListAdapter = new WorkoutListAdapter(workoutsInfo);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutsRecycler.setLayoutManager(layoutManager);
         workoutsRecycler.setAdapter(workoutListAdapter);

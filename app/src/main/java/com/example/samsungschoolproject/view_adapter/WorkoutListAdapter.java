@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.databinding.WorkoutItemBinding;
 import com.example.samsungschoolproject.database.model.Workout;
@@ -15,10 +16,10 @@ import java.util.List;
 
 public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.WorkoutViewHolder> {
 
-    private final List<Workout> workouts;
+    private final List<WorkoutInfo> workoutsInfo;
 
-    public WorkoutListAdapter(List<Workout> items) {
-        workouts = items;
+    public WorkoutListAdapter(List<WorkoutInfo> items) {
+        workoutsInfo = items;
     }
 
     @NonNull
@@ -34,12 +35,12 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
 
     @Override
     public void onBindViewHolder(final WorkoutViewHolder holder, int position) {
-        holder.bind(workouts.get(position));
+        holder.bind(workoutsInfo.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return workouts.size();
+        return workoutsInfo.size();
     }
 
     public class WorkoutViewHolder extends RecyclerView.ViewHolder {
@@ -50,15 +51,14 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
             workoutItemBinding = WorkoutItemBinding.bind(itemView);
         }
 
-        public void bind(Workout workout){
-            workoutItemBinding.name.setText(workout.name);
-            workoutItemBinding.approximateLength.setText("~ " + workout.approximate_length + "m");
-            // MUST BE ADDED A LOGIC !!! (cuz now idk how to make it correctly lol)
+        public void bind(WorkoutInfo workoutInfo){
+            workoutItemBinding.name.setText(workoutInfo.name);
+            workoutItemBinding.approximateLength.setText("~ " + workoutInfo.approximate_length + "m");
         }
     }
 
-    public void Add(Workout training){
-        workouts.add(training);
+    public void Add(WorkoutInfo workoutInfo){
+        workoutsInfo.add(workoutInfo);
         notifyDataSetChanged();
     }
 }

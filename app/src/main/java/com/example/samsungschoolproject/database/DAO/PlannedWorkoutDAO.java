@@ -14,13 +14,13 @@ import java.util.List;
 @Dao
 public interface PlannedWorkoutDAO {
     @Insert
-    public void addPlannedWorkout(Workout workout);
+    public void addPlannedWorkout(PlannedWorkout plannedWorkout);
 
     @Update
-    public void updatePlannedWorkout(Workout workout);
+    public void updatePlannedWorkout(PlannedWorkout plannedWorkout);
 
     @Delete
-    public void deletePlannedWorkout(Workout workout);
+    public void deletePlannedWorkout(PlannedWorkout plannedWorkout);
 
     @Query("SELECT * FROM planned_workouts WHERE date==:date")
     public List<PlannedWorkout> getPlannedWorkoutsByDate(String date);
