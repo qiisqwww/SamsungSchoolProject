@@ -17,11 +17,11 @@ import java.util.ArrayList;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
     private final ArrayList<LocalDate> days;
-    private final OnItemListener onItemListener;
+    private final OnCalendarItemListener onCalendarItemListener;
 
-    public CalendarAdapter(ArrayList<LocalDate> days, OnItemListener onItemListener){
+    public CalendarAdapter(ArrayList<LocalDate> days, OnCalendarItemListener onCalendarItemListener){
         this.days = days;
-        this.onItemListener = onItemListener;
+        this.onCalendarItemListener = onCalendarItemListener;
     }
     @NonNull
     @Override
@@ -36,7 +36,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         else{ // Задает размер для "недельного" режима
             layoutParams.height = (parent.getHeight());
         }
-        return new CalendarViewHolder(view, onItemListener);
+        return new CalendarViewHolder(view, onCalendarItemListener);
     }
 
     @Override
@@ -67,24 +67,24 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         notifyItemChanged(CalendarUtils.selectedDatePosition);
     }
 
-    public interface OnItemListener{
+    public interface OnCalendarItemListener {
         void onItemClick(int position, String dayText);
     }
 
     public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public final TextView day;
-        private final CalendarAdapter.OnItemListener onItemListener;
+        private final OnCalendarItemListener onCalendarItemListener;
 
-        public CalendarViewHolder(@NonNull View itemView, OnItemListener onItemListener) {
+        public CalendarViewHolder(@NonNull View itemView, OnCalendarItemListener onCalendarItemListener) {
             super(itemView);
             day = itemView.findViewById(R.id.day);
-            this.onItemListener = onItemListener;
+            this.onCalendarItemListener = onCalendarItemListener;
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view){
-            onItemListener.onItemClick(getAdapterPosition(), (String) day.getText());
+            onCalendarItemListener.onItemClick(getAdapterPosition(), (String) day.getText());
         }
     }
 }

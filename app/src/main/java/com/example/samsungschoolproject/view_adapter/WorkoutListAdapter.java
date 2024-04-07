@@ -44,6 +44,10 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         return workoutsInfo.size();
     }
 
+    public interface OnWorkoutTemplateItemListener {
+        void onItemClick(int position, String dayText);
+    }
+
     public class WorkoutViewHolder extends RecyclerView.ViewHolder {
         private WorkoutItemBinding workoutItemBinding;
 

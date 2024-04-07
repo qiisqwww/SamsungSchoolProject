@@ -20,9 +20,6 @@ import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
-import com.example.samsungschoolproject.database.model.Workout;
-import com.example.samsungschoolproject.fragment.сalendar.CalendarFragment;
-import com.example.samsungschoolproject.fragment.сalendar.WeekCalendarFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
@@ -34,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MonthCalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
+public class MonthCalendarFragment extends Fragment implements CalendarAdapter.OnCalendarItemListener {
     private CalendarAdapter calendarAdapter;
     private TextView monthYearTV;
     private ModalBottomSheetFragment modalBottomSheet;
