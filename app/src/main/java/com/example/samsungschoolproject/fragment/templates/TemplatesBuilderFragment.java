@@ -45,6 +45,7 @@ public class TemplatesBuilderFragment extends Fragment {
         goBackButton.setOnClickListener(v -> {
             TemplatesListFragment templatesListFragment = new TemplatesListFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.popBackStack();
             fragmentManager.beginTransaction()
                     .replace(R.id.workoutTemplatesContainer, templatesListFragment)
                     .commit();
