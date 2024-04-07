@@ -33,6 +33,13 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 return new InputNameViewHolder(view);
             case 2:
                 view = LayoutInflater.from(parent.getContext()).inflate(
+                        R.layout.field_add_exercise,
+                        parent,
+                        false
+                );
+                return new AddExerciseViewHolder(view);
+            case 3:
+                view = LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.field_save_workout,
                         parent,
                         false
@@ -63,6 +70,13 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public class ChooseExerciseViewHolder extends RecyclerView.ViewHolder{
 
         public ChooseExerciseViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
+
+    public class AddExerciseViewHolder extends RecyclerView.ViewHolder{
+
+        public AddExerciseViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
