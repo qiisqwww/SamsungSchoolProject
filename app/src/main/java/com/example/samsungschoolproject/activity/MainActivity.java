@@ -11,7 +11,7 @@ import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.fragment.сalendar.CalendarFragment;
 import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
 import com.example.samsungschoolproject.fragment.main.MainMenuFragment;
-import com.example.samsungschoolproject.fragment.templates.WorkoutTemplatesFragment;
+import com.example.samsungschoolproject.fragment.templates.TemplatesFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewPagerAdapter.Add(new CalendarFragment() , getResources().getString(R.string.calendar));
         viewPagerAdapter.Add(new MainMenuFragment(), getResources().getString(R.string.menu));
-        viewPagerAdapter.Add(new WorkoutTemplatesFragment(), getResources().getString(R.string.templates));
+        viewPagerAdapter.Add(new TemplatesFragment(), getResources().getString(R.string.templates));
     }
 
     private void initDatabase(){

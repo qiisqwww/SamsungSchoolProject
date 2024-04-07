@@ -11,6 +11,7 @@ import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.databinding.WorkoutItemBinding;
 import com.example.samsungschoolproject.database.model.Workout;
+import com.example.samsungschoolproject.utils.WorkoutListUtils;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
 
         public void bind(WorkoutInfo workoutInfo){
             workoutItemBinding.name.setText(workoutInfo.name);
-            workoutItemBinding.approximateLength.setText("~ " + workoutInfo.approximate_length + "m");
+            workoutItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutInfo.approximate_length));
         }
     }
 
