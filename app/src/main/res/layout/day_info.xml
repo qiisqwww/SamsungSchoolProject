@@ -50,7 +50,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/darkThemeBackgroundColor"
+                android:backgroundTint="@color/additionalButtonsColor"
                 android:text="@string/new_workout_template_button"
                 />
             <Button
@@ -59,7 +59,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/darkThemeBackgroundColor"
+                android:backgroundTint="@color/additionalButtonsColor"
                 android:text="@string/add_new_workout"
                 />
 

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Планировщик тренировок</string>
     <string name="settings_button">Настройки</string>
-    <string name="back_to_main_menu">Назад</string>
+    <string name="back">Назад</string>
     <string name="get_previous_month">&lt;-</string>
     <string name="get_next_month">-&gt;</string>
     <string name="calendar">Календарь</string>
