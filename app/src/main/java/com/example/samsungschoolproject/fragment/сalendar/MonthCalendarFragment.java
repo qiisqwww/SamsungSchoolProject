@@ -24,6 +24,7 @@ import com.example.samsungschoolproject.database.model.Workout;
 import com.example.samsungschoolproject.fragment.сalendar.CalendarFragment;
 import com.example.samsungschoolproject.fragment.сalendar.WeekCalendarFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
+import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -127,7 +128,6 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         private RecyclerView workoutsRecycler;
         private Button createNewTemplateButton, addNewWorkoutButton;
         private ViewSwitcher viewSwitcher;
-        private WorkoutListAdapter workoutListAdapter;
         private TextView noPlannedWorkouts;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -167,9 +167,9 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         // Загружает список тренировок из БД.
         private void loadWorkouts(){
             WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
-            List<PlannedWorkout> planned_workouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
+            List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
 
-            if (planned_workouts.size() == 0){// Если нет тренировок на этот день, то нужно выйти из метода
+            if (plannedWorkouts.size() == 0){// Если нет тренировок на этот день, то нужно выйти из метода
                 // Если не установлено сообщение о том, что нет тренировок, то установить его
                 if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
                     viewSwitcher.showNext();
@@ -182,20 +182,12 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
                 viewSwitcher.showNext();
             }
 
-            ArrayList<WorkoutInfo> workoutsInfo = new ArrayList<WorkoutInfo>(){};
-            for (int i = 0; i < planned_workouts.size(); i++){
-                PlannedWorkout plannedWorkout = planned_workouts.get(i);
-                Workout workout = database.getWorkoutDAO().getWorkoutById(plannedWorkout.workout_id);
-
-                WorkoutInfo workoutInfo = WorkoutInfo.fromMapper(workout, plannedWorkout);
-                workoutsInfo.add(workoutInfo);
-            }
-
-            setCalendarRecycler(workoutsInfo);
+            List<WorkoutInfo> workoutsInfo = WorkoutListUtils.parseWorkoutsForAdapter(plannedWorkouts, database);
+            setWorkoutsRecycler(workoutsInfo);
         }
 
-        private void setCalendarRecycler(List<WorkoutInfo> workoutsInfo){
-            workoutListAdapter = new WorkoutListAdapter(workoutsInfo);
+        private void setWorkoutsRecycler(List<WorkoutInfo> workoutsInfo){
+            WorkoutListAdapter workoutListAdapter = new WorkoutListAdapter(workoutsInfo);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
             workoutsRecycler.setLayoutManager(layoutManager);
             workoutsRecycler.setAdapter(workoutListAdapter);
