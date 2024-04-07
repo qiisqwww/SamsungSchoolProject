@@ -19,9 +19,11 @@ import java.util.List;
 public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemplateListAdapter.WorkoutTemplateViewHolder> {
 
     private final List<WorkoutTemplateInfo> workoutTemplatesInfo;
+    private final OnWorkoutTemplateItemListener onWorkoutTemplateItemListener;
 
-    public WorkoutTemplateListAdapter(List<WorkoutTemplateInfo> items) {
+    public WorkoutTemplateListAdapter(List<WorkoutTemplateInfo> items, OnWorkoutTemplateItemListener onWorkoutTemplateItemListener) {
         workoutTemplatesInfo = items;
+        this.onWorkoutTemplateItemListener = onWorkoutTemplateItemListener;
     }
 
     @NonNull
@@ -32,7 +34,7 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
                 parent,
                 false
         );
-        return new WorkoutTemplateViewHolder(view);
+        return new WorkoutTemplateViewHolder(view, onWorkoutTemplateItemListener);
     }
 
     @Override
@@ -45,17 +47,28 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
         return workoutTemplatesInfo.size();
     }
 
-    public class WorkoutTemplateViewHolder extends RecyclerView.ViewHolder {
-        private WorkoutItemBinding workoutTemplateItemBinding;
+    public interface OnWorkoutTemplateItemListener {
+        void onItemClick(int position);
+    }
 
-        public WorkoutTemplateViewHolder(@NonNull View itemView) {
+    public static class WorkoutTemplateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private final WorkoutItemBinding workoutTemplateItemBinding;
+        private final OnWorkoutTemplateItemListener onWorkoutTemplateItemListener;
+
+        public WorkoutTemplateViewHolder(@NonNull View itemView, OnWorkoutTemplateItemListener onWorkoutTemplateItemListener) {
             super(itemView);
             workoutTemplateItemBinding = WorkoutItemBinding.bind(itemView);
+            this.onWorkoutTemplateItemListener = onWorkoutTemplateItemListener;
         }
 
         public void bind(WorkoutTemplateInfo workoutTemplateInfo){
             workoutTemplateItemBinding.name.setText(workoutTemplateInfo.name);
             workoutTemplateItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutTemplateInfo.approximate_length));
+        }
+
+        @Override
+        public void onClick(View v) {
+            onWorkoutTemplateItemListener.onItemClick(getAdapterPosition());
         }
     }
 

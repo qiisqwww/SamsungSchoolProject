@@ -28,7 +28,7 @@ import com.example.samsungschoolproject.view_adapter.WorkoutTemplateListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TemplatesListFragment extends Fragment implements WorkoutListAdapter.OnWorkoutTemplateItemListener{
+public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutTemplateItemListener{
     private Button createNewTemplateButton;
     private RecyclerView workoutTemplatesRecycler;
 
@@ -82,14 +82,14 @@ public class TemplatesListFragment extends Fragment implements WorkoutListAdapte
     }
 
     private void setWorkoutTemplatesRecycler(List<WorkoutTemplateInfo> workoutTemplatesInfo){
-        WorkoutTemplateListAdapter workoutTemplateListAdapter = new WorkoutTemplateListAdapter(workoutTemplatesInfo);
+        WorkoutTemplateListAdapter workoutTemplateListAdapter = new WorkoutTemplateListAdapter(workoutTemplatesInfo, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutTemplatesRecycler.setLayoutManager(layoutManager);
         workoutTemplatesRecycler.setAdapter(workoutTemplateListAdapter);
     }
 
     @Override
-    public void onItemClick(int position, String dayText) {
+    public void onItemClick(int position) {
 
     }
 }

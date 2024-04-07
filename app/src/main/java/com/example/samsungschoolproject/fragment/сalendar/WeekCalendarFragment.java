@@ -30,7 +30,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnCalendarItemListener {
+public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnCalendarItemListener, WorkoutListAdapter.OnWorkoutItemListener{
     private CalendarAdapter calendarAdapter;
     private TextView monthYearTV;
     private RecyclerView calendarRecycler, workoutsRecycler;
@@ -141,7 +141,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     }
 
     private void setCalendarRecycler(List<WorkoutInfo> workoutsInfo){
-        WorkoutListAdapter workoutListAdapter = new WorkoutListAdapter(workoutsInfo);
+        WorkoutListAdapter workoutListAdapter = new WorkoutListAdapter(workoutsInfo, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutsRecycler.setLayoutManager(layoutManager);
         workoutsRecycler.setAdapter(workoutListAdapter);
@@ -166,5 +166,10 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
             loadWorkouts();
         }
+    }
+
+    @Override
+    public void onWorkoutItemClick(int position) {
+
     }
 }

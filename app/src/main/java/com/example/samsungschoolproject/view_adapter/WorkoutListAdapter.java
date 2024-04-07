@@ -18,9 +18,11 @@ import java.util.List;
 public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.WorkoutViewHolder> {
 
     private final List<WorkoutInfo> workoutsInfo;
+    private final OnWorkoutItemListener onWorkoutItemListener;
 
-    public WorkoutListAdapter(List<WorkoutInfo> items) {
+    public WorkoutListAdapter(List<WorkoutInfo> items, OnWorkoutItemListener onWorkoutItemListener) {
         workoutsInfo = items;
+        this.onWorkoutItemListener = onWorkoutItemListener;
     }
 
     @NonNull
@@ -31,7 +33,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
                 parent,
                 false
         );
-        return new WorkoutViewHolder(view);
+        return new WorkoutViewHolder(view, onWorkoutItemListener);
     }
 
     @Override
@@ -44,21 +46,28 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         return workoutsInfo.size();
     }
 
-    public interface OnWorkoutTemplateItemListener {
-        void onItemClick(int position, String dayText);
+    public interface OnWorkoutItemListener {
+        void onWorkoutItemClick(int position);
     }
 
-    public class WorkoutViewHolder extends RecyclerView.ViewHolder {
-        private WorkoutItemBinding workoutItemBinding;
+    public static class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private final WorkoutItemBinding workoutItemBinding;
+        private final OnWorkoutItemListener onWorkoutItemListener;
 
-        public WorkoutViewHolder(@NonNull View itemView) {
+        public WorkoutViewHolder(@NonNull View itemView, OnWorkoutItemListener onWorkoutItemListener) {
             super(itemView);
             workoutItemBinding = WorkoutItemBinding.bind(itemView);
+            this.onWorkoutItemListener = onWorkoutItemListener;
         }
 
         public void bind(WorkoutInfo workoutInfo){
             workoutItemBinding.name.setText(workoutInfo.name);
             workoutItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutInfo.approximate_length));
+        }
+
+        @Override
+        public void onClick(View v) {
+            onWorkoutItemListener.onWorkoutItemClick(getAdapterPosition());
         }
     }
 

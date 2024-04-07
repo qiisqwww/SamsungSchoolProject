@@ -120,7 +120,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         initBottomSheetFragment();
     }
 
-    public static class ModalBottomSheetFragment extends BottomSheetDialogFragment {
+    public static class ModalBottomSheetFragment extends BottomSheetDialogFragment implements WorkoutListAdapter.OnWorkoutItemListener{
         public static String TAG;
         private RecyclerView workoutsRecycler;
         private Button createNewTemplateButton, addNewWorkoutButton;
@@ -184,10 +184,15 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         }
 
         private void setWorkoutsRecycler(List<WorkoutInfo> workoutsInfo){
-            WorkoutListAdapter workoutListAdapter = new WorkoutListAdapter(workoutsInfo);
+            WorkoutListAdapter workoutListAdapter = new WorkoutListAdapter(workoutsInfo, this);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
             workoutsRecycler.setLayoutManager(layoutManager);
             workoutsRecycler.setAdapter(workoutListAdapter);
+        }
+
+        @Override
+        public void onWorkoutItemClick(int position) {
+
         }
     }
 }

@@ -22,4 +22,5 @@
     <string name="add_new_workout">Добавить тренировку</string>
     <string name="no_planned_workouts">На этот день нет запланированных тренировок</string>
     <string name="workout_length">Длительность ~</string>
+    <string name="save_workout">Сохранить тренировку</string>
 </resources>
