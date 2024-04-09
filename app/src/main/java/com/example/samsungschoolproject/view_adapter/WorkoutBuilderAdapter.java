@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.R;
 
+import java.util.ArrayList;
+
 public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    private int length = 4;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder;
         View view;
 
         switch(viewType){
@@ -30,7 +32,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         parent,
                         false
                 );
-                return new InputNameViewHolder(view);
+                return new ChooseExerciseViewHolder(view);
             case 2:
                 view = LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.field_add_exercise,
@@ -44,20 +46,34 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         parent,
                         false
                 );
-                return new InputNameViewHolder(view);
+                return new SaveWorkoutButtonViewHolder(view);
         }
 
         return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public int getItemViewType(int position) {
+        if (position == 0){
+            return 0;
+        }
+        if (position == getItemCount()-2){
+            return 2;
+        }
+        if (position == getItemCount()-1){
+            return 3;
+        }
 
+        return 2;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return length;
     }
 
     public class InputNameViewHolder extends RecyclerView.ViewHolder{

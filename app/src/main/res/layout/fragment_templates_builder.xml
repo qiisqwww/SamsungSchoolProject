@@ -13,4 +13,9 @@
         android:text="@string/back"
         android:backgroundTint="@color/additionalButtonsColor"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/workoutBuilderRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>
