@@ -1,19 +1,18 @@
 package com.example.samsungschoolproject.view_adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.R;
 
-import java.util.ArrayList;
-
 public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private int length = 4;
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -39,7 +38,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         parent,
                         false
                 );
-                return new AddExerciseViewHolder(view);
+                return new AddExerciseViewHolder(view, this);
             case 3:
                 view = LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.field_save_workout,
@@ -55,54 +54,68 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public int getItemViewType(int position) {
         if (position == 0){
-            return 0;
+            return 0; //  inputName Field
         }
         if (position == getItemCount()-2){
-            return 2;
+            return 2; //  addExercise Button
         }
         if (position == getItemCount()-1){
-            return 3;
+            return 3; //  saveWorkout Button
         }
 
-        return 1;
+        return 1; //  fillExercise Field
     }
 
-    public void addElement(){
-        // Логика добавления элемента должна быть добавлена
+    public void addExercise(){
         length++;
+        notifyItemChanged(length-1);
+        notifyItemChanged(length-2);
+        notifyItemChanged(length-3);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
     }
 
+
     @Override
     public int getItemCount() {
         return length;
     }
 
-    public class InputNameViewHolder extends RecyclerView.ViewHolder{
+    public static class InputNameViewHolder extends RecyclerView.ViewHolder{
 
         public InputNameViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
 
-    public class ChooseExerciseViewHolder extends RecyclerView.ViewHolder{
+    public static class ChooseExerciseViewHolder extends RecyclerView.ViewHolder{
 
         public ChooseExerciseViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }
 
-    public class AddExerciseViewHolder extends RecyclerView.ViewHolder{
+    public static class AddExerciseViewHolder extends RecyclerView.ViewHolder{
+        private Button addExerciseButton;
+        private WorkoutBuilderAdapter workoutBuilderAdapter;
 
-        public AddExerciseViewHolder(@NonNull View itemView) {
+        public AddExerciseViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter) {
             super(itemView);
+            addExerciseButton = itemView.findViewById(R.id.addExercise);
+            this.workoutBuilderAdapter = workoutBuilderAdapter;
+            initButtonListeners();
+        }
+
+        private void initButtonListeners(){
+            addExerciseButton.setOnClickListener(v -> {
+                workoutBuilderAdapter.addExercise();
+            });
         }
     }
 
-    public class SaveWorkoutButtonViewHolder extends RecyclerView.ViewHolder{
+    public static class SaveWorkoutButtonViewHolder extends RecyclerView.ViewHolder{
 
         public SaveWorkoutButtonViewHolder(@NonNull View itemView) {
             super(itemView);

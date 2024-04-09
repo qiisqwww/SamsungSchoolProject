@@ -14,16 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.samsungschoolproject.DTO.WorkoutTemplateInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.view_adapter.WorkoutBuilderAdapter;
-import com.example.samsungschoolproject.view_adapter.WorkoutTemplateListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
-public class TemplatesBuilderFragment extends Fragment {
+public class TemplatesBuilderFragment extends Fragment{
     private Button goBackButton;
     private RecyclerView workoutBuilderRecycler;
 
@@ -43,12 +38,13 @@ public class TemplatesBuilderFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initWidgets(view);
-        initButtonListeners();
         setWorkoutBuilderRecycler();
+        initButtonListeners();
     }
 
     private void initWidgets(View view){
         goBackButton = view.findViewById(R.id.goBack);
+
         workoutBuilderRecycler = view.findViewById(R.id.workoutBuilderRecycler);
     }
 
