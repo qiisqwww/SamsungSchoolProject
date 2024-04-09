@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="40dp"
     android:orientation="vertical">
 
     <Button
@@ -10,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:backgroundTint="@color/additionalButtonsColor"
-        android:text="@string/save_workout"
+        android:text="@string/save_workout_template"
         android:textColor="@color/white"/>
 
 </LinearLayout>
