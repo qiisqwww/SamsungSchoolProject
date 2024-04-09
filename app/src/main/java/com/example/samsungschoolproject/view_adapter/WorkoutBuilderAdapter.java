@@ -64,7 +64,12 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return 3;
         }
 
-        return 2;
+        return 1;
+    }
+
+    public void addElement(){
+        // Логика добавления элемента должна быть добавлена
+        length++;
     }
 
     @Override
