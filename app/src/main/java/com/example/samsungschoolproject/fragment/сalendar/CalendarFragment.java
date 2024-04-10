@@ -17,9 +17,11 @@ import com.example.samsungschoolproject.R;
 
 public class CalendarFragment extends Fragment {
     public static Button switchModeButton;
-    public static Fragment nextFragment;
+
     // nextFragment содержит фрагмент, который необходимо открыть следующим
     // при нажатии switchModeButton
+    public static Fragment nextFragment;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

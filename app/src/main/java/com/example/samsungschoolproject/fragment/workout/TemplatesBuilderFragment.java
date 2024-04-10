@@ -48,7 +48,6 @@ public class TemplatesBuilderFragment extends Fragment{
         initWidgets(view);
         initButtonListeners();
 
-
         setWorkoutBuilderRecycler();
     }
 

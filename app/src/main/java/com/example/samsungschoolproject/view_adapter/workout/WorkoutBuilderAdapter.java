@@ -92,7 +92,6 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
     }
 
-
     @Override
     public int getItemCount() {
         return length;
