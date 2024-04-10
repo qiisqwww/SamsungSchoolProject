@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -107,6 +108,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static class ChooseExerciseViewHolder extends RecyclerView.ViewHolder{
         private final Button deleteExerciseButton;
         private final Spinner exerciseListSpinner, approachesListSpinner, repeatsListSpinner;
+        private final TextView showExercise, showApproaches, showRepeats;
         private final int[] approaches = {1, 2, 3, 4, 5};
         private final int[] repeats = {5, 8, 10, 12, 15, 20};
         private final List<Exercise> exercises;
@@ -119,6 +121,9 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             exerciseListSpinner = itemView.findViewById(R.id.exerciseList);
             approachesListSpinner = itemView.findViewById(R.id.approachesList);
             repeatsListSpinner = itemView.findViewById(R.id.repeatsList);
+            showExercise = itemView.findViewById(R.id.showExercise);
+            showApproaches = itemView.findViewById(R.id.showApproaches);
+            showRepeats = itemView.findViewById(R.id.showRepeats);
             this.exercises = exercises;
 
             this.workoutBuilderAdapter = workoutBuilderAdapter;
