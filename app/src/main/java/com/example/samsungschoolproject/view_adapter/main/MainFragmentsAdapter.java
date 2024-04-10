@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.view_adapter;
+package com.example.samsungschoolproject.view_adapter.main;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,11 +9,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class MainFragmentsAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> fragmentList = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
 
-    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+    public MainFragmentsAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
 

@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.samsungschoolproject.R;
-import com.example.samsungschoolproject.view_adapter.WorkoutBuilderAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
 
 
 public class TemplatesBuilderFragment extends Fragment{

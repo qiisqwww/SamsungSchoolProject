@@ -1,6 +1,5 @@
-package com.example.samsungschoolproject.view_adapter;
+package com.example.samsungschoolproject.view_adapter.workout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         parent,
                         false
                 );
-                return new ChooseExerciseViewHolder(view);
+                return new ChooseExerciseViewHolder(view, this);
             case 2:
                 view = LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.field_add_exercise,
@@ -73,6 +72,11 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         notifyItemChanged(length-3);
     }
 
+    public void deleteExercise(int position){
+        length--;
+        notifyItemRemoved(position);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
     }
@@ -91,15 +95,27 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public static class ChooseExerciseViewHolder extends RecyclerView.ViewHolder{
+        private final Button deleteExerciseButton;
+        private final WorkoutBuilderAdapter workoutBuilderAdapter;
 
-        public ChooseExerciseViewHolder(@NonNull View itemView) {
+        public ChooseExerciseViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter) {
+
             super(itemView);
+            deleteExerciseButton = itemView.findViewById(R.id.deleteExercise);
+            this.workoutBuilderAdapter = workoutBuilderAdapter;
+            initButtonListeners(getAdapterPosition());
+        }
+
+        private void initButtonListeners(int position){
+            deleteExerciseButton.setOnClickListener(v -> {
+                workoutBuilderAdapter.deleteExercise(position);
+            });
         }
     }
 
     public static class AddExerciseViewHolder extends RecyclerView.ViewHolder{
-        private Button addExerciseButton;
-        private WorkoutBuilderAdapter workoutBuilderAdapter;
+        private final Button addExerciseButton;
+        private final WorkoutBuilderAdapter workoutBuilderAdapter;
 
         public AddExerciseViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter) {
             super(itemView);

@@ -26,6 +26,7 @@
     <string name="save_workout_template">Сохранить шаблон</string>
     <string name="your_workout_name">Название тренировки</string>
     <string name="add_exercise">+</string>
+    <string name="delete_exercise">×</string>
     <string name="choose_exercise">Выберите упражнение из списка:</string>
     <string name="choose_approaches">Выберите количество подходов:</string>
     <string name="choose_repeats">Выберите количество повторений:</string>

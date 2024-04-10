@@ -9,7 +9,7 @@ import android.os.Bundle;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.fragment.сalendar.CalendarFragment;
-import com.example.samsungschoolproject.view_adapter.ViewPagerAdapter;
+import com.example.samsungschoolproject.view_adapter.main.MainFragmentsAdapter;
 import com.example.samsungschoolproject.fragment.main.MainMenuFragment;
 import com.example.samsungschoolproject.fragment.templates.TemplatesFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 public class MainActivity extends AppCompatActivity {
     private ViewPager mainViewPager;
     private TabLayout tabNavigation;
-    private ViewPagerAdapter viewPagerAdapter;
+    private MainFragmentsAdapter mainFragmentsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +36,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initPagerAdapter(){
-        viewPagerAdapter = new ViewPagerAdapter(
+        mainFragmentsAdapter = new MainFragmentsAdapter(
                 getSupportFragmentManager(),
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         );
 
-        viewPagerAdapter.Add(new CalendarFragment() , getResources().getString(R.string.calendar));
-        viewPagerAdapter.Add(new MainMenuFragment(), getResources().getString(R.string.menu));
-        viewPagerAdapter.Add(new TemplatesFragment(), getResources().getString(R.string.templates));
+        mainFragmentsAdapter.Add(new CalendarFragment() , getResources().getString(R.string.calendar));
+        mainFragmentsAdapter.Add(new MainMenuFragment(), getResources().getString(R.string.menu));
+        mainFragmentsAdapter.Add(new TemplatesFragment(), getResources().getString(R.string.templates));
     }
 
     private void initDatabase(){
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void connectWidgetsWithAdapter(){
-        mainViewPager.setAdapter(viewPagerAdapter);
+        mainViewPager.setAdapter(mainFragmentsAdapter);
         tabNavigation.setupWithViewPager(mainViewPager);
 
         mainViewPager.setCurrentItem(1); // Устанавливает MainMenuFragment при открытии MainActivity

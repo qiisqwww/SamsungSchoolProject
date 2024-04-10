@@ -14,18 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.DTO.WorkoutTemplateInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.model.PlannedWorkout;
-import com.example.samsungschoolproject.database.model.Workout;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
-import com.example.samsungschoolproject.view_adapter.WorkoutListAdapter;
-import com.example.samsungschoolproject.view_adapter.WorkoutTemplateListAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.WorkoutTemplateListAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutTemplateItemListener{

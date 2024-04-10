@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.view_adapter;
+package com.example.samsungschoolproject.view_adapter.workout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,11 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.DTO.WorkoutTemplateInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.databinding.WorkoutItemBinding;
-import com.example.samsungschoolproject.database.model.Workout;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 
 import java.util.List;

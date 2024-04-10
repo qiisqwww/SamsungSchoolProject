@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.view_adapter;
+package com.example.samsungschoolproject.view_adapter.calendar;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
