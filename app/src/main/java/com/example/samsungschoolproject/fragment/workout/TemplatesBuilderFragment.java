@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.fragment.templates;
+package com.example.samsungschoolproject.fragment.workout;
 
 import android.os.Bundle;
 
@@ -15,11 +15,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
+import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TemplatesBuilderFragment extends Fragment{
     private Button goBackButton;
+    private WorkoutHelperDatabase database;
     private RecyclerView workoutBuilderRecycler;
 
     @Override
@@ -37,9 +43,13 @@ public class TemplatesBuilderFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext()); //  Получить объект БД
+
         initWidgets(view);
-        setWorkoutBuilderRecycler();
         initButtonListeners();
+
+
+        setWorkoutBuilderRecycler();
     }
 
     private void initWidgets(View view){
@@ -59,8 +69,13 @@ public class TemplatesBuilderFragment extends Fragment{
         });
     }
 
+    private List<Exercise> getAllExercises(){
+        List<Exercise> exercises = database.getExerciseDAO().getAllExercises();
+        return exercises;
+    }
+
     private void setWorkoutBuilderRecycler(){
-        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter();
+        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(getAllExercises());
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutBuilderRecycler.setLayoutManager(layoutManager);
         workoutBuilderRecycler.setAdapter(workoutBuilderAdapter);

@@ -38,8 +38,6 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     private RecyclerView calendarRecycler;
     private Button monthBackButton, monthNextButton;
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,18 +56,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         initWidgets(view);
         setButtonListeners();
 
-        CalendarUtils.state = SwitchToWeekStates.NOT_JUST_SWITCHED_TO_WEEK_MODE;
-
-        if (CalendarUtils.dateToScroll == null){
-            CalendarUtils.dateToScroll = LocalDate.now();
-        }
-        if (CalendarUtils.selectedDate == null){
-            CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
-        }
+        setCurrentState();
         setMonthView();
-
-        CalendarFragment.nextFragment = new WeekCalendarFragment();
-        CalendarFragment.switchModeButton.setText(getResources().getString(R.string.month));
     }
 
     private void initWidgets(View view){
@@ -92,6 +80,22 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         });
     }
 
+
+    // Устанавливает корректное состояние для объектов
+    private void setCurrentState(){
+        CalendarUtils.state = SwitchToWeekStates.NOT_JUST_SWITCHED_TO_WEEK_MODE;
+
+        if (CalendarUtils.dateToScroll == null){
+            CalendarUtils.dateToScroll = LocalDate.now();
+        }
+        if (CalendarUtils.selectedDate == null){
+            CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
+        }
+
+        CalendarFragment.nextFragment = new WeekCalendarFragment();
+        CalendarFragment.switchModeButton.setText(getResources().getString(R.string.month));
+    }
+
     // Отрисовка "месячного" режима календаря
     private void setMonthView(){
         monthYearTV.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));
@@ -105,7 +109,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
     private void initBottomSheetFragment(){
         modalBottomSheet = new ModalBottomSheetFragment();
-        ModalBottomSheetFragment.TAG = "New Instance";
+        ModalBottomSheetFragment.TAG = "New Instance"; // idk if this name is important
 
         modalBottomSheet.show(getActivity().getSupportFragmentManager(), ModalBottomSheetFragment.TAG);
     }
@@ -122,6 +126,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
     public static class ModalBottomSheetFragment extends BottomSheetDialogFragment implements WorkoutListAdapter.OnWorkoutItemListener{
         public static String TAG;
+        private WorkoutHelperDatabase database;
         private RecyclerView workoutsRecycler;
         private Button createNewTemplateButton, addNewWorkoutButton;
         private ViewSwitcher viewSwitcher;
@@ -136,8 +141,11 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
 
+            database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
+
             initWidgets(view);
             initButtonListeners();
+
             loadWorkouts(); // Загружает список тренировок из базы данных
         }
 
@@ -163,7 +171,6 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         // Загружает список тренировок из БД.
         private void loadWorkouts(){
-            WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
             List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
 
             if (plannedWorkouts.size() == 0){// Если нет тренировок на этот день, то нужно выйти из метода
@@ -190,6 +197,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             workoutsRecycler.setAdapter(workoutListAdapter);
         }
 
+        //  В разработке
         @Override
         public void onWorkoutItemClick(int position) {
 

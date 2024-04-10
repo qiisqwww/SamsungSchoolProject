@@ -37,6 +37,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private Button weekBackButton, weekNextButton, createNewTemplateButton, addNewWorkoutButton;;
     private TextView noPlannedWorkouts;
     private ViewSwitcher viewSwitcher;
+    private WorkoutHelperDatabase database;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,23 +54,13 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
+
         initWidgets(view);
         setButtonListeners();
+        setCurrentState();
 
-        // Устанавливается состояние об переходе на "недельныЙ" фрагмент
-        CalendarUtils.state = SwitchToWeekStates.JUST_SWITCHED_TO_WEEK_MODE;
-
-        if (CalendarUtils.dateToScroll == null){
-            CalendarUtils.dateToScroll = LocalDate.now();
-        }
-        if (CalendarUtils.selectedDate == null){
-            CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
-        }
         setWeekView();
-
-        CalendarFragment.nextFragment = new MonthCalendarFragment();
-        CalendarFragment.switchModeButton.setText(getResources().getString(R.string.week));
-
         loadWorkouts(); // Загружает список тренировок из базы данных
     }
 
@@ -107,6 +98,22 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         });
     }
 
+    // Устанавливает корректное состояние для объектов
+    private void setCurrentState(){
+        // Устанавливается состояние об переходе на "недельныЙ" фрагмент
+        CalendarUtils.state = SwitchToWeekStates.JUST_SWITCHED_TO_WEEK_MODE;
+
+        if (CalendarUtils.dateToScroll == null){
+            CalendarUtils.dateToScroll = LocalDate.now();
+        }
+        if (CalendarUtils.selectedDate == null){
+            CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
+        }
+
+        CalendarFragment.nextFragment = new MonthCalendarFragment();
+        CalendarFragment.switchModeButton.setText(getResources().getString(R.string.week));
+    }
+
     // Отрисовка "недельного" режима календаря
     private void setWeekView(){
         monthYearTV.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll)) ;
@@ -120,7 +127,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
     // Загружает список тренировок из БД.
     private void loadWorkouts(){
-        WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
         List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
 
         if (plannedWorkouts.size() == 0){ // Если нет тренировок на этот день, то нужно выйти из метода
@@ -168,6 +174,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         }
     }
 
+    //  В разработке
     @Override
     public void onWorkoutItemClick(int position) {
 

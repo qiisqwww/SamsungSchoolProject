@@ -4,14 +4,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.database.model.Exercise;
+
+import java.util.List;
 
 public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private int length = 4;
+    private final List<Exercise> exercises;
+
+    public WorkoutBuilderAdapter (List<Exercise> exercises){
+        this.exercises = exercises;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -30,7 +40,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         parent,
                         false
                 );
-                return new ChooseExerciseViewHolder(view, this);
+                return new ChooseExerciseViewHolder(view, this, exercises);
             case 2:
                 view = LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.field_add_exercise,
@@ -96,12 +106,21 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public static class ChooseExerciseViewHolder extends RecyclerView.ViewHolder{
         private final Button deleteExerciseButton;
+        private final Spinner exerciseListSpinner, approachesListSpinner, repeatsListSpinner;
+        private final int[] approaches = {1, 2, 3, 4, 5};
+        private final int[] repeats = {5, 8, 10, 12, 15, 20};
+        private final List<Exercise> exercises;
         private final WorkoutBuilderAdapter workoutBuilderAdapter;
 
-        public ChooseExerciseViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter) {
-
+        public ChooseExerciseViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter, List<Exercise> exercises) {
             super(itemView);
+
             deleteExerciseButton = itemView.findViewById(R.id.deleteExercise);
+            exerciseListSpinner = itemView.findViewById(R.id.exerciseList);
+            approachesListSpinner = itemView.findViewById(R.id.approachesList);
+            repeatsListSpinner = itemView.findViewById(R.id.repeatsList);
+            this.exercises = exercises;
+
             this.workoutBuilderAdapter = workoutBuilderAdapter;
             initButtonListeners(getAdapterPosition());
         }

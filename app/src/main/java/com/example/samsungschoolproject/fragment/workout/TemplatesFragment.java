@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.fragment.templates;
+package com.example.samsungschoolproject.fragment.workout;
 
 import android.os.Bundle;
 
