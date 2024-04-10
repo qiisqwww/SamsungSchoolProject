@@ -23,8 +23,10 @@
     <string name="no_planned_workouts">На этот день нет запланированных тренировок</string>
     <string name="workout_length">Длительность ~</string>
     <string name="input_name">Введите название тренировки</string>
-    <string name="save_workout_template">Сохранить шаблон тренировки</string>
+    <string name="save_workout_template">Сохранить шаблон</string>
     <string name="your_workout_name">Название тренировки</string>
-    <string name="add_exercise">Добавить упражнение</string>
+    <string name="add_exercise">+</string>
     <string name="choose_exercise">Выберите упражнение из списка:</string>
+    <string name="choose_approaches">Выберите количество подходов:</string>
+    <string name="choose_repeats">Выберите количество повторений:</string>
 </resources>
