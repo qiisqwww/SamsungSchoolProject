@@ -2,4 +2,7 @@
     <style name="Base.Theme.SamsungSchoolProject" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/darkThemeStatusBarColor</item>
     </style>
+    <style name="Base.Widget.Design.TabLayout" parent="android:Widget" tools:override="true">
+        <item name="tabBackground">@drawable/tab_background</item>
+    </style>
 </resources>

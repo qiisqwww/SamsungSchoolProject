@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.example.samsungschoolproject.R;
@@ -32,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void initWidgets(){
         mainViewPager = findViewById(R.id.mainViewPager);
+
         tabNavigation = findViewById(R.id.tabNavigation);
+        tabNavigation.setTabTextColors(Color.WHITE, Color.WHITE);
     }
 
     private void initPagerAdapter(){
