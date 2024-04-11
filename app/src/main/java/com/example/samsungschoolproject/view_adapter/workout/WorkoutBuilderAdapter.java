@@ -112,7 +112,6 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public static class ChooseExerciseViewHolder extends RecyclerView.ViewHolder{
         private final Button deleteExerciseButton;
         private final Spinner exerciseListSpinner, approachesListSpinner, repeatsListSpinner;
-        private final TextView showExercise, showApproaches, showRepeats;
 
         private final List<String> exercises;
         private final WorkoutBuilderAdapter workoutBuilderAdapter;
@@ -127,9 +126,6 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             exerciseListSpinner = itemView.findViewById(R.id.exerciseList);
             approachesListSpinner = itemView.findViewById(R.id.approachesList);
             repeatsListSpinner = itemView.findViewById(R.id.repeatsList);
-            showExercise = itemView.findViewById(R.id.showExercise);
-            showApproaches = itemView.findViewById(R.id.showApproaches);
-            showRepeats = itemView.findViewById(R.id.showRepeats);
 
             initButtonListeners(getAdapterPosition());
             setSpinnerAdapters();
@@ -142,13 +138,27 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         private void setSpinnerAdapters(){
-            SpinnerAdapter exerciseAdapter = new SpinnerAdapter(itemView.getContext(), R.layout.spinner_item_title, R.layout.spinner_item_dropdown, exercises);
+            SpinnerAdapter exerciseAdapter = new SpinnerAdapter(
+                    itemView.getContext(),
+                    R.layout.spinner_item_title,
+                    R.layout.spinner_item_dropdown,
+                    exercises);
             exerciseListSpinner.setAdapter(exerciseAdapter);
 
-            SpinnerAdapter approachesAdapter = new SpinnerAdapter(itemView.getContext(), R.layout.spinner_item_title, R.layout.spinner_item_dropdown, Arrays.asList(ExerciseListUtils.approaches));
+            SpinnerAdapter approachesAdapter = new SpinnerAdapter(
+                    itemView.getContext(),
+                    R.layout.spinner_item_title,
+                    R.layout.spinner_item_dropdown,
+                    Arrays.asList(ExerciseListUtils.approaches)
+            );
             approachesListSpinner.setAdapter(approachesAdapter);
 
-            SpinnerAdapter repeatsAdapter = new SpinnerAdapter(itemView.getContext(), R.layout.spinner_item_title, R.layout.spinner_item_dropdown, Arrays.asList(ExerciseListUtils.repeats));
+            SpinnerAdapter repeatsAdapter = new SpinnerAdapter(
+                    itemView.getContext(),
+                    R.layout.spinner_item_title,
+                    R.layout.spinner_item_dropdown,
+                    Arrays.asList(ExerciseListUtils.repeats)
+            );
             repeatsListSpinner.setAdapter(repeatsAdapter);
         }
     }
