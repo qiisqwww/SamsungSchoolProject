@@ -17,6 +17,7 @@ import android.widget.Button;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.Exercise;
+import com.example.samsungschoolproject.utils.ExerciseListUtils;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
 
 import java.util.ArrayList;
@@ -74,7 +75,9 @@ public class TemplatesBuilderFragment extends Fragment{
     }
 
     private void setWorkoutBuilderRecycler(){
-        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(getAllExercises());
+        List<String> stringExercises = ExerciseListUtils.parseExerciseToStrings(getAllExercises());
+
+        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutBuilderRecycler.setLayoutManager(layoutManager);
         workoutBuilderRecycler.setAdapter(workoutBuilderAdapter);

@@ -3,23 +3,28 @@ package com.example.samsungschoolproject.view_adapter.workout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.TypedArrayUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.model.Exercise;
+import com.example.samsungschoolproject.utils.ExerciseListUtils;
+import com.example.samsungschoolproject.view_adapter.exercise.SpinnerAdapter;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private int length = 4;
-    private final List<Exercise> exercises;
+    private final List<String> exercises;
 
-    public WorkoutBuilderAdapter (List<Exercise> exercises){
+    public WorkoutBuilderAdapter (List<String> exercises){
         this.exercises = exercises;
     }
 
@@ -108,13 +113,15 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private final Button deleteExerciseButton;
         private final Spinner exerciseListSpinner, approachesListSpinner, repeatsListSpinner;
         private final TextView showExercise, showApproaches, showRepeats;
-        private final int[] approaches = {1, 2, 3, 4, 5};
-        private final int[] repeats = {5, 8, 10, 12, 15, 20};
-        private final List<Exercise> exercises;
+
+        private final List<String> exercises;
         private final WorkoutBuilderAdapter workoutBuilderAdapter;
 
-        public ChooseExerciseViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter, List<Exercise> exercises) {
+        public ChooseExerciseViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter, List<String> exercises) {
             super(itemView);
+
+            this.exercises = exercises;
+            this.workoutBuilderAdapter = workoutBuilderAdapter;
 
             deleteExerciseButton = itemView.findViewById(R.id.deleteExercise);
             exerciseListSpinner = itemView.findViewById(R.id.exerciseList);
@@ -123,16 +130,26 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             showExercise = itemView.findViewById(R.id.showExercise);
             showApproaches = itemView.findViewById(R.id.showApproaches);
             showRepeats = itemView.findViewById(R.id.showRepeats);
-            this.exercises = exercises;
 
-            this.workoutBuilderAdapter = workoutBuilderAdapter;
             initButtonListeners(getAdapterPosition());
+            setSpinnerAdapters();
         }
 
         private void initButtonListeners(int position){
             deleteExerciseButton.setOnClickListener(v -> {
                 workoutBuilderAdapter.deleteExercise(position);
             });
+        }
+
+        private void setSpinnerAdapters(){
+            SpinnerAdapter exerciseAdapter = new SpinnerAdapter(itemView.getContext(), R.layout.spinner_item_title, R.layout.spinner_item_dropdown, exercises);
+            exerciseListSpinner.setAdapter(exerciseAdapter);
+
+            SpinnerAdapter approachesAdapter = new SpinnerAdapter(itemView.getContext(), R.layout.spinner_item_title, R.layout.spinner_item_dropdown, Arrays.asList(ExerciseListUtils.approaches));
+            approachesListSpinner.setAdapter(approachesAdapter);
+
+            SpinnerAdapter repeatsAdapter = new SpinnerAdapter(itemView.getContext(), R.layout.spinner_item_title, R.layout.spinner_item_dropdown, Arrays.asList(ExerciseListUtils.repeats));
+            repeatsListSpinner.setAdapter(repeatsAdapter);
         }
     }
 
