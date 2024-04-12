@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.model.Workout;
+import com.example.samsungschoolproject.enums.WorkoutBuilderAdapterStates;
 import com.example.samsungschoolproject.fragment.workout.TemplatesBuilderFragment;
 import com.example.samsungschoolproject.fragment.workout.TemplatesListFragment;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private int length = 4;
+    private WorkoutBuilderAdapterStates state;
 
     private ArrayList<View> views;
     private final RecyclerView workoutBuilderRecycler;
@@ -37,6 +39,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.workoutBuilderRecycler = workoutBuilderRecycler;
         this.exercises = exercises;
         this.startTemplateListFragment = startTemplateListFragment;
+        this.state = WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING;
 
         views = new ArrayList<>();
     }
@@ -97,6 +100,9 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void addView(View view){
         views.add(view);
     }
+    public void addChooseExerciseView(View view){
+        views.add(length-3, view);
+    }
 
     public View getItemViewByPosition(int position){
         return views.get(position);
@@ -113,6 +119,14 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         length--;
         views.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void setStateCreated(){
+        state = WorkoutBuilderAdapterStates.ADAPTER_CREATED;
+    }
+
+    public WorkoutBuilderAdapterStates getState(){
+        return state;
     }
 
     @Override
@@ -163,7 +177,12 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             initButtonListeners(getAdapterPosition());
             setSpinnerAdapters();
 
-            workoutBuilderAdapter.addView(itemView);
+            if (workoutBuilderAdapter.getState() == WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING){
+                workoutBuilderAdapter.addView(itemView);
+                return;
+            }
+
+            workoutBuilderAdapter.addChooseExerciseView(itemView);
         }
 
         private void initButtonListeners(int position){
@@ -237,21 +256,19 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             initButtonListeners();
             workoutBuilderAdapter.addView(itemView);
+            workoutBuilderAdapter.setStateCreated();
         }
 
         private void initButtonListeners(){
             saveWorkoutButton.setOnClickListener( v -> {
-                String name;
-                ArrayList<ArrayList<String>> exercises = new ArrayList<>();
-
-                WorkoutListUtils.name = readNameFromField();  // Нужна логика на null moment
-                if (WorkoutListUtils.name.equals("")){
+                WorkoutListUtils.name = readNameFromField();
+                if (WorkoutListUtils.name.equals("")){ // Отработает, если человек не ввел данные (в таком случае сохранить нельзя)
                     Toast.makeText(saveWorkoutButton.getContext(), R.string.need_to_input_name, Toast.LENGTH_LONG).show();
                     return;
                 }
                 WorkoutListUtils.exercises = readExercisesFromFields();
 
-                startTemplatesListFragment();
+                startTemplatesListFragment(); // Запускает предыдущий фрагмент (список шаблонов)
             });
         }
 

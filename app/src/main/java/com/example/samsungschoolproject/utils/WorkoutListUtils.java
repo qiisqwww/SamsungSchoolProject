@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutListUtils {
-    public static String name;
+    public static String name = "";
     public static ArrayList<ArrayList<String>> exercises;
 
     private static String parseLengthTime(int length){
@@ -56,5 +56,9 @@ public class WorkoutListUtils {
         }
 
         return workoutsInfo;
+    }
+
+    public static int countWorkoutLength(){ //  Нужно добавить логику
+        return 10;
     }
 }

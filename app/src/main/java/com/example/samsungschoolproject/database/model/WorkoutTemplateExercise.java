@@ -31,8 +31,7 @@ public class WorkoutTemplateExercise {
 
     public int number_in_query;
 
-    public WorkoutTemplateExercise(int id, int workout_template_id, int exercise_id, int repeats, int approaches, int number_in_query) {
-        this.id = id;
+    public WorkoutTemplateExercise(int workout_template_id, int exercise_id, int repeats, int approaches, int number_in_query) {
         this.workout_template_id = workout_template_id;
         this.exercise_id = exercise_id;
         this.repeats = repeats;

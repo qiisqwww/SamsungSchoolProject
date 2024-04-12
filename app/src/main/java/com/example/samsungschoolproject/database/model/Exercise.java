@@ -11,8 +11,7 @@ public class Exercise {
     public String name;
     public String muscle;
 
-    public Exercise(int id, String name, String muscle) {
-        this.id = id;
+    public Exercise(String name, String muscle) {
         this.name = name;
         this.muscle = muscle;
     }

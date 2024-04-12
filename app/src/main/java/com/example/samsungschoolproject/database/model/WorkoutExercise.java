@@ -32,8 +32,7 @@ public class WorkoutExercise {
 
     public int number_in_query;
 
-    public WorkoutExercise(int id, int workout_id, int exercise_id, int repeats, int approaches, int number_in_query) {
-        this.id = id;
+    public WorkoutExercise(int workout_id, int exercise_id, int repeats, int approaches, int number_in_query) {
         this.workout_id = workout_id;
         this.exercise_id = exercise_id;
         this.repeats = repeats;

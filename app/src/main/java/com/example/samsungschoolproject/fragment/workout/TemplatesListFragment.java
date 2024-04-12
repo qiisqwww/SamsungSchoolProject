@@ -17,14 +17,19 @@ import android.widget.Button;
 import com.example.samsungschoolproject.DTO.WorkoutTemplateInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
+import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
+import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
+import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutTemplateListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutTemplateItemListener{
     private Button createNewTemplateButton;
+    private WorkoutHelperDatabase database;
     private RecyclerView workoutTemplatesRecycler;
 
     @Override
@@ -42,6 +47,8 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
 
         initWidgets(view);
         initButtonListeners();
@@ -65,7 +72,9 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     }
 
     private void loadTemplatesList() {
-        WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
+        if (!WorkoutListUtils.name.equals(""))
+            loadNewTemplateFromUtils();
+
         List<WorkoutTemplate> workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
 
         if (workoutTemplates.size() == 0) {
@@ -74,6 +83,27 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
 
         List<WorkoutTemplateInfo> workoutTemplatesInfo = WorkoutListUtils.parseWorkoutTemplatesForAdapter(workoutTemplates);
         setWorkoutTemplatesRecycler(workoutTemplatesInfo);
+    }
+
+    private void loadNewTemplateFromUtils(){
+        WorkoutTemplate workoutTemplate = new WorkoutTemplate(WorkoutListUtils.name, WorkoutListUtils.countWorkoutLength());
+        database.getWorkoutTemplateDAO().addWorkoutTemplate(workoutTemplate);
+
+        workoutTemplate = database.getWorkoutTemplateDAO().getWorkoutTemplateByName(WorkoutListUtils.name);
+        for (int i = 0; i < WorkoutListUtils.exercises.size(); i++){
+            ArrayList<String> exerciseInfo = WorkoutListUtils.exercises.get(i);
+            Exercise exercise = database.getExerciseDAO().getExerciseByName(exerciseInfo.get(0));
+            database.getWorkoutTemplateExerciseDAO().addWorkoutTemplateExercise(new WorkoutTemplateExercise(
+                    workoutTemplate.id,
+                    exercise.id,
+                    Integer.valueOf(exerciseInfo.get(2)),
+                    Integer.valueOf(exerciseInfo.get(1)),
+                    i+1
+            ));
+        }
+
+        WorkoutListUtils.name = "";
+        WorkoutListUtils.exercises = new ArrayList<>(); // Очищаю введенные данные
     }
 
     private void setWorkoutTemplatesRecycler(List<WorkoutTemplateInfo> workoutTemplatesInfo){

@@ -18,8 +18,7 @@ public class PlannedWorkout {
     public String is_completed;
     public String date;
 
-    public PlannedWorkout(int id, int workout_id, String is_completed, String date) {
-        this.id = id;
+    public PlannedWorkout(int workout_id, String is_completed, String date) {
         this.workout_id = workout_id;
         this.is_completed = is_completed;
         this.date = date;
