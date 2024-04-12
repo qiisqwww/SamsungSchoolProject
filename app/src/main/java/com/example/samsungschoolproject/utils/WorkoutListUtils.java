@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutListUtils {
+    public static String name;
+    public static ArrayList<ArrayList<String>> exercises;
+
     private static String parseLengthTime(int length){
         if (length%100 >= 5 && length%100 <= 20){
             return " минут";

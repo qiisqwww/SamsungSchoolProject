@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TemplatesBuilderFragment extends Fragment{
+public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilderAdapter.StartTemplateListFragment {
     private Button goBackButton;
     private WorkoutHelperDatabase database;
     private RecyclerView workoutBuilderRecycler;
@@ -77,9 +78,17 @@ public class TemplatesBuilderFragment extends Fragment{
     private void setWorkoutBuilderRecycler(){
         List<String> stringExercises = ExerciseListUtils.parseExerciseToStrings(getAllExercises());
 
-        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, workoutBuilderRecycler);
+        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, workoutBuilderRecycler, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutBuilderRecycler.setLayoutManager(layoutManager);
         workoutBuilderRecycler.setAdapter(workoutBuilderAdapter);
+    }
+
+    @Override
+    public void startTemplateListFragment() {
+        TemplatesListFragment templatesListFragment = new TemplatesListFragment();
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.remove(new TemplatesListFragment());
+        fragmentTransaction.replace(R.id.workoutTemplatesContainer, templatesListFragment).commit();
     }
 }

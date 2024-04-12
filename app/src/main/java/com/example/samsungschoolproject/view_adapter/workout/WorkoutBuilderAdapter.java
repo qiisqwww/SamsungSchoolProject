@@ -10,10 +10,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.database.model.Workout;
+import com.example.samsungschoolproject.fragment.workout.TemplatesBuilderFragment;
+import com.example.samsungschoolproject.fragment.workout.TemplatesListFragment;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
+import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.exercise.SpinnerAdapter;
 
 import java.util.ArrayList;
@@ -25,11 +30,13 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private ArrayList<View> views;
     private final RecyclerView workoutBuilderRecycler;
+    private final StartTemplateListFragment startTemplateListFragment;
     private final List<String> exercises;
 
-    public WorkoutBuilderAdapter (List<String> exercises, RecyclerView workoutBuilderRecycler){
+    public WorkoutBuilderAdapter (List<String> exercises, RecyclerView workoutBuilderRecycler, StartTemplateListFragment startTemplateListFragment){
         this.workoutBuilderRecycler = workoutBuilderRecycler;
         this.exercises = exercises;
+        this.startTemplateListFragment = startTemplateListFragment;
 
         views = new ArrayList<>();
     }
@@ -66,7 +73,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         parent,
                         false
                 );
-                return new SaveWorkoutButtonViewHolder(view, this);
+                return new SaveWorkoutButtonViewHolder(view, this, startTemplateListFragment);
         }
 
         return null;
@@ -125,12 +132,12 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             this.itemView = itemView;
             this.workoutBuilderAdapter = workoutBuilderAdapter;
 
-            addItemViewToViewList();
-        }
-
-        private void addItemViewToViewList(){
             workoutBuilderAdapter.addView(itemView);
         }
+    }
+
+    public interface StartTemplateListFragment{
+        public void startTemplateListFragment();
     }
 
     public static class ChooseExerciseViewHolder extends RecyclerView.ViewHolder{
@@ -156,7 +163,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             initButtonListeners(getAdapterPosition());
             setSpinnerAdapters();
 
-            addItemViewToViewList();
+            workoutBuilderAdapter.addView(itemView);
         }
 
         private void initButtonListeners(int position){
@@ -189,10 +196,6 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             );
             repeatsListSpinner.setAdapter(repeatsAdapter);
         }
-
-        private void addItemViewToViewList(){
-            workoutBuilderAdapter.addView(itemView);
-        }
     }
 
     public static class AddExerciseViewHolder extends RecyclerView.ViewHolder{
@@ -208,7 +211,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             this.workoutBuilderAdapter = workoutBuilderAdapter;
             initButtonListeners();
 
-            addItemViewToViewList();
+            workoutBuilderAdapter.addView(itemView);
         }
 
         private void initButtonListeners(){
@@ -216,26 +219,24 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 workoutBuilderAdapter.addExercise();
             });
         }
-
-        private void addItemViewToViewList(){
-            workoutBuilderAdapter.addView(itemView);
-        }
     }
 
     public static class SaveWorkoutButtonViewHolder extends RecyclerView.ViewHolder{
         private final Button saveWorkoutButton;
         private final View itemView;
         private final WorkoutBuilderAdapter workoutBuilderAdapter;
+        private final StartTemplateListFragment startTemplateListFragment;
 
-        public SaveWorkoutButtonViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter) {
+        public SaveWorkoutButtonViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter, StartTemplateListFragment startTemplateListFragment) {
             super(itemView);
             this.itemView = itemView;
 
             saveWorkoutButton = itemView.findViewById(R.id.saveWorkout);
             this.workoutBuilderAdapter = workoutBuilderAdapter;
+            this.startTemplateListFragment = startTemplateListFragment;
 
             initButtonListeners();
-            addItemViewToViewList();
+            workoutBuilderAdapter.addView(itemView);
         }
 
         private void initButtonListeners(){
@@ -243,12 +244,14 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 String name;
                 ArrayList<ArrayList<String>> exercises = new ArrayList<>();
 
-                name = readNameFromField();  // Нужна логика на null moment
-                if (name.equals("")){
+                WorkoutListUtils.name = readNameFromField();  // Нужна логика на null moment
+                if (WorkoutListUtils.name.equals("")){
                     Toast.makeText(saveWorkoutButton.getContext(), R.string.need_to_input_name, Toast.LENGTH_LONG).show();
                     return;
                 }
-                exercises = readExercisesFromFields();
+                WorkoutListUtils.exercises = readExercisesFromFields();
+
+                startTemplatesListFragment();
             });
         }
 
@@ -284,8 +287,8 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return exercises;
         }
 
-        private void addItemViewToViewList(){
-            workoutBuilderAdapter.addView(itemView);
+        private void startTemplatesListFragment(){
+            startTemplateListFragment.startTemplateListFragment();
         }
     }
 }
