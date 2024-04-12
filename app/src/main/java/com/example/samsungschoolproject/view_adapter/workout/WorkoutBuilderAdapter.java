@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -243,7 +244,11 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 ArrayList<ArrayList<String>> exercises = new ArrayList<>();
 
                 name = readNameFromField();  // Нужна логика на null moment
-                exercises = readExercisesFromFields();  // Нужна логика на null moment
+                if (name.equals("")){
+                    Toast.makeText(saveWorkoutButton.getContext(), R.string.need_to_input_name, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                exercises = readExercisesFromFields();
             });
         }
 

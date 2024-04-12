@@ -30,4 +30,5 @@
     <string name="choose_exercise">Выберите упражнение из списка:</string>
     <string name="choose_approaches">Выберите количество подходов:</string>
     <string name="choose_repeats">Выберите количество повторений:</string>
+    <string name="need_to_input_name">Введите название тренировки</string>
 </resources>
