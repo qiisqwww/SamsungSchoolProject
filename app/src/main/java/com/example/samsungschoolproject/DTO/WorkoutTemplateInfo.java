@@ -7,7 +7,6 @@ import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 public class WorkoutTemplateInfo {
     public int id;
     public String name;
-    public String date;
     public int approximate_length;
     public WorkoutTemplateInfo(WorkoutTemplate workoutTemplate){
         id = workoutTemplate.id;

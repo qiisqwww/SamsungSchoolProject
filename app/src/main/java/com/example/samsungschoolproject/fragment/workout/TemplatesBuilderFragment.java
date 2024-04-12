@@ -77,7 +77,7 @@ public class TemplatesBuilderFragment extends Fragment{
     private void setWorkoutBuilderRecycler(){
         List<String> stringExercises = ExerciseListUtils.parseExerciseToStrings(getAllExercises());
 
-        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises);
+        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, workoutBuilderRecycler);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutBuilderRecycler.setLayoutManager(layoutManager);
         workoutBuilderRecycler.setAdapter(workoutBuilderAdapter);
