@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private int length = 4;
+    private int length = 0;
     private WorkoutBuilderAdapterStates state;
     private EditText name;
     public ArrayList<ArrayList<String>> views;
@@ -92,7 +92,6 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         return 1; //  fillExercise Field
     }
-
     public void addView(ArrayList<String> template){
         if (state == WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING){
             views.add(template);
@@ -100,7 +99,6 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (state == WorkoutBuilderAdapterStates.ADAPTER_CREATED){
             views.add(length-3, template);
         }
-
     }
 
     public ArrayList<String> getItemViewByPosition(int position){
@@ -135,6 +133,10 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return length;
     }
 
+    public interface StartTemplateListFragment{
+        public void startTemplateListFragment();
+    }
+
     public static class InputNameViewHolder extends RecyclerView.ViewHolder{
         private final View itemView;
         private EditText name;
@@ -152,10 +154,6 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private void initWidgets(){
             name = itemView.findViewById(R.id.inputedName);
         }
-    }
-
-    public interface StartTemplateListFragment{
-        public void startTemplateListFragment();
     }
 
     public static class ChooseExerciseViewHolder extends RecyclerView.ViewHolder{
