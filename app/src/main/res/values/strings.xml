@@ -30,4 +30,6 @@
     <string name="choose_approaches">Выберите количество подходов:</string>
     <string name="choose_repeats">Выберите количество повторений:</string>
     <string name="need_to_input_name">Введите название тренировки</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

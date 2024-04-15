@@ -116,7 +116,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
     @Override
     public void onItemClick(int position, String dayText) {
-        if (!dayText.equals("")) {
+        if (!dayText.isEmpty()) {
             CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth(), Integer.parseInt(dayText));
             calendarAdapter.resetBacklitItem(position);
         }

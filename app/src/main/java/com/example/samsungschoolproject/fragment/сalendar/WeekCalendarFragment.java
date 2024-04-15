@@ -19,12 +19,15 @@ import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
+import com.example.samsungschoolproject.enums.BackFragmentForBuilder;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 
+import com.example.samsungschoolproject.fragment.workout.WorkoutsBuilderFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.calendar.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutListAdapter;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,7 +37,8 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private CalendarAdapter calendarAdapter;
     private TextView monthYearTV;
     private RecyclerView calendarRecycler, workoutsRecycler;
-    private Button weekBackButton, weekNextButton, createNewTemplateButton, addNewWorkoutButton;;
+    private Button weekBackButton, weekNextButton, createNewTemplateButton, addNewWorkoutButton;
+    private BottomSheetDialogFragment workoutsBuilderFragment;
     private TextView noPlannedWorkouts;
     private ViewSwitcher viewSwitcher;
     private WorkoutHelperDatabase database;
@@ -93,8 +97,12 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
         });
 
-        addNewWorkoutButton.setOnClickListener(v -> { // Логика должна быть добавлена
+        addNewWorkoutButton.setOnClickListener(v -> {
+            workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT);
+            WorkoutsBuilderFragment.TAG = "Another Instance"; // idk if this name is important
 
+            WorkoutListUtils.date = CalendarUtils.selectedDate.toString();
+            workoutsBuilderFragment.show(getActivity().getSupportFragmentManager(), MonthCalendarFragment.ModalBottomSheetFragment.TAG);
         });
     }
 

@@ -18,17 +18,23 @@ import android.widget.Button;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.Exercise;
+import com.example.samsungschoolproject.enums.BackFragmentForBuilder;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
-
-public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilderAdapter.StartTemplateListFragment {
+public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implements WorkoutBuilderAdapter.StartTemplateListFragment{
+    public static String TAG;
     private Button goBackButton;
+    private BackFragmentForBuilder backFragmentForBuilder;
     private WorkoutHelperDatabase database;
-    private RecyclerView templateBuilderRecycler;
+    private RecyclerView workoutBuilderRecycler;
+
+    public WorkoutsBuilderFragment(BackFragmentForBuilder backFragmentForBuilder){
+        this.backFragmentForBuilder = backFragmentForBuilder;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +44,7 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_templates_builder, container, false);
+        return inflater.inflate(R.layout.fragment_workouts_builder, container, false);
     }
 
     @Override
@@ -56,17 +62,18 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
     private void initWidgets(View view){
         goBackButton = view.findViewById(R.id.goBack);
 
-        templateBuilderRecycler = view.findViewById(R.id.templateBuilderRecycler);
+        workoutBuilderRecycler = view.findViewById(R.id.workoutBuilderRecycler);
     }
 
     private void initButtonListeners(){
         goBackButton.setOnClickListener(v -> {
-            TemplatesListFragment templatesListFragment = new TemplatesListFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            fragmentManager.popBackStack();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.workoutTemplatesContainer, templatesListFragment)
-                    .commit();
+            if (backFragmentForBuilder == BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT){
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().remove(this).commit();
+            }
+            if (backFragmentForBuilder == BackFragmentForBuilder.BACK_TO_MONTH_FRAGMENT){
+                // Нужно обдумать логику
+            }
         });
     }
 
@@ -78,10 +85,10 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
     private void setWorkoutBuilderRecycler(){
         List<String> stringExercises = ExerciseListUtils.parseExerciseToStrings(getAllExercises());
 
-        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, templateBuilderRecycler, this);
+        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, workoutBuilderRecycler, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
-        templateBuilderRecycler.setLayoutManager(layoutManager);
-        templateBuilderRecycler.setAdapter(workoutBuilderAdapter);
+        workoutBuilderRecycler.setLayoutManager(layoutManager);
+        workoutBuilderRecycler.setAdapter(workoutBuilderAdapter);
     }
 
     @Override

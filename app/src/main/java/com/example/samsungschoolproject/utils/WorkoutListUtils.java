@@ -15,6 +15,7 @@ import java.util.List;
 
 public class WorkoutListUtils {
     public static String name = "";
+    public static String date = "";
     public static ArrayList<ArrayList<String>> exercises;
 
     private static String parseLengthTime(int length){

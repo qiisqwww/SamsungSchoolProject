@@ -14,7 +14,7 @@
         android:backgroundTint="@color/additionalButtonsColor"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/templateBuilderRecycler"
+        android:id="@+id/workoutBuilderRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
