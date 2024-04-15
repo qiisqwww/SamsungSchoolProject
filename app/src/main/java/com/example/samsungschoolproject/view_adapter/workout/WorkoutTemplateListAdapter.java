@@ -1,5 +1,6 @@
 package com.example.samsungschoolproject.view_adapter.workout;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,8 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
         }
 
         public void bind(WorkoutTemplateInfo workoutTemplateInfo){
-            templateItemBinding.name.setText(workoutTemplateInfo.name);
+            String fieldText = "Название: " + workoutTemplateInfo.name;
+            templateItemBinding.name.setText(fieldText);
             templateItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutTemplateInfo.approximate_length));
         }
 
