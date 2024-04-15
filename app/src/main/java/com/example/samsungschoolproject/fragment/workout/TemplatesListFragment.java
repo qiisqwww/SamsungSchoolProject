@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,12 +73,16 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     }
 
     private void loadTemplatesList() {
-        if (!WorkoutListUtils.name.equals(""))
+        if (!WorkoutListUtils.name.isEmpty()){
+            Log.d("GG", WorkoutListUtils.name);
             loadNewTemplateFromUtils();
+        }
+
 
         List<WorkoutTemplate> workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
 
-        if (workoutTemplates.size() == 0) {
+        if (workoutTemplates.isEmpty()) {
+            Log.d("GG", "isEmpty");
             return;
         }
 

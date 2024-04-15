@@ -1,5 +1,7 @@
 package com.example.samsungschoolproject.utils;
 
+import android.util.Log;
+
 import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.DTO.WorkoutTemplateInfo;
 import com.example.samsungschoolproject.R;
@@ -29,13 +31,14 @@ public class WorkoutListUtils {
         return " минут";
     }
     public static String configureWorkoutLengthInfo(int approximate_length){
-        return R.string.workout_length + String.valueOf(approximate_length) + parseLengthTime(approximate_length);
+        return "~ " + String.valueOf(approximate_length) + parseLengthTime(approximate_length);
     }
 
     public static ArrayList<WorkoutTemplateInfo> parseWorkoutTemplatesForAdapter(List<WorkoutTemplate> workoutTemplates){
-        ArrayList<WorkoutTemplateInfo> workoutTemplatesInfo = new ArrayList<WorkoutTemplateInfo>() {
-        };
-        for (int i = 0; i < workoutTemplatesInfo.size(); i++) {
+        ArrayList<WorkoutTemplateInfo> workoutTemplatesInfo = new ArrayList<>();
+
+
+        for (int i = 0; i < workoutTemplates.size(); i++) {
             WorkoutTemplate workoutTemplate = workoutTemplates.get(i);
 
             WorkoutTemplateInfo workoutTemplateInfo = WorkoutTemplateInfo.fromMapper(workoutTemplate);
@@ -58,7 +61,17 @@ public class WorkoutListUtils {
         return workoutsInfo;
     }
 
-    public static int countWorkoutLength(){ //  Нужно добавить логику
-        return 10;
+    public static int countWorkoutLength(){
+        int workoutLength = 0;
+        for (int i = 0; i < exercises.size(); i++){
+            ArrayList<String> exercise = exercises.get(0);
+            if (exercise.size() != 3){
+                continue;
+            }
+
+            workoutLength += Integer.valueOf(exercise.get(1)) * Integer.valueOf(exercise.get(2)) * 2 + Integer.valueOf(exercise.get(1))*70;
+        }
+
+        return workoutLength/60;
     }
 }

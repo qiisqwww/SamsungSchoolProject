@@ -1,15 +1,16 @@
 package com.example.samsungschoolproject.view_adapter.workout;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.samsungschoolproject.DTO.WorkoutTemplateInfo;
 import com.example.samsungschoolproject.R;
-import com.example.samsungschoolproject.databinding.WorkoutItemBinding;
+import com.example.samsungschoolproject.databinding.TemplateItemBinding;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
     @Override
     public WorkoutTemplateViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.workout_item,
+                R.layout.template_item,
                 parent,
                 false
         );
@@ -50,28 +51,24 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
     }
 
     public static class WorkoutTemplateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private final WorkoutItemBinding workoutTemplateItemBinding;
+        private final TemplateItemBinding templateItemBinding;
         private final OnWorkoutTemplateItemListener onWorkoutTemplateItemListener;
 
         public WorkoutTemplateViewHolder(@NonNull View itemView, OnWorkoutTemplateItemListener onWorkoutTemplateItemListener) {
             super(itemView);
-            workoutTemplateItemBinding = WorkoutItemBinding.bind(itemView);
+            templateItemBinding = TemplateItemBinding.bind(itemView);
             this.onWorkoutTemplateItemListener = onWorkoutTemplateItemListener;
         }
 
         public void bind(WorkoutTemplateInfo workoutTemplateInfo){
-            workoutTemplateItemBinding.name.setText(workoutTemplateInfo.name);
-            workoutTemplateItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutTemplateInfo.approximate_length));
+            String fieldText = "Название: " + workoutTemplateInfo.name;
+            templateItemBinding.name.setText(fieldText);
+            templateItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutTemplateInfo.approximate_length));
         }
 
         @Override
         public void onClick(View v) {
             onWorkoutTemplateItemListener.onItemClick(getAdapterPosition());
         }
-    }
-
-    public void Add(WorkoutTemplateInfo workoutTemplateInfo){
-        workoutTemplatesInfo.add(workoutTemplateInfo);
-        notifyDataSetChanged();
     }
 }
