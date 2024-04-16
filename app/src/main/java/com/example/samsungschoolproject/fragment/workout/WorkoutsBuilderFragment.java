@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
@@ -34,11 +36,13 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
     public static String TAG;
     private Button goBackButton;
     private BackFragmentForBuilder backFragmentForBuilder;
+    private WorkoutListAdapter workoutListAdapter;
     private WorkoutHelperDatabase database;
     private RecyclerView workoutBuilderRecycler;
 
-    public WorkoutsBuilderFragment(BackFragmentForBuilder backFragmentForBuilder){
+    public WorkoutsBuilderFragment(BackFragmentForBuilder backFragmentForBuilder, WorkoutListAdapter workoutListAdapter){
         this.backFragmentForBuilder = backFragmentForBuilder;
+        this.workoutListAdapter = workoutListAdapter;
     }
 
     @Override
@@ -62,6 +66,12 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
         initButtonListeners();
 
         setWorkoutBuilderRecycler();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        workoutListAdapter.update();
     }
 
     private void initWidgets(View view){

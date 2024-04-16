@@ -26,6 +26,7 @@ import com.example.samsungschoolproject.fragment.workout.WorkoutsBuilderFragment
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.calendar.CalendarAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -33,8 +34,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnCalendarItemListener, WorkoutListAdapter.OnWorkoutItemListener{
+public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnCalendarItemListener, WorkoutListAdapter.OnWorkoutItemListener, WorkoutListAdapter.UpdateRecycler{
     private CalendarAdapter calendarAdapter;
+    private WorkoutListAdapter workoutListAdapter;
     private TextView monthYearTV;
     private RecyclerView calendarRecycler, workoutsRecycler;
     private Button weekBackButton, weekNextButton, loadFromTemplatesButton, addNewWorkoutButton;
@@ -61,11 +63,11 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
 
         initWidgets(view);
-        setButtonListeners();
         setCurrentState();
 
         setWeekView();
         loadWorkouts(); // Загружает список тренировок из базы данных
+        initButtonListeners();
     }
 
     private void initWidgets(View view){
@@ -82,7 +84,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         viewSwitcher = view.findViewById(R.id.viewSwitcher);
     }
 
-    private void setButtonListeners(){
+    private void initButtonListeners(){
         weekNextButton.setOnClickListener(v -> {
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.plusWeeks(1);
             setWeekView();
@@ -98,7 +100,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         });
 
         addNewWorkoutButton.setOnClickListener(v -> {
-            workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT);
+            workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT, workoutListAdapter);
             WorkoutsBuilderFragment.TAG = "Another Instance"; // idk if this name is important
 
             workoutsBuilderFragment.show(getActivity().getSupportFragmentManager(), WorkoutsBuilderFragment.TAG);
@@ -132,6 +134,33 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         calendarRecycler.setAdapter(calendarAdapter);
     }
 
+    private void setCalendarRecycler(List<WorkoutInfo> workoutsInfo){
+        workoutListAdapter = new WorkoutListAdapter(workoutsInfo, this, this);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        workoutsRecycler.setLayoutManager(layoutManager);
+        workoutsRecycler.setAdapter(workoutListAdapter);
+    }
+
+    @Override
+    public void onItemClick(int position, String dayText) {
+        if (!dayText.isEmpty()) {
+            // Логика ниже необходима для избежания багов, возникающих с выбором дня при отображении недели, лежащей на стыке двух месяцев.
+            // shift - сдвиг, который необходимо учесть в selectedDate, чтобы правильно отрисовать изменения
+            int shift = 0;
+            if (Integer.parseInt(dayText) < CalendarUtils.dateToScroll.getDayOfMonth() - 15){
+                shift = 1;
+            }
+            if (Integer.parseInt(dayText) - 15 > CalendarUtils.dateToScroll.getDayOfMonth()){
+                shift = -1;
+            }
+
+            CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth().plus(shift), Integer.parseInt(dayText));
+            calendarAdapter.resetBacklitItem(position);
+
+            loadWorkouts();
+        }
+    }
+
     // Загружает список тренировок из БД.
     private void loadWorkouts(){
         List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
@@ -153,37 +182,14 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         setCalendarRecycler(workoutsInfo);
     }
 
-    private void setCalendarRecycler(List<WorkoutInfo> workoutsInfo){
-        WorkoutListAdapter workoutListAdapter = new WorkoutListAdapter(workoutsInfo, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
-        workoutsRecycler.setLayoutManager(layoutManager);
-        workoutsRecycler.setAdapter(workoutListAdapter);
-    }
-
-    @Override
-    public void onItemClick(int position, String dayText) {
-        if (!dayText.isEmpty()) {
-            // Логика ниже необходима для избежания багов, возникающих с выбором дня при отображении
-            // недели, лежащей на стыке двух месяцев.
-            // shift - сдвиг, который необходимо учесть в selectedDate, чтобы правильно отрисовать изменения
-            int shift = 0;
-            if (Integer.parseInt(dayText) < CalendarUtils.dateToScroll.getDayOfMonth() - 15){
-                shift = 1;
-            }
-            if (Integer.parseInt(dayText) - 15 > CalendarUtils.dateToScroll.getDayOfMonth()){
-                shift = -1;
-            }
-
-            CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth().plus(shift), Integer.parseInt(dayText));
-            calendarAdapter.resetBacklitItem(position);
-
-            loadWorkouts();
-        }
-    }
-
     // TODO: Добавить вывод информации о тренировке по нажатии на нее
     @Override
     public void onWorkoutItemClick(int position) {
 
+    }
+
+    @Override
+    public void updateRecycler() {
+        loadWorkouts();
     }
 }

@@ -17,11 +17,13 @@ import java.util.List;
 public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.WorkoutViewHolder> {
 
     private final List<WorkoutInfo> workoutsInfo;
+    private final UpdateRecycler updateRecycler;
     private final OnWorkoutItemListener onWorkoutItemListener;
 
-    public WorkoutListAdapter(List<WorkoutInfo> items, OnWorkoutItemListener onWorkoutItemListener) {
+    public WorkoutListAdapter(List<WorkoutInfo> items, OnWorkoutItemListener onWorkoutItemListener, UpdateRecycler updateRecycler) {
         workoutsInfo = items;
         this.onWorkoutItemListener = onWorkoutItemListener;
+        this.updateRecycler = updateRecycler;
     }
 
     @NonNull
@@ -45,8 +47,16 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         return workoutsInfo.size();
     }
 
+    public void update(){
+        updateRecycler.updateRecycler();
+    }
+
     public interface OnWorkoutItemListener {
         void onWorkoutItemClick(int position);
+    }
+
+    public interface UpdateRecycler{
+        void updateRecycler();
     }
 
     public static class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -68,10 +78,5 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         public void onClick(View v) {
             onWorkoutItemListener.onWorkoutItemClick(getAdapterPosition());
         }
-    }
-
-    public void Add(WorkoutInfo workoutInfo){
-        workoutsInfo.add(workoutInfo);
-        notifyDataSetChanged();
     }
 }

@@ -138,11 +138,11 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public interface StartPreviousFragment{
-        public void startPreviousFragment();
+        void startPreviousFragment();
     }
 
     public interface LoadJustCreated {
-        public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises);
+        void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises);
     }
 
     public static class InputNameViewHolder extends RecyclerView.ViewHolder{
