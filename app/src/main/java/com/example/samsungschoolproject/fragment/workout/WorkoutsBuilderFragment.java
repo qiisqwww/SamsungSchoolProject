@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,7 @@ import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
-import com.example.samsungschoolproject.database.model.Workout;
-import com.example.samsungschoolproject.database.model.WorkoutExercise;
+import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilder;
 import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
@@ -102,19 +100,17 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
 
     @Override
     public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises) {
-        Workout workout = new Workout(name, WorkoutListUtils.countWorkoutLength(exercises));
-        database.getWorkoutDAO().addWorkout(workout);
-
-        workout = database.getWorkoutDAO().getWorkoutByName(name);
-
-        database.getPlannedWorkoutDAO().addPlannedWorkout(new PlannedWorkout(workout.id, "False", CalendarUtils.selectedDate.toString()));
+        PlannedWorkout plannedWorkout = new PlannedWorkout(name, WorkoutListUtils.countWorkoutLength(exercises), "False", CalendarUtils.selectedDate.toString());
+        database.getPlannedWorkoutDAO().addPlannedWorkout(plannedWorkout);
         // TODO: Сделать enum для is_completed
+
+        plannedWorkout = database.getPlannedWorkoutDAO().getPlannedWorkoutByDateAndName(plannedWorkout.date, plannedWorkout.name);
 
         for (int i = 0; i < exercises.size(); i++){
             ArrayList<String> exerciseInfo = exercises.get(i);
             Exercise exercise = database.getExerciseDAO().getExerciseByName(exerciseInfo.get(0));
-            database.getWorkoutExerciseDAO().addWorkoutExercise(new WorkoutExercise(
-                    workout.id,
+            database.getPlannedWorkoutExerciseDAO().addPlannedWorkoutExercise(new PlannedWorkoutExercise(
+                    plannedWorkout.id,
                     exercise.id,
                     Integer.valueOf(exerciseInfo.get(2)),
                     Integer.valueOf(exerciseInfo.get(1)),

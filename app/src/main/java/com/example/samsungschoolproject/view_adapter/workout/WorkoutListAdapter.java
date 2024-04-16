@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.databinding.WorkoutItemBinding;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 
@@ -16,12 +16,12 @@ import java.util.List;
 
 public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.WorkoutViewHolder> {
 
-    private final List<WorkoutInfo> workoutsInfo;
+    private final List<PlannedWorkout> plannedWorkouts;
     private final UpdateRecycler updateRecycler;
     private final OnWorkoutItemListener onWorkoutItemListener;
 
-    public WorkoutListAdapter(List<WorkoutInfo> items, OnWorkoutItemListener onWorkoutItemListener, UpdateRecycler updateRecycler) {
-        workoutsInfo = items;
+    public WorkoutListAdapter(List<PlannedWorkout> items, OnWorkoutItemListener onWorkoutItemListener, UpdateRecycler updateRecycler) {
+        plannedWorkouts = items;
         this.onWorkoutItemListener = onWorkoutItemListener;
         this.updateRecycler = updateRecycler;
     }
@@ -39,12 +39,12 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
 
     @Override
     public void onBindViewHolder(final WorkoutViewHolder holder, int position) {
-        holder.bind(workoutsInfo.get(position));
+        holder.bind(plannedWorkouts.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return workoutsInfo.size();
+        return plannedWorkouts.size();
     }
 
     public void update(){
@@ -69,9 +69,10 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
             this.onWorkoutItemListener = onWorkoutItemListener;
         }
 
-        public void bind(WorkoutInfo workoutInfo){
-            workoutItemBinding.name.setText(workoutInfo.name);
-            workoutItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutInfo.approximate_length));
+        public void bind(PlannedWorkout plannedWorkout){
+            String fieldText = "Название: " + plannedWorkout.name;
+            workoutItemBinding.name.setText(fieldText);
+            workoutItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(plannedWorkout.approximate_length));
         }
 
         @Override

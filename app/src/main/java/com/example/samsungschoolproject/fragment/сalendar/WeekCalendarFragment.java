@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
@@ -24,9 +24,7 @@ import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 
 import com.example.samsungschoolproject.fragment.workout.WorkoutsBuilderFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
-import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.calendar.CalendarAdapter;
-import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -44,6 +42,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private TextView noPlannedWorkouts;
     private ViewSwitcher viewSwitcher;
     private WorkoutHelperDatabase database;
+    private List<PlannedWorkout> plannedWorkouts;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +60,12 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         super.onViewCreated(view, savedInstanceState);
 
         database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
+
+        // TODO: возможно, это костыль. Необходимо переделать.
+        // Код двумя строчками ниже необходим для корректной работы "обновления" данных после создания новой тренировки.
+        ArrayList<PlannedWorkout> plannedWorkouts = new ArrayList<>();
+        workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this);
+
 
         initWidgets(view);
         setCurrentState();
@@ -134,8 +139,28 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         calendarRecycler.setAdapter(calendarAdapter);
     }
 
-    private void setCalendarRecycler(List<WorkoutInfo> workoutsInfo){
-        workoutListAdapter = new WorkoutListAdapter(workoutsInfo, this, this);
+    // Загружает список тренировок из БД.
+    private void loadWorkouts(){
+        plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
+
+        if (plannedWorkouts.isEmpty()){ // Если нет тренировок на этот день, то нужно выйти из метода
+            // Если не установлено сообщение о том, что нет тренировок, то установить его
+            if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
+                viewSwitcher.showNext();
+            }
+            return;
+        }
+
+        // Если установлено сообщение о том, что нет тренировок, но предыдущие условия не выполнились, то нужно переключить view
+        if (viewSwitcher.getCurrentView() == noPlannedWorkouts){
+            viewSwitcher.showNext();
+        }
+
+        setWorkoutsRecycler();
+    }
+
+    private void setWorkoutsRecycler(){
+        workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutsRecycler.setLayoutManager(layoutManager);
         workoutsRecycler.setAdapter(workoutListAdapter);
@@ -159,27 +184,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
             loadWorkouts();
         }
-    }
-
-    // Загружает список тренировок из БД.
-    private void loadWorkouts(){
-        List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
-
-        if (plannedWorkouts.isEmpty()){ // Если нет тренировок на этот день, то нужно выйти из метода
-            // Если не установлено сообщение о том, что нет тренировок, то установить его
-            if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
-                viewSwitcher.showNext();
-            }
-            return;
-        }
-
-        // Если установлено сообщение о том, что нет тренировок, но предыдущие условия не выполнились, то нужно переключить view
-        if (viewSwitcher.getCurrentView() == noPlannedWorkouts){
-            viewSwitcher.showNext();
-        }
-
-        List<WorkoutInfo> workoutsInfo = WorkoutListUtils.parseWorkoutsForAdapter(plannedWorkouts, database);
-        setCalendarRecycler(workoutsInfo);
     }
 
     // TODO: Добавить вывод информации о тренировке по нажатии на нее

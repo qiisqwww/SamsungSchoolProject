@@ -1,6 +1,5 @@
 package com.example.samsungschoolproject.view_adapter.workout;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.samsungschoolproject.DTO.WorkoutTemplateInfo;
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.databinding.TemplateItemBinding;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 
@@ -17,12 +16,12 @@ import java.util.List;
 
 public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemplateListAdapter.WorkoutTemplateViewHolder> {
 
-    private final List<WorkoutTemplateInfo> workoutTemplatesInfo;
-    private final OnWorkoutTemplateItemListener onWorkoutTemplateItemListener;
+    private final List<WorkoutTemplate> workoutTemplates;
+    private final OnWorkoutItemListener onWorkoutItemListener;
 
-    public WorkoutTemplateListAdapter(List<WorkoutTemplateInfo> items, OnWorkoutTemplateItemListener onWorkoutTemplateItemListener) {
-        workoutTemplatesInfo = items;
-        this.onWorkoutTemplateItemListener = onWorkoutTemplateItemListener;
+    public WorkoutTemplateListAdapter(List<WorkoutTemplate> items, OnWorkoutItemListener onWorkoutItemListener) {
+        workoutTemplates = items;
+        this.onWorkoutItemListener = onWorkoutItemListener;
     }
 
     @NonNull
@@ -33,42 +32,42 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
                 parent,
                 false
         );
-        return new WorkoutTemplateViewHolder(view, onWorkoutTemplateItemListener);
+        return new WorkoutTemplateViewHolder(view, onWorkoutItemListener);
     }
 
     @Override
     public void onBindViewHolder(final WorkoutTemplateViewHolder holder, int position) {
-        holder.bind(workoutTemplatesInfo.get(position));
+        holder.bind(workoutTemplates.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return workoutTemplatesInfo.size();
+        return workoutTemplates.size();
     }
 
-    public interface OnWorkoutTemplateItemListener {
-        void onItemClick(int position);
+    public interface OnWorkoutItemListener {
+        void onWorkoutItemClick(int position);
     }
 
     public static class WorkoutTemplateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TemplateItemBinding templateItemBinding;
-        private final OnWorkoutTemplateItemListener onWorkoutTemplateItemListener;
+        private final OnWorkoutItemListener onWorkoutItemListener;
 
-        public WorkoutTemplateViewHolder(@NonNull View itemView, OnWorkoutTemplateItemListener onWorkoutTemplateItemListener) {
+        public WorkoutTemplateViewHolder(@NonNull View itemView, OnWorkoutItemListener onWorkoutItemListener) {
             super(itemView);
             templateItemBinding = TemplateItemBinding.bind(itemView);
-            this.onWorkoutTemplateItemListener = onWorkoutTemplateItemListener;
+            this.onWorkoutItemListener = onWorkoutItemListener;
         }
 
-        public void bind(WorkoutTemplateInfo workoutTemplateInfo){
-            String fieldText = "Название: " + workoutTemplateInfo.name;
+        public void bind(WorkoutTemplate workoutTemplate){
+            String fieldText = "Название: " + workoutTemplate.name;
             templateItemBinding.name.setText(fieldText);
-            templateItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutTemplateInfo.approximate_length));
+            templateItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutTemplate.approximate_length));
         }
 
         @Override
         public void onClick(View v) {
-            onWorkoutTemplateItemListener.onItemClick(getAdapterPosition());
+            onWorkoutItemListener.onWorkoutItemClick(getAdapterPosition());
         }
     }
 }

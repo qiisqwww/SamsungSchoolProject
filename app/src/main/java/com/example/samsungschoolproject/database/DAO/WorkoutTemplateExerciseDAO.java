@@ -6,7 +6,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.samsungschoolproject.database.model.WorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 
 @Dao

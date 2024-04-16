@@ -7,7 +7,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
-import com.example.samsungschoolproject.database.model.Workout;
 
 import java.util.List;
 
@@ -24,4 +23,7 @@ public interface PlannedWorkoutDAO {
 
     @Query("SELECT * FROM planned_workouts WHERE date==:date")
     public List<PlannedWorkout> getPlannedWorkoutsByDate(String date);
+
+    @Query("SELECT * FROM planned_workouts WHERE date==:date AND name==:name")
+    public PlannedWorkout getPlannedWorkoutByDateAndName(String date, String name);
 }

@@ -325,7 +325,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 ArrayList<ArrayList<String>> exercises = readExercisesFromFields();
 
                 loadJustCreated.loadJustCreated(name, exercises);
-                startPreviousFragment(); // Запускает предыдущий фрагмент (список шаблонов)
+                startPreviousFragment(); // Запускает предыдущий фрагмент
             });
         }
 

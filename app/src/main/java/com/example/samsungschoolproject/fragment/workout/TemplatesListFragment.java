@@ -9,29 +9,24 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.samsungschoolproject.DTO.WorkoutTemplateInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
-import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
-import com.example.samsungschoolproject.utils.CalendarUtils;
-import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutTemplateListAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutTemplateItemListener{
+public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener {
     private Button createNewTemplateButton;
     private WorkoutHelperDatabase database;
+    private List<WorkoutTemplate> workoutTemplates;
     private RecyclerView workoutTemplatesRecycler;
+    private WorkoutTemplateListAdapter workoutTemplateListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,18 +68,17 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     }
 
     private void loadTemplatesList() {
-        List<WorkoutTemplate> workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
+        workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
 
         if (workoutTemplates.isEmpty()) {
             return;
         }
-        List<WorkoutTemplateInfo> workoutTemplatesInfo = WorkoutListUtils.parseWorkoutTemplatesForAdapter(workoutTemplates);
-        setWorkoutTemplatesRecycler(workoutTemplatesInfo);
 
+        setWorkoutTemplatesRecycler();
     }
 
-    private void setWorkoutTemplatesRecycler(List<WorkoutTemplateInfo> workoutTemplatesInfo){
-        WorkoutTemplateListAdapter workoutTemplateListAdapter = new WorkoutTemplateListAdapter(workoutTemplatesInfo, this);
+    private void setWorkoutTemplatesRecycler(){
+        workoutTemplateListAdapter = new WorkoutTemplateListAdapter(workoutTemplates, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutTemplatesRecycler.setLayoutManager(layoutManager);
         workoutTemplatesRecycler.setAdapter(workoutTemplateListAdapter);
@@ -93,7 +87,7 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
 
     // TODO: Добавить вывод информации о шаблоне по нажатии на нее
     @Override
-    public void onItemClick(int position) {
+    public void onWorkoutItemClick(int position) {
 
     }
 }
