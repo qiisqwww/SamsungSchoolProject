@@ -202,7 +202,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             workoutsRecycler.setAdapter(workoutListAdapter);
         }
 
-        //  В разработке
+        // TODO: Добавить вывод информации о тренировке по нажатии на нее
         @Override
         public void onWorkoutItemClick(int position) {
 

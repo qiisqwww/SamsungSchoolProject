@@ -90,6 +90,8 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
         workoutTemplatesRecycler.setAdapter(workoutTemplateListAdapter);
     }
 
+
+    // TODO: Добавить вывод информации о шаблоне по нажатии на нее
     @Override
     public void onItemClick(int position) {
 

@@ -136,7 +136,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private void loadWorkouts(){
         List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
 
-        if (plannedWorkouts.size() == 0){ // Если нет тренировок на этот день, то нужно выйти из метода
+        if (plannedWorkouts.isEmpty()){ // Если нет тренировок на этот день, то нужно выйти из метода
             // Если не установлено сообщение о том, что нет тренировок, то установить его
             if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
                 viewSwitcher.showNext();
@@ -162,7 +162,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
     @Override
     public void onItemClick(int position, String dayText) {
-        if (!dayText.equals("")) {
+        if (!dayText.isEmpty()) {
             // Логика ниже необходима для избежания багов, возникающих с выбором дня при отображении
             // недели, лежащей на стыке двух месяцев.
             // shift - сдвиг, который необходимо учесть в selectedDate, чтобы правильно отрисовать изменения
@@ -181,7 +181,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         }
     }
 
-    //  В разработке
+    // TODO: Добавить вывод информации о тренировке по нажатии на нее
     @Override
     public void onWorkoutItemClick(int position) {
 
