@@ -37,7 +37,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     private CalendarAdapter calendarAdapter;
     private TextView monthYearTV;
     private RecyclerView calendarRecycler, workoutsRecycler;
-    private Button weekBackButton, weekNextButton, createNewTemplateButton, addNewWorkoutButton;
+    private Button weekBackButton, weekNextButton, loadFromTemplatesButton, addNewWorkoutButton;
     private BottomSheetDialogFragment workoutsBuilderFragment;
     private TextView noPlannedWorkouts;
     private ViewSwitcher viewSwitcher;
@@ -76,7 +76,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
         weekNextButton = view.findViewById(R.id.weekNext);
         weekBackButton = view.findViewById(R.id.weekBack);
-        createNewTemplateButton = view.findViewById(R.id.createNewTemplate);
+        loadFromTemplatesButton = view.findViewById(R.id.loadFromTemplates);
         addNewWorkoutButton = view.findViewById(R.id.addNewWorkout);
 
         viewSwitcher = view.findViewById(R.id.viewSwitcher);
@@ -93,7 +93,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
             setWeekView();
         });
 
-        createNewTemplateButton.setOnClickListener(v -> { // Логика должна быть добавлена
+        loadFromTemplatesButton.setOnClickListener(v -> { // Логика должна быть добавлена
 
         });
 

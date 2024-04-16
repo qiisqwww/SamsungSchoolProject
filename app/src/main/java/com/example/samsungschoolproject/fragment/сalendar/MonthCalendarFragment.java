@@ -130,7 +130,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         public static String TAG;
         private WorkoutHelperDatabase database;
         private RecyclerView workoutsRecycler;
-        private Button createNewTemplateButton, addNewWorkoutButton;
+        private Button loadFromTemplatesButton, addNewWorkoutButton;
         private ViewSwitcher viewSwitcher;
         private TextView noPlannedWorkouts;
         @Override
@@ -155,18 +155,18 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             workoutsRecycler = view.findViewById(R.id.workoutsRecycler);
             noPlannedWorkouts = view.findViewById(R.id.noPlannedWorkouts);
 
-            createNewTemplateButton = view.findViewById(R.id.createNewTemplate);
+            loadFromTemplatesButton = view.findViewById(R.id.loadFromTemplates);
             addNewWorkoutButton = view.findViewById(R.id.addNewWorkout);
 
             viewSwitcher = view.findViewById(R.id.viewSwitcher);
         }
 
         private void initButtonListeners(){
-            createNewTemplateButton.setOnClickListener(v -> { // Логика должна быть добавлена
+            loadFromTemplatesButton.setOnClickListener(v -> { // Логика должна быть добавлена
 
             });
 
-            addNewWorkoutButton.setOnClickListener(v -> { // Логика должна быть добавлена
+            addNewWorkoutButton.setOnClickListener(v -> {
                 WorkoutsBuilderFragment workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT);
                 WorkoutsBuilderFragment.TAG = "Another Instance"; // idk if this name is important
 
