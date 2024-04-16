@@ -78,9 +78,9 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
         if (workoutTemplates.isEmpty()) {
             return;
         }
-
         List<WorkoutTemplateInfo> workoutTemplatesInfo = WorkoutListUtils.parseWorkoutTemplatesForAdapter(workoutTemplates);
         setWorkoutTemplatesRecycler(workoutTemplatesInfo);
+
     }
 
     private void setWorkoutTemplatesRecycler(List<WorkoutTemplateInfo> workoutTemplatesInfo){
