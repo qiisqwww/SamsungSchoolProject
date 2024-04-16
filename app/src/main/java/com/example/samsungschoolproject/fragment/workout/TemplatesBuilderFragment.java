@@ -18,14 +18,17 @@ import android.widget.Button;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.Exercise;
+import com.example.samsungschoolproject.database.model.WorkoutTemplate;
+import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
+import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilderAdapter.StartPreviousFragment {
+public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilderAdapter.StartPreviousFragment, WorkoutBuilderAdapter.LoadJustCreated {
     private Button goBackButton;
     private WorkoutHelperDatabase database;
     private RecyclerView templateBuilderRecycler;
@@ -78,10 +81,29 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
     private void setWorkoutBuilderRecycler(){
         List<String> stringExercises = ExerciseListUtils.parseExerciseToStrings(getAllExercises());
 
-        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, templateBuilderRecycler, this);
+        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, templateBuilderRecycler, this, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         templateBuilderRecycler.setLayoutManager(layoutManager);
         templateBuilderRecycler.setAdapter(workoutBuilderAdapter);
+    }
+
+    @Override
+    public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises) {
+        WorkoutTemplate workoutTemplate = new WorkoutTemplate(name, WorkoutListUtils.countWorkoutLength(exercises));
+        database.getWorkoutTemplateDAO().addWorkoutTemplate(workoutTemplate);
+
+        workoutTemplate = database.getWorkoutTemplateDAO().getWorkoutTemplateByName(name);
+        for (int i = 0; i < exercises.size(); i++){
+            ArrayList<String> exerciseInfo = exercises.get(i);
+            Exercise exercise = database.getExerciseDAO().getExerciseByName(exerciseInfo.get(0));
+            database.getWorkoutTemplateExerciseDAO().addWorkoutTemplateExercise(new WorkoutTemplateExercise(
+                    workoutTemplate.id,
+                    exercise.id,
+                    Integer.valueOf(exerciseInfo.get(2)),
+                    Integer.valueOf(exerciseInfo.get(1)),
+                    i+1
+            ));
+        }
     }
 
     @Override

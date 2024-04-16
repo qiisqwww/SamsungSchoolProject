@@ -170,7 +170,6 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
                 WorkoutsBuilderFragment workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT);
                 WorkoutsBuilderFragment.TAG = "Another Instance"; // idk if this name is important
 
-                WorkoutListUtils.date = CalendarUtils.selectedDate.toString();
                 workoutsBuilderFragment.show(getActivity().getSupportFragmentManager(), WorkoutsBuilderFragment.TAG);
             });
         }
@@ -179,7 +178,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         private void loadWorkouts(){
             List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
 
-            if (plannedWorkouts.size() == 0){// Если нет тренировок на этот день, то нужно выйти из метода
+            if (plannedWorkouts.isEmpty()){// Если нет тренировок на этот день, то нужно выйти из метода
                 // Если не установлено сообщение о том, что нет тренировок, то установить его
                 if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
                     viewSwitcher.showNext();

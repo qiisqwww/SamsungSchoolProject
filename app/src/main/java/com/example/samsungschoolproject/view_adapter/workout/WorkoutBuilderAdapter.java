@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.enums.WorkoutBuilderAdapterStates;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
-import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.exercise.SpinnerAdapter;
 
 import java.util.ArrayList;
@@ -24,19 +23,25 @@ import java.util.List;
 
 public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private int length = 4;
-    private WorkoutBuilderAdapterStates state;
+    private WorkoutBuilderAdapterStates adapterCreatingState;
     private EditText name;
-    public ArrayList<ArrayList<String>> views;
+    private ArrayList<ArrayList<String>> viewItems;
     private final RecyclerView workoutBuilderRecycler;
     private final StartPreviousFragment startPreviousFragment;
+    private final LoadJustCreated loadJustCreated;
     private final List<String> exercises;
 
-    public WorkoutBuilderAdapter (List<String> exercises, RecyclerView workoutBuilderRecycler, StartPreviousFragment startPreviousFragment){
+    public WorkoutBuilderAdapter (
+            List<String> exercises,
+            RecyclerView workoutBuilderRecycler,
+            StartPreviousFragment startPreviousFragment,
+            LoadJustCreated loadJustCreated){
         this.workoutBuilderRecycler = workoutBuilderRecycler;
         this.exercises = exercises;
-        this.state = WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING;
+        this.adapterCreatingState = WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING;
         this.startPreviousFragment = startPreviousFragment;
-        views = new ArrayList<>();
+        this.loadJustCreated = loadJustCreated;
+        viewItems = new ArrayList<>();
     }
 
     @Override
@@ -71,7 +76,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         parent,
                         false
                 );
-                return new SaveWorkoutButtonViewHolder(view, this, startPreviousFragment);
+                return new SaveWorkoutButtonViewHolder(view, this, startPreviousFragment, loadJustCreated);
         }
 
         return null;
@@ -92,16 +97,16 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return 1; //  fillExercise Field
     }
     public void addView(ArrayList<String> template){
-        if (state == WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING){
-            views.add(template);
+        if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING){
+            viewItems.add(template);
         }
-        if (state == WorkoutBuilderAdapterStates.ADAPTER_CREATED){
-            views.add(length-3, template);
+        if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_CREATED){
+            viewItems.add(length-3, template);
         }
     }
 
     public ArrayList<String> getItemViewByPosition(int position){
-        return views.get(position);
+        return viewItems.get(position);
     }
 
     public void addExercise(){
@@ -113,13 +118,13 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public void deleteExercise(int position){
         length--;
-        views.remove(position);
+        viewItems.remove(position);
         workoutBuilderRecycler.removeViewAt(position);
         notifyItemRemoved(position);
     }
 
     public void setStateCreated(){
-        state = WorkoutBuilderAdapterStates.ADAPTER_CREATED;
+        adapterCreatingState = WorkoutBuilderAdapterStates.ADAPTER_CREATED;
     }
 
     @Override
@@ -136,22 +141,16 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public void startPreviousFragment();
     }
 
+    public interface LoadJustCreated {
+        public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises);
+    }
+
     public static class InputNameViewHolder extends RecyclerView.ViewHolder{
-        private final View itemView;
-        private EditText name;
-        private final WorkoutBuilderAdapter workoutBuilderAdapter;
         public InputNameViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter) {
             super(itemView);
-            this.itemView = itemView;
-            this.workoutBuilderAdapter = workoutBuilderAdapter;
 
             workoutBuilderAdapter.addView(new ArrayList<>());
-            initWidgets();
             workoutBuilderAdapter.name = itemView.findViewById(R.id.inputedName);
-        }
-
-        private void initWidgets(){
-            name = itemView.findViewById(R.id.inputedName);
         }
     }
 
@@ -232,7 +231,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         exercise.set(0, parent.getItemAtPosition(position).toString());
                     }
 
-                    workoutBuilderAdapter.views.set(getBindingAdapterPosition(), exercise);
+                    workoutBuilderAdapter.viewItems.set(getBindingAdapterPosition(), exercise);
                 }
 
                 @Override
@@ -244,10 +243,10 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             approachesListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    ArrayList<String> exercise = workoutBuilderAdapter.views.get(getBindingAdapterPosition());
+                    ArrayList<String> exercise = workoutBuilderAdapter.viewItems.get(getBindingAdapterPosition());
                     exercise.set(1, parent.getItemAtPosition(position).toString());
 
-                    workoutBuilderAdapter.views.set(getBindingAdapterPosition(), exercise);
+                    workoutBuilderAdapter.viewItems.set(getBindingAdapterPosition(), exercise);
                 }
 
                 @Override
@@ -259,10 +258,10 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             repeatsListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    ArrayList<String> exercise = workoutBuilderAdapter.views.get(getBindingAdapterPosition());
+                    ArrayList<String> exercise = workoutBuilderAdapter.viewItems.get(getBindingAdapterPosition());
                     exercise.set(2, parent.getItemAtPosition(position).toString());
 
-                    workoutBuilderAdapter.views.set(getBindingAdapterPosition(), exercise);
+                    workoutBuilderAdapter.viewItems.set(getBindingAdapterPosition(), exercise);
                 }
 
                 @Override
@@ -274,13 +273,11 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public static class AddExerciseViewHolder extends RecyclerView.ViewHolder{
-        private final View itemView;
         private final Button addExerciseButton;
         private final WorkoutBuilderAdapter workoutBuilderAdapter;
 
         public AddExerciseViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter) {
             super(itemView);
-            this.itemView = itemView;
             addExerciseButton = itemView.findViewById(R.id.addExercise);
             this.workoutBuilderAdapter = workoutBuilderAdapter;
             workoutBuilderAdapter.addView(new ArrayList<>());
@@ -297,16 +294,20 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public static class SaveWorkoutButtonViewHolder extends RecyclerView.ViewHolder{
         private final Button saveWorkoutButton;
-        private final View itemView;
         private final WorkoutBuilderAdapter workoutBuilderAdapter;
         private final StartPreviousFragment startPreviousFragment;
+        private final LoadJustCreated loadJustCreated;
 
-        public SaveWorkoutButtonViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter, StartPreviousFragment startPreviousFragment) {
+        public SaveWorkoutButtonViewHolder(
+                @NonNull View itemView,
+                WorkoutBuilderAdapter workoutBuilderAdapter,
+                StartPreviousFragment startPreviousFragment,
+                LoadJustCreated loadJustCreated) {
             super(itemView);
-            this.itemView = itemView;
             saveWorkoutButton = itemView.findViewById(R.id.saveWorkout);
             this.workoutBuilderAdapter = workoutBuilderAdapter;
             this.startPreviousFragment = startPreviousFragment;
+            this.loadJustCreated = loadJustCreated;
 
             workoutBuilderAdapter.addView(new ArrayList<>());
 
@@ -316,13 +317,14 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         private void initButtonListeners(){
             saveWorkoutButton.setOnClickListener( v -> {
-                WorkoutListUtils.name = readNameFromField();
-                if (WorkoutListUtils.name.isEmpty()){ // Отработает, если человек не ввел данные (в таком случае сохранить нельзя)
+                String name = readNameFromField();
+                if (name.isEmpty()){ // Отработает, если человек не ввел данные (в таком случае сохранить нельзя)
                     Toast.makeText(saveWorkoutButton.getContext(), R.string.need_to_input_name, Toast.LENGTH_LONG).show();
                     return;
                 }
-                WorkoutListUtils.exercises = readExercisesFromFields();
+                ArrayList<ArrayList<String>> exercises = readExercisesFromFields();
 
+                loadJustCreated.loadJustCreated(name, exercises);
                 startPreviousFragment(); // Запускает предыдущий фрагмент (список шаблонов)
             });
         }
@@ -340,7 +342,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
 
             for (int i = 1; i < length - 2; i++){
-                ArrayList<String> exercise = workoutBuilderAdapter.views.get(i);
+                ArrayList<String> exercise = workoutBuilderAdapter.viewItems.get(i);
                 exercises.add(exercise);
             }
 

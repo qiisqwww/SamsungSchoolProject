@@ -73,42 +73,14 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     }
 
     private void loadTemplatesList() {
-        if (!WorkoutListUtils.name.isEmpty()){
-            Log.d("GG", WorkoutListUtils.name);
-            loadNewTemplateFromUtils();
-        }
-
-
         List<WorkoutTemplate> workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
 
         if (workoutTemplates.isEmpty()) {
-            Log.d("GG", "isEmpty");
             return;
         }
 
         List<WorkoutTemplateInfo> workoutTemplatesInfo = WorkoutListUtils.parseWorkoutTemplatesForAdapter(workoutTemplates);
         setWorkoutTemplatesRecycler(workoutTemplatesInfo);
-    }
-
-    private void loadNewTemplateFromUtils(){
-        WorkoutTemplate workoutTemplate = new WorkoutTemplate(WorkoutListUtils.name, WorkoutListUtils.countWorkoutLength());
-        database.getWorkoutTemplateDAO().addWorkoutTemplate(workoutTemplate);
-
-        workoutTemplate = database.getWorkoutTemplateDAO().getWorkoutTemplateByName(WorkoutListUtils.name);
-        for (int i = 0; i < WorkoutListUtils.exercises.size(); i++){
-            ArrayList<String> exerciseInfo = WorkoutListUtils.exercises.get(i);
-            Exercise exercise = database.getExerciseDAO().getExerciseByName(exerciseInfo.get(0));
-            database.getWorkoutTemplateExerciseDAO().addWorkoutTemplateExercise(new WorkoutTemplateExercise(
-                    workoutTemplate.id,
-                    exercise.id,
-                    Integer.valueOf(exerciseInfo.get(2)),
-                    Integer.valueOf(exerciseInfo.get(1)),
-                    i+1
-            ));
-        }
-
-        WorkoutListUtils.name = "";
-        WorkoutListUtils.exercises = new ArrayList<>(); // Очищаю введенные данные
     }
 
     private void setWorkoutTemplatesRecycler(List<WorkoutTemplateInfo> workoutTemplatesInfo){

@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutListUtils {
-    public static String name = "";
-    public static String date = "";
-    public static ArrayList<ArrayList<String>> exercises;
-
     private static String parseLengthTime(int length){
         if (length%100 >= 5 && length%100 <= 20){
             return " минут";
@@ -62,7 +58,7 @@ public class WorkoutListUtils {
         return workoutsInfo;
     }
 
-    public static int countWorkoutLength(){
+    public static int countWorkoutLength(ArrayList<ArrayList<String>> exercises){
         int workoutLength = 0;
         for (int i = 0; i < exercises.size(); i++){
             ArrayList<String> exercise = exercises.get(0);

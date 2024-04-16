@@ -101,7 +101,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
             workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT);
             WorkoutsBuilderFragment.TAG = "Another Instance"; // idk if this name is important
 
-            WorkoutListUtils.date = CalendarUtils.selectedDate.toString();
             workoutsBuilderFragment.show(getActivity().getSupportFragmentManager(), WorkoutsBuilderFragment.TAG);
         });
     }
