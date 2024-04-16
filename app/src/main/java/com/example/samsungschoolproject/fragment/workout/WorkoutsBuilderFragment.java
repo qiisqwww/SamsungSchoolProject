@@ -19,13 +19,14 @@ import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilder;
+import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
 
-public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implements WorkoutBuilderAdapter.StartTemplateListFragment{
+public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implements WorkoutBuilderAdapter.StartPreviousFragment{
     public static String TAG;
     private Button goBackButton;
     private BackFragmentForBuilder backFragmentForBuilder;
@@ -67,13 +68,7 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
 
     private void initButtonListeners(){
         goBackButton.setOnClickListener(v -> {
-            if (backFragmentForBuilder == BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT){
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().remove(this).commit();
-            }
-            if (backFragmentForBuilder == BackFragmentForBuilder.BACK_TO_MONTH_FRAGMENT){
-                // Нужно обдумать логику
-            }
+            startPreviousFragment();
         });
     }
 
@@ -92,10 +87,18 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
     }
 
     @Override
-    public void startTemplateListFragment() {
-        TemplatesListFragment templatesListFragment = new TemplatesListFragment();
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.remove(new TemplatesListFragment());
-        fragmentTransaction.replace(R.id.workoutTemplatesContainer, templatesListFragment).commit();
+    public void startPreviousFragment() {
+        if (backFragmentForBuilder == BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT){
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().remove(this).commit();
+        }
+        if (backFragmentForBuilder == BackFragmentForBuilder.BACK_TO_MONTH_FRAGMENT){
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().remove(this).commit();
+            MonthCalendarFragment.ModalBottomSheetFragment modalBottomSheet = new MonthCalendarFragment.ModalBottomSheetFragment();
+            MonthCalendarFragment.ModalBottomSheetFragment.TAG = "Another Instance"; // idk if this name is important
+
+            modalBottomSheet.show(getActivity().getSupportFragmentManager(), MonthCalendarFragment.ModalBottomSheetFragment.TAG);
+        }
     }
 }

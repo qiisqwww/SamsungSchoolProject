@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:text="@string/back"
-        android:backgroundTint="@color/additionalButtonsColor"/>
+        android:backgroundTint="@color/additionalButtonsColor"
+        android:textColor="@color/white"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/workoutBuilderRecycler"

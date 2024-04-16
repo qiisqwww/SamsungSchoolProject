@@ -19,7 +19,9 @@ import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
+import com.example.samsungschoolproject.enums.BackFragmentForBuilder;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
+import com.example.samsungschoolproject.fragment.workout.WorkoutsBuilderFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.calendar.CalendarAdapter;
@@ -165,7 +167,11 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             });
 
             addNewWorkoutButton.setOnClickListener(v -> { // Логика должна быть добавлена
+                WorkoutsBuilderFragment workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT);
+                WorkoutsBuilderFragment.TAG = "Another Instance"; // idk if this name is important
 
+                WorkoutListUtils.date = CalendarUtils.selectedDate.toString();
+                workoutsBuilderFragment.show(getActivity().getSupportFragmentManager(), WorkoutsBuilderFragment.TAG);
             });
         }
 

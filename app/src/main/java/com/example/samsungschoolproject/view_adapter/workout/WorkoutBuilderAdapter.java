@@ -23,20 +23,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private int length = 0;
+    private int length = 4;
     private WorkoutBuilderAdapterStates state;
     private EditText name;
     public ArrayList<ArrayList<String>> views;
     private final RecyclerView workoutBuilderRecycler;
-    private final StartTemplateListFragment startTemplateListFragment;
+    private final StartPreviousFragment startPreviousFragment;
     private final List<String> exercises;
 
-    public WorkoutBuilderAdapter (List<String> exercises, RecyclerView workoutBuilderRecycler, StartTemplateListFragment startTemplateListFragment){
+    public WorkoutBuilderAdapter (List<String> exercises, RecyclerView workoutBuilderRecycler, StartPreviousFragment startPreviousFragment){
         this.workoutBuilderRecycler = workoutBuilderRecycler;
         this.exercises = exercises;
-        this.startTemplateListFragment = startTemplateListFragment;
         this.state = WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING;
-
+        this.startPreviousFragment = startPreviousFragment;
         views = new ArrayList<>();
     }
 
@@ -72,7 +71,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         parent,
                         false
                 );
-                return new SaveWorkoutButtonViewHolder(view, this, startTemplateListFragment);
+                return new SaveWorkoutButtonViewHolder(view, this, startPreviousFragment);
         }
 
         return null;
@@ -133,8 +132,8 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return length;
     }
 
-    public interface StartTemplateListFragment{
-        public void startTemplateListFragment();
+    public interface StartPreviousFragment{
+        public void startPreviousFragment();
     }
 
     public static class InputNameViewHolder extends RecyclerView.ViewHolder{
@@ -300,14 +299,14 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private final Button saveWorkoutButton;
         private final View itemView;
         private final WorkoutBuilderAdapter workoutBuilderAdapter;
-        private final StartTemplateListFragment startTemplateListFragment;
+        private final StartPreviousFragment startPreviousFragment;
 
-        public SaveWorkoutButtonViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter, StartTemplateListFragment startTemplateListFragment) {
+        public SaveWorkoutButtonViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter, StartPreviousFragment startPreviousFragment) {
             super(itemView);
             this.itemView = itemView;
             saveWorkoutButton = itemView.findViewById(R.id.saveWorkout);
             this.workoutBuilderAdapter = workoutBuilderAdapter;
-            this.startTemplateListFragment = startTemplateListFragment;
+            this.startPreviousFragment = startPreviousFragment;
 
             workoutBuilderAdapter.addView(new ArrayList<>());
 
@@ -324,7 +323,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
                 WorkoutListUtils.exercises = readExercisesFromFields();
 
-                startTemplatesListFragment(); // Запускает предыдущий фрагмент (список шаблонов)
+                startPreviousFragment(); // Запускает предыдущий фрагмент (список шаблонов)
             });
         }
 
@@ -348,8 +347,8 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return exercises;
         }
 
-        private void startTemplatesListFragment(){
-            startTemplateListFragment.startTemplateListFragment();
+        private void startPreviousFragment(){
+            startPreviousFragment.startPreviousFragment();
         }
     }
 }

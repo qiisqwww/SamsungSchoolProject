@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilderAdapter.StartTemplateListFragment {
+public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilderAdapter.StartPreviousFragment {
     private Button goBackButton;
     private WorkoutHelperDatabase database;
     private RecyclerView templateBuilderRecycler;
@@ -85,7 +85,7 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
     }
 
     @Override
-    public void startTemplateListFragment() {
+    public void startPreviousFragment() {
         TemplatesListFragment templatesListFragment = new TemplatesListFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.remove(new TemplatesListFragment());
