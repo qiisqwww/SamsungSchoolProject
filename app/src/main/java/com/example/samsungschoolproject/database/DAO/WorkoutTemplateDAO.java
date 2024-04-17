@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface WorkoutTemplateDAO {
     @Insert
-    public void addWorkoutTemplate(WorkoutTemplate workoutTemplate);
+    public long addWorkoutTemplate(WorkoutTemplate workoutTemplate);
 
     @Update
     public void updateWorkoutTemplate(WorkoutTemplate workoutTemplate);

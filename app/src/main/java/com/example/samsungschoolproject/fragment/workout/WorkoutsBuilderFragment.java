@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
@@ -30,7 +31,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implements WorkoutBuilderAdapter.StartPreviousFragment, WorkoutBuilderAdapter.LoadJustCreated {
+public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implements WorkoutBuilderAdapter.LoadJustCreated {
     public static String TAG;
     private Button goBackButton;
     private BackFragmentForBuilderStates backFragmentForBuilderStates;
@@ -92,7 +93,7 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
     private void setWorkoutBuilderRecycler(){
         List<String> stringExercises = ExerciseListUtils.parseExerciseToStrings(getAllExercises());
 
-        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, workoutBuilderRecycler, this, this);
+        WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, workoutBuilderRecycler, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutBuilderRecycler.setLayoutManager(layoutManager);
         workoutBuilderRecycler.setAdapter(workoutBuilderAdapter);
@@ -102,25 +103,37 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
     @Override
     public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises) {
         PlannedWorkout plannedWorkout = new PlannedWorkout(name, WorkoutListUtils.countWorkoutLength(exercises), "False", CalendarUtils.selectedDate.toString());
-        database.getPlannedWorkoutDAO().addPlannedWorkout(plannedWorkout);
 
-        plannedWorkout = database.getPlannedWorkoutDAO().getPlannedWorkoutByDateAndName(plannedWorkout.date, plannedWorkout.name);
+        // Необходимо проверить, что тренировка с таким же именем еще не запланирована на сегодня
+        List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
+        for (int i = 0; i < plannedWorkouts.size(); i++){
+            if(plannedWorkout.name.equals(plannedWorkouts.get(i).name)){
+                Toast.makeText(getContext(), R.string.workout_already_exists, Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
 
+        // Добавляем новую запись в таблицу planned_workouts
+        long newPlannedWorkoutID = database.getPlannedWorkoutDAO().addPlannedWorkout(plannedWorkout);
+        int plannedWorkoutID = Math.toIntExact(newPlannedWorkoutID);
+
+        // Добавляем связанные записи в таблицу planned_workout_exercises
         for (int i = 0; i < exercises.size(); i++){
             ArrayList<String> exerciseInfo = exercises.get(i);
             Exercise exercise = database.getExerciseDAO().getExerciseByName(exerciseInfo.get(0));
             database.getPlannedWorkoutExerciseDAO().addPlannedWorkoutExercise(new PlannedWorkoutExercise(
-                    plannedWorkout.id,
+                    plannedWorkoutID,
                     exercise.id,
-                    Integer.valueOf(exerciseInfo.get(2)),
                     Integer.valueOf(exerciseInfo.get(1)),
+                    Integer.valueOf(exerciseInfo.get(2)),
                     i+1
             ));
         }
+
+        startPreviousFragment();
     }
 
     // Запускает предыдущий фрагмент исходя из состояния BackFragmentForBuilderStates
-    @Override
     public void startPreviousFragment() {
         if (backFragmentForBuilderStates == BackFragmentForBuilderStates.BACK_TO_WEEK_FRAGMENT){
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

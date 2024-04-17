@@ -31,11 +31,11 @@ public class PlannedWorkoutExercise {
 
     public int number_in_query;
 
-    public PlannedWorkoutExercise(int planned_workout_id, int exercise_id, int repeats, int approaches, int number_in_query) {
+    public PlannedWorkoutExercise(int planned_workout_id, int exercise_id, int approaches, int repeats, int number_in_query) {
         this.planned_workout_id = planned_workout_id;
         this.exercise_id = exercise_id;
-        this.repeats = repeats;
         this.approaches = approaches;
+        this.repeats = repeats;
         this.number_in_query = number_in_query;
     }
 }
