@@ -61,6 +61,7 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
         loadTemplates();
     }
 
+    // Необходим для того, чтобы обновить список отображаемых PlannedWorkout
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -72,6 +73,7 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
         headInfoTV = view.findViewById(R.id.headInfoTV);
     }
 
+    // Загружает список из WorkoutTemplate's из БД
     private void loadTemplates(){
         workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
 
@@ -90,6 +92,7 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
         workoutTemplatesRecycler.setAdapter(workoutTemplateListAdapter);
     }
 
+    // Отрабатывает при нажатии на WorkoutTemplate (т.е. при выборе шаблона, по которому нужно создать тренировку)
     @Override
     public void onWorkoutItemClick(int position) {
         WorkoutTemplate workoutTemplate = workoutTemplates.get(position);

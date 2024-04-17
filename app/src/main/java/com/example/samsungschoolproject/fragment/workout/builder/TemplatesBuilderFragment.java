@@ -89,6 +89,7 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
         templateBuilderRecycler.setAdapter(workoutBuilderAdapter);
     }
 
+    // Загружает в БД только что созданную тренировку
     @Override
     public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises) {
         WorkoutTemplate workoutTemplate = new WorkoutTemplate(name, WorkoutListUtils.countWorkoutLength(exercises));
@@ -122,6 +123,7 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
         startPreviousFragment();
     }
 
+    // Запускает предыдущий фрагмент
     public void startPreviousFragment() {
         TemplatesListFragment templatesListFragment = new TemplatesListFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();

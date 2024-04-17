@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         mainFragmentsAdapter.Add(new TemplatesFragment(), getResources().getString(R.string.templates));
     }
 
+    // Вызов метода getInstance, чтобы создать объект БД при создании MainActivity
     private void initDatabase(){
         WorkoutHelperDatabase.getInstance(getApplicationContext());
     }

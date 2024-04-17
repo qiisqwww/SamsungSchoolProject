@@ -99,7 +99,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
             setWeekView();
         });
 
-        loadFromTemplatesButton.setOnClickListener(v -> { // TODO: Добавить функционал
+        loadFromTemplatesButton.setOnClickListener(v -> {
             WorkoutFromTemplateListFragment workoutFromTemplateListFragment = new WorkoutFromTemplateListFragment(workoutListAdapter);
             WorkoutFromTemplateListFragment.TAG = "New Instance"; // idk if this name is important
 

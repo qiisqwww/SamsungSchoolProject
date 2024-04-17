@@ -32,6 +32,7 @@ public abstract class WorkoutHelperDatabase extends RoomDatabase {
     public abstract WorkoutTemplateExerciseDAO getWorkoutTemplateExerciseDAO();
     public static WorkoutHelperDatabase database = null;
 
+    // Singleton
     public static WorkoutHelperDatabase getInstance(Context context){
         if (database == null){
             database = Room.databaseBuilder(context, WorkoutHelperDatabase.class, "workout_helper").allowMainThreadQueries().createFromAsset("database/workout_helper.db").build();

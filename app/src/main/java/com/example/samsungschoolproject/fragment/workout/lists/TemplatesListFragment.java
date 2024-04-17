@@ -71,6 +71,7 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
         });
     }
 
+    // Загружает список из WorkoutTemplate's из БД
     private void loadTemplatesList() {
         workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
 

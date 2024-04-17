@@ -33,6 +33,7 @@ public class TemplatesFragment extends Fragment {
         startTemplatesListFragment();
     }
 
+    // Заполняет контейнер фрагментом, содержащим в себе список WorkoutTemplate's
     private void startTemplatesListFragment(){
         TemplatesListFragment templatesListFragment = new TemplatesListFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

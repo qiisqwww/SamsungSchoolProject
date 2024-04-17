@@ -46,10 +46,6 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         return plannedWorkouts.size();
     }
 
-    public List<PlannedWorkout> getPlannedWorkouts(){
-        return plannedWorkouts;
-    }
-
     public void update(){
         updateRecycler.updateRecycler();
     }

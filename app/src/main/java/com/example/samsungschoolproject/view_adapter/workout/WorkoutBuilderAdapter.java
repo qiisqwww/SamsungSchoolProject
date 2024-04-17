@@ -234,6 +234,9 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     ArrayList<String> exercise = workoutBuilderAdapter.getItemViewByPosition(getBindingAdapterPosition());
+                    /* При добавлении "второго" упражнения во время создания тренировки/шаблона
+                     * зачем-то создается 3 объекта, причем второй и третий пустые. Потому приходится
+                     * проверять, что exercise для этого объекта не пустой и объект был создан корректно */ // TODO: Выяснить, почему создается 3 объекта вместо 1
                     if (exercise.isEmpty()){
                         exercise.add(parent.getItemAtPosition(position).toString());
                         exercise.add("1");
@@ -262,9 +265,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
+                public void onNothingSelected(AdapterView<?> parent) {} // Нет логики
             });
 
             repeatsListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -277,9 +278,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
+                public void onNothingSelected(AdapterView<?> parent) {} // Нет логики
             });
         }
     }
@@ -321,7 +320,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             workoutBuilderAdapter.addToViewItems(new ArrayList<>());
 
             initButtonListeners();
-            workoutBuilderAdapter.setStateCreated();
+            workoutBuilderAdapter.setStateCreated(); // Устанавливает состояние, что adapter создан
         }
 
         private void initButtonListeners(){
@@ -337,10 +336,12 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             });
         }
 
+        // Возвращает введенное пользователем название тренировки
         private String readNameFromField(){
             return workoutBuilderAdapter.getName();
         }
 
+        // Возвращает выбранные пользователем упражнения
         private ArrayList<ArrayList<String>> readExercisesFromFields(){
             ArrayList<ArrayList<String>> exercises = new ArrayList<>();
 

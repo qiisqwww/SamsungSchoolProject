@@ -7,9 +7,7 @@ import android.widget.Button;
 
 import com.example.samsungschoolproject.R;
 
-
-
-
+// TODO: Добавить функционал для настроек + !ВОЗМОЖНО! удалить активность и сделать отдельный фрагмент
 public class SettingsMenuActivity extends AppCompatActivity {
     Button backToMenuButton;
 
