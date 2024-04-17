@@ -22,7 +22,7 @@ public class WorkoutListUtils {
         return " минут";
     }
     public static String configureWorkoutLengthInfo(int approximate_length){
-        return "~ " + String.valueOf(approximate_length) + parseLengthTime(approximate_length);
+        return "Длительность ~ " + String.valueOf(approximate_length) + parseLengthTime(approximate_length);
     }
 
     public static int countWorkoutLength(ArrayList<ArrayList<String>> exercises){

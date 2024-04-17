@@ -34,4 +34,5 @@
     <string name="need_to_input_name">Введите название тренировки</string>
     <string name="choose_template">Выберите ваш шаблон, на основе которого нужно создать тренировку:</string>
     <string name="no_templates_yet">Вы еще не создали ни одного шаблона</string>
+    <string name="already_planned_today">Уже запланирован на сегодня</string>
 </resources>

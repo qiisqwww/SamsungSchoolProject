@@ -15,7 +15,6 @@ import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import java.util.List;
 
 public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.WorkoutViewHolder> {
-
     private final List<PlannedWorkout> plannedWorkouts;
     private final UpdateRecycler updateRecycler;
     private final OnWorkoutItemListener onWorkoutItemListener;
@@ -45,6 +44,10 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
     @Override
     public int getItemCount() {
         return plannedWorkouts.size();
+    }
+
+    public List<PlannedWorkout> getPlannedWorkouts(){
+        return plannedWorkouts;
     }
 
     public void update(){

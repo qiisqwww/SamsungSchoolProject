@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -92,6 +93,16 @@ public class WorkoutFromChoiceFragment extends BottomSheetDialogFragment impleme
     @Override
     public void onWorkoutItemClick(int position) {
         WorkoutTemplate workoutTemplate = workoutTemplates.get(position);
+
+        // Необходимо проверить, не пытается ли человек запланировать одинаковый шаблон дважды на один и тот же день
+        List<PlannedWorkout> alreadyPlannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
+        for (int i = 0; i < alreadyPlannedWorkouts.size(); i++){
+            Log.d("GG", alreadyPlannedWorkouts.get(i).name + " " + workoutTemplate.name);
+            if (alreadyPlannedWorkouts.get(i).name.equals(workoutTemplate.name)){
+                Toast.makeText(getContext(), R.string.already_planned_today, Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
 
         // Добавляем запись в таблицу planned_workouts
         PlannedWorkout newPlannedWorkout = new PlannedWorkout(workoutTemplate.name, workoutTemplate.approximate_length, "False", CalendarUtils.selectedDate.toString());
