@@ -1,5 +1,6 @@
 package com.example.samsungschoolproject.view_adapter.workout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
             super(itemView);
             templateItemBinding = TemplateItemBinding.bind(itemView);
             this.onWorkoutItemListener = onWorkoutItemListener;
+            itemView.setOnClickListener(this);
         }
 
         public void bind(WorkoutTemplate workoutTemplate){

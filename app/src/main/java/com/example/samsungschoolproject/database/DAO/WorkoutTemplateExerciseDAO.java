@@ -8,6 +8,8 @@ import androidx.room.Update;
 
 import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 
+import java.util.List;
+
 @Dao
 public interface WorkoutTemplateExerciseDAO {
     @Insert
@@ -21,5 +23,5 @@ public interface WorkoutTemplateExerciseDAO {
 
 
     @Query("SELECT * FROM workout_template_exercises WHERE workout_template_id==:workoutTemplateId")
-    public WorkoutTemplateExercise getWorkoutTemplateExercisesByWorkoutId(int workoutTemplateId);
+    public List<WorkoutTemplateExercise> getWorkoutTemplateExercisesByWorkoutTemplateId(int workoutTemplateId);
 }

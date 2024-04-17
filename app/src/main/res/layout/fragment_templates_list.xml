@@ -17,7 +17,7 @@
         android:layout_gravity="bottom|center"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/additionalButtonsColor"
-        android:text="@string/add_new_workout"
+        android:text="@string/add_workout_template"
         android:textColor="@color/white" />
 
 </LinearLayout>

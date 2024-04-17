@@ -1,6 +1,7 @@
 package com.example.samsungschoolproject.fragment.workout;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,26 +9,36 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
+import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
+import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 import com.example.samsungschoolproject.utils.CalendarUtils;
-import com.example.samsungschoolproject.utils.WorkoutListUtils;
+import com.example.samsungschoolproject.view_adapter.workout.WorkoutListAdapter;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutTemplateListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
 
 public class WorkoutFromChoiceFragment extends BottomSheetDialogFragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener {
+    public static String TAG;
     private WorkoutHelperDatabase database;
     private RecyclerView workoutTemplatesRecycler;
     private TextView headInfoTV;
     private WorkoutTemplateListAdapter workoutTemplateListAdapter;
+    private final WorkoutListAdapter workoutListAdapter;
     private List<WorkoutTemplate> workoutTemplates;
+
+    public WorkoutFromChoiceFragment (WorkoutListAdapter workoutListAdapter){
+        this.workoutListAdapter = workoutListAdapter;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +58,12 @@ public class WorkoutFromChoiceFragment extends BottomSheetDialogFragment impleme
 
         initWidgets(view);
         loadTemplates();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        workoutListAdapter.update();
     }
 
     private void initWidgets(View view){
@@ -75,6 +92,27 @@ public class WorkoutFromChoiceFragment extends BottomSheetDialogFragment impleme
     @Override
     public void onWorkoutItemClick(int position) {
         WorkoutTemplate workoutTemplate = workoutTemplates.get(position);
-        PlannedWorkout newPlannedWorkout = new PlannedWorkout(workoutTemplate.name, workoutTemplate.approximate_length, CalendarUtils.selectedDate.toString(), "False");
+
+        // Добавляем запись в таблицу planned_workouts
+        PlannedWorkout newPlannedWorkout = new PlannedWorkout(workoutTemplate.name, workoutTemplate.approximate_length, "False", CalendarUtils.selectedDate.toString());
+        long newPlannedWorkoutID = database.getPlannedWorkoutDAO().addPlannedWorkout(newPlannedWorkout);
+        int plannedWorkoutID = Math.toIntExact(newPlannedWorkoutID);
+
+        // Добавляем связанные записи в таблицу planned_workout_exercises
+        List<WorkoutTemplateExercise> workoutTemplateExercises = database.getWorkoutTemplateExerciseDAO().getWorkoutTemplateExercisesByWorkoutTemplateId(workoutTemplate.id);
+        for (int i = 0; i < workoutTemplateExercises.size(); i++){
+            WorkoutTemplateExercise workoutTemplateExercise = workoutTemplateExercises.get(i);
+            database.getPlannedWorkoutExerciseDAO().addPlannedWorkoutExercise(new PlannedWorkoutExercise(
+                    plannedWorkoutID,
+                    workoutTemplateExercise.exercise_id,
+                    workoutTemplateExercise.repeats,
+                    workoutTemplateExercise.approaches,
+                    workoutTemplateExercise.number_in_query
+                    ));
+        }
+
+        // Закрыть текущий фрагмент после выбора
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().remove(this).commit();
     }
 }

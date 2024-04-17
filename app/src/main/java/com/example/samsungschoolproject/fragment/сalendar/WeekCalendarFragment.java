@@ -21,6 +21,7 @@ import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 
+import com.example.samsungschoolproject.fragment.workout.WorkoutFromChoiceFragment;
 import com.example.samsungschoolproject.fragment.workout.WorkoutsBuilderFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.calendar.CalendarAdapter;
@@ -99,7 +100,10 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         });
 
         loadFromTemplatesButton.setOnClickListener(v -> { // TODO: Добавить функционал
+            WorkoutFromChoiceFragment workoutFromChoiceFragment = new WorkoutFromChoiceFragment(workoutListAdapter);
+            WorkoutFromChoiceFragment.TAG = "New Instance"; // idk if this name is important
 
+           workoutFromChoiceFragment.show(getActivity().getSupportFragmentManager(), WorkoutFromChoiceFragment.TAG);
         });
 
         addNewWorkoutButton.setOnClickListener(v -> {
