@@ -1,8 +1,9 @@
 package com.example.samsungschoolproject.enums;
 
 public enum SwitchToWeekStates {
-    JUST_SWITCHED_TO_WEEK_MODE,
     // Состояние указывает на то, что пользователь только что переключился на "недельный" режим
-    NOT_JUST_SWITCHED_TO_WEEK_MODE,
+    JUST_SWITCHED_TO_WEEK_MODE,
+
     // Отрицание предыдущего состояния
+    NOT_JUST_SWITCHED_TO_WEEK_MODE,
 }

@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import android.widget.ViewSwitcher;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
-import com.example.samsungschoolproject.enums.BackFragmentForBuilder;
+import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 
 import com.example.samsungschoolproject.fragment.workout.WorkoutsBuilderFragment;
@@ -99,12 +98,12 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
             setWeekView();
         });
 
-        loadFromTemplatesButton.setOnClickListener(v -> { // Логика должна быть добавлена
+        loadFromTemplatesButton.setOnClickListener(v -> { // TODO: Добавить функционал
 
         });
 
         addNewWorkoutButton.setOnClickListener(v -> {
-            workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT, workoutListAdapter);
+            workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilderStates.BACK_TO_WEEK_FRAGMENT, workoutListAdapter);
             WorkoutsBuilderFragment.TAG = "Another Instance"; // idk if this name is important
 
             workoutsBuilderFragment.show(getActivity().getSupportFragmentManager(), WorkoutsBuilderFragment.TAG);

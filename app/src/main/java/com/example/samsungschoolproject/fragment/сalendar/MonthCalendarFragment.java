@@ -19,11 +19,10 @@ import android.widget.ViewSwitcher;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
-import com.example.samsungschoolproject.enums.BackFragmentForBuilder;
+import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.fragment.workout.WorkoutsBuilderFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
-import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import com.example.samsungschoolproject.view_adapter.calendar.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -166,7 +165,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         }
 
         private void initButtonListeners(){
-            loadFromTemplatesButton.setOnClickListener(v -> { // Логика должна быть добавлена
+            loadFromTemplatesButton.setOnClickListener(v -> { // TODO: Добавить функционал
 
             });
 
@@ -176,7 +175,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
                     return;
                 }
 
-                WorkoutsBuilderFragment workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT, workoutListAdapter);
+                WorkoutsBuilderFragment workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilderStates.BACK_TO_WEEK_FRAGMENT, workoutListAdapter);
                 WorkoutsBuilderFragment.TAG = "Another Instance"; // idk if this name is important
 
                 workoutsBuilderFragment.show(getActivity().getSupportFragmentManager(), WorkoutsBuilderFragment.TAG);

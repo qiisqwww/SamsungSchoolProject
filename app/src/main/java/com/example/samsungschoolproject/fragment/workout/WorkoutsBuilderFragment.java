@@ -18,7 +18,7 @@ import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
-import com.example.samsungschoolproject.enums.BackFragmentForBuilder;
+import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
@@ -33,13 +33,13 @@ import java.util.List;
 public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implements WorkoutBuilderAdapter.StartPreviousFragment, WorkoutBuilderAdapter.LoadJustCreated {
     public static String TAG;
     private Button goBackButton;
-    private BackFragmentForBuilder backFragmentForBuilder;
+    private BackFragmentForBuilderStates backFragmentForBuilderStates;
     private WorkoutListAdapter workoutListAdapter;
     private WorkoutHelperDatabase database;
     private RecyclerView workoutBuilderRecycler;
 
-    public WorkoutsBuilderFragment(BackFragmentForBuilder backFragmentForBuilder, WorkoutListAdapter workoutListAdapter){
-        this.backFragmentForBuilder = backFragmentForBuilder;
+    public WorkoutsBuilderFragment(BackFragmentForBuilderStates backFragmentForBuilderStates, WorkoutListAdapter workoutListAdapter){
+        this.backFragmentForBuilderStates = backFragmentForBuilderStates;
         this.workoutListAdapter = workoutListAdapter;
     }
 
@@ -58,7 +58,7 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext()); //  Получить объект БД
+        database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
 
         initWidgets(view);
         initButtonListeners();
@@ -98,6 +98,7 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
         workoutBuilderRecycler.setAdapter(workoutBuilderAdapter);
     }
 
+    // Загружает в БД только что созданную тренировку
     @Override
     public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises) {
         PlannedWorkout plannedWorkout = new PlannedWorkout(name, WorkoutListUtils.countWorkoutLength(exercises), "False", CalendarUtils.selectedDate.toString());
@@ -118,13 +119,14 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
         }
     }
 
+    // Запускает предыдущий фрагмент исходя из состояния BackFragmentForBuilderStates
     @Override
     public void startPreviousFragment() {
-        if (backFragmentForBuilder == BackFragmentForBuilder.BACK_TO_WEEK_FRAGMENT){
+        if (backFragmentForBuilderStates == BackFragmentForBuilderStates.BACK_TO_WEEK_FRAGMENT){
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction().remove(this).commit();
         }
-        if (backFragmentForBuilder == BackFragmentForBuilder.BACK_TO_MONTH_FRAGMENT){
+        if (backFragmentForBuilderStates == BackFragmentForBuilderStates.BACK_TO_MONTH_FRAGMENT){
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction().remove(this).commit();
             MonthCalendarFragment.ModalBottomSheetFragment modalBottomSheet = new MonthCalendarFragment.ModalBottomSheetFragment();

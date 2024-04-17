@@ -72,7 +72,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
     }
 
     public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public final TextView day;
+        private final TextView day;
         private final OnCalendarItemListener onCalendarItemListener;
 
         public CalendarViewHolder(@NonNull View itemView, OnCalendarItemListener onCalendarItemListener) {
