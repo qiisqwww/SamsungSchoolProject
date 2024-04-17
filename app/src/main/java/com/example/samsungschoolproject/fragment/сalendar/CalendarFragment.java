@@ -16,11 +16,11 @@ import android.widget.Button;
 import com.example.samsungschoolproject.R;
 
 public class CalendarFragment extends Fragment {
-    public static Button switchModeButton;
+    private static Button switchModeButton;
 
     // nextFragment содержит фрагмент, который необходимо открыть следующим
     // при нажатии switchModeButton
-    public static Fragment nextFragment;
+    private static Fragment nextFragment;
 
 
     @Override
@@ -59,6 +59,16 @@ public class CalendarFragment extends Fragment {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.container, new MonthCalendarFragment());
         transaction.commit();
+    }
+
+    public static void setViewToWeekly(String week){
+        nextFragment = new MonthCalendarFragment();
+        switchModeButton.setText(week);
+    }
+
+    public static void setViewToMonthly(String month){
+        nextFragment = new WeekCalendarFragment();
+        switchModeButton.setText(month);
     }
 
     private void switchCalendarMode(){

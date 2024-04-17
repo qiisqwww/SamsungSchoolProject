@@ -62,9 +62,8 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
 
         // TODO: возможно, это костыль. Необходимо переделать.
-        // Код двумя строчками ниже необходим для корректной работы "обновления" данных после создания новой тренировки.
-        ArrayList<PlannedWorkout> plannedWorkouts = new ArrayList<>();
-        workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this);
+        // Код ниже необходим для корректной работы "обновления" данных после создания новой тренировки.
+        workoutListAdapter = new WorkoutListAdapter(new ArrayList<>(), this, this);
 
 
         initWidgets(view);
@@ -124,8 +123,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
             CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
         }
 
-        CalendarFragment.nextFragment = new MonthCalendarFragment();
-        CalendarFragment.switchModeButton.setText(getResources().getString(R.string.week));
+        CalendarFragment.setViewToWeekly(getResources().getString(R.string.week));
     }
 
     // Отрисовка "недельного" режима календаря

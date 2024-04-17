@@ -102,7 +102,6 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
     public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises) {
         PlannedWorkout plannedWorkout = new PlannedWorkout(name, WorkoutListUtils.countWorkoutLength(exercises), "False", CalendarUtils.selectedDate.toString());
         database.getPlannedWorkoutDAO().addPlannedWorkout(plannedWorkout);
-        // TODO: Сделать enum для is_completed
 
         plannedWorkout = database.getPlannedWorkoutDAO().getPlannedWorkoutByDateAndName(plannedWorkout.date, plannedWorkout.name);
 

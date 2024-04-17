@@ -94,8 +94,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
         }
 
-        CalendarFragment.nextFragment = new WeekCalendarFragment();
-        CalendarFragment.switchModeButton.setText(getResources().getString(R.string.month));
+        CalendarFragment.setViewToMonthly(getResources().getString(R.string.month));
     }
 
     // Отрисовка "месячного" режима календаря
@@ -148,9 +147,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
 
             // TODO: возможно, это костыль. Необходимо переделать.
-            // Код двумя строчками ниже необходим для корректной работы "обновления" данных после создания новой тренировки.
-            ArrayList<PlannedWorkout> plannedWorkouts = new ArrayList<>();
-            workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this);
+            // Код ниже необходим для корректной работы "обновления" данных после создания новой тренировки.
+            workoutListAdapter = new WorkoutListAdapter(new ArrayList<>(), this, this);
 
             initWidgets(view);
             loadWorkouts(); // Загружает список тренировок из базы данных
