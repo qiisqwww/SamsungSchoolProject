@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.fragment.workout;
+package com.example.samsungschoolproject.fragment.workout.lists;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -27,7 +27,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
 
-public class WorkoutFromChoiceFragment extends BottomSheetDialogFragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener {
+public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener {
     public static String TAG;
     private WorkoutHelperDatabase database;
     private RecyclerView workoutTemplatesRecycler;
@@ -36,7 +36,7 @@ public class WorkoutFromChoiceFragment extends BottomSheetDialogFragment impleme
     private final WorkoutListAdapter workoutListAdapter;
     private List<WorkoutTemplate> workoutTemplates;
 
-    public WorkoutFromChoiceFragment (WorkoutListAdapter workoutListAdapter){
+    public WorkoutFromTemplateListFragment(WorkoutListAdapter workoutListAdapter){
         this.workoutListAdapter = workoutListAdapter;
     }
 

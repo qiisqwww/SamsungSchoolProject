@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,8 @@ import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
-import com.example.samsungschoolproject.fragment.workout.WorkoutFromChoiceFragment;
-import com.example.samsungschoolproject.fragment.workout.WorkoutsBuilderFragment;
+import com.example.samsungschoolproject.fragment.workout.lists.WorkoutFromTemplateListFragment;
+import com.example.samsungschoolproject.fragment.workout.builder.WorkoutsBuilderFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.calendar.CalendarAdapter;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutListAdapter;
@@ -168,10 +167,10 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         private void initButtonListeners(){
             loadFromTemplatesButton.setOnClickListener(v -> {
-                WorkoutFromChoiceFragment workoutFromChoiceFragment = new WorkoutFromChoiceFragment(workoutListAdapter);
-                WorkoutFromChoiceFragment.TAG = "New Instance"; // idk if this name is important
+                WorkoutFromTemplateListFragment workoutFromTemplateListFragment = new WorkoutFromTemplateListFragment(workoutListAdapter);
+                WorkoutFromTemplateListFragment.TAG = "New Instance"; // idk if this name is important
 
-                workoutFromChoiceFragment.show(getActivity().getSupportFragmentManager(), WorkoutFromChoiceFragment.TAG);
+                workoutFromTemplateListFragment.show(getActivity().getSupportFragmentManager(), WorkoutFromTemplateListFragment.TAG);
             });
 
             addNewWorkoutButton.setOnClickListener(v -> {

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.fragment.workout.lists.TemplatesListFragment;
 
 public class TemplatesFragment extends Fragment {
     @Override

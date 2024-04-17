@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.fragment.workout;
+package com.example.samsungschoolproject.fragment.workout.lists;
 
 import android.os.Bundle;
 
@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
+import com.example.samsungschoolproject.fragment.workout.builder.TemplatesBuilderFragment;
 import com.example.samsungschoolproject.view_adapter.workout.WorkoutTemplateListAdapter;
 
 import java.util.List;
