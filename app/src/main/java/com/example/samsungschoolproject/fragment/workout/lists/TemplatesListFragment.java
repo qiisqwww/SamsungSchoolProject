@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +95,6 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     // TODO: Добавить вывод информации о шаблоне по нажатии на нее
     @Override
     public void onWorkoutItemClick(int position) {
-
+        Log.d("GG", String.valueOf(position));
     }
 }

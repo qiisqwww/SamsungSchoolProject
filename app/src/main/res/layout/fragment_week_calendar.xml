@@ -56,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp" />
 
-    <include layout="@layout/day_info"></include>
+    <include layout="@layout/day_info"/>
 
 
 </LinearLayout>

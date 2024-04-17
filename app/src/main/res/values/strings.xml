@@ -39,4 +39,6 @@
     <string name="workout_already_exists">Тренировка с таким именем уже запланирована сегодня</string>
     <string name="templates_list_empty_info">Тут будут шаблоны Ваших тренировок</string>
     <string name="templates_list_info">Шаблоны Ваших тренировок:</string>
+    <string name="tap_on_template_asking">Нажмите, чтобы получить информацию о шаблоне</string>
+    <string name="tap_on_workout_asking">Нажмите, чтобы получить информацию о тренировке</string>
 </resources>
