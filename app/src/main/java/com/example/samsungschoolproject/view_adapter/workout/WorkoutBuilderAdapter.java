@@ -96,7 +96,40 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         return 1; //  fillExercise Field
     }
-    public void addView(ArrayList<String> template){
+    public ArrayList<String> getItemViewByPosition(int position){
+        return viewItems.get(position);
+    }
+
+    // Добавляет Exercise в отображение, но не в массив viewItems. Массив обновится, когда создатся Holder
+    public void addExercise(){
+        length++;
+        notifyItemChanged(length-1);
+        notifyItemChanged(length-2);
+        notifyItemChanged(length-3);
+    }
+
+    // Удаляет Exercise из отображения и из массива viewItems
+    public void deleteExercise(int position){
+        length--;
+        viewItems.remove(position);
+        workoutBuilderRecycler.removeViewAt(position);
+        notifyItemRemoved(position);
+    }
+
+    // Устанавливает состояние о том, что адаптер был полностью создан
+    public void setStateCreated(){
+        adapterCreatingState = WorkoutBuilderAdapterStates.ADAPTER_CREATED;
+    }
+
+    public void setName(EditText newName){
+        name = newName;
+    }
+
+    public String getName(){
+        return name.getText().toString();
+    }
+
+    public void addToViewItems(ArrayList<String> template){
         if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING){
             viewItems.add(template);
         }
@@ -105,26 +138,12 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    public ArrayList<String> getItemViewByPosition(int position){
+    public void UpdateViewItem(int position, ArrayList<String> item){
+        viewItems.set(position, item);
+    }
+
+    public ArrayList<String> getFromViewItems(int position){
         return viewItems.get(position);
-    }
-
-    public void addExercise(){
-        length++;
-        notifyItemChanged(length-1);
-        notifyItemChanged(length-2);
-        notifyItemChanged(length-3);
-    }
-
-    public void deleteExercise(int position){
-        length--;
-        viewItems.remove(position);
-        workoutBuilderRecycler.removeViewAt(position);
-        notifyItemRemoved(position);
-    }
-
-    public void setStateCreated(){
-        adapterCreatingState = WorkoutBuilderAdapterStates.ADAPTER_CREATED;
     }
 
     @Override
@@ -149,8 +168,8 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public InputNameViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter) {
             super(itemView);
 
-            workoutBuilderAdapter.addView(new ArrayList<>());
-            workoutBuilderAdapter.name = itemView.findViewById(R.id.inputedName);
+            workoutBuilderAdapter.addToViewItems(new ArrayList<>());
+            workoutBuilderAdapter.setName(itemView.findViewById(R.id.inputedName));
         }
     }
 
@@ -170,7 +189,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             template.add("1");
             template.add("5");
 
-            workoutBuilderAdapter.addView(template);
+            workoutBuilderAdapter.addToViewItems(template);
 
             this.itemView = itemView;
             this.exercises = exercises;
@@ -231,7 +250,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         exercise.set(0, parent.getItemAtPosition(position).toString());
                     }
 
-                    workoutBuilderAdapter.viewItems.set(getBindingAdapterPosition(), exercise);
+                    workoutBuilderAdapter.UpdateViewItem(getBindingAdapterPosition(), exercise);
                 }
 
                 @Override
@@ -243,10 +262,10 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             approachesListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    ArrayList<String> exercise = workoutBuilderAdapter.viewItems.get(getBindingAdapterPosition());
+                    ArrayList<String> exercise = workoutBuilderAdapter.getFromViewItems(getBindingAdapterPosition());
                     exercise.set(1, parent.getItemAtPosition(position).toString());
 
-                    workoutBuilderAdapter.viewItems.set(getBindingAdapterPosition(), exercise);
+                    workoutBuilderAdapter.UpdateViewItem(getBindingAdapterPosition(), exercise);
                 }
 
                 @Override
@@ -258,10 +277,10 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             repeatsListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    ArrayList<String> exercise = workoutBuilderAdapter.viewItems.get(getBindingAdapterPosition());
+                    ArrayList<String> exercise = workoutBuilderAdapter.getFromViewItems(getBindingAdapterPosition());
                     exercise.set(2, parent.getItemAtPosition(position).toString());
 
-                    workoutBuilderAdapter.viewItems.set(getBindingAdapterPosition(), exercise);
+                    workoutBuilderAdapter.UpdateViewItem(getBindingAdapterPosition(), exercise);
                 }
 
                 @Override
@@ -280,7 +299,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
             addExerciseButton = itemView.findViewById(R.id.addExercise);
             this.workoutBuilderAdapter = workoutBuilderAdapter;
-            workoutBuilderAdapter.addView(new ArrayList<>());
+            workoutBuilderAdapter.addToViewItems(new ArrayList<>());
 
             initButtonListeners();
         }
@@ -309,7 +328,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             this.startPreviousFragment = startPreviousFragment;
             this.loadJustCreated = loadJustCreated;
 
-            workoutBuilderAdapter.addView(new ArrayList<>());
+            workoutBuilderAdapter.addToViewItems(new ArrayList<>());
 
             initButtonListeners();
             workoutBuilderAdapter.setStateCreated();
@@ -330,7 +349,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         private String readNameFromField(){
-            return workoutBuilderAdapter.name.getText().toString();
+            return workoutBuilderAdapter.getName();
         }
 
         private ArrayList<ArrayList<String>> readExercisesFromFields(){
@@ -342,7 +361,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
 
             for (int i = 1; i < length - 2; i++){
-                ArrayList<String> exercise = workoutBuilderAdapter.viewItems.get(i);
+                ArrayList<String> exercise = workoutBuilderAdapter.getFromViewItems(i);
                 exercises.add(exercise);
             }
 
