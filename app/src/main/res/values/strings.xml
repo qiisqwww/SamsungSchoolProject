@@ -37,4 +37,6 @@
     <string name="already_planned_today">Уже запланирован на сегодня</string>
     <string name="template_already_exists">Шаблон с таким именем уже существует</string>
     <string name="workout_already_exists">Тренировка с таким именем уже запланирована сегодня</string>
+    <string name="templates_list_empty_info">Тут будут шаблоны Ваших тренировок</string>
+    <string name="templates_list_info">Шаблоны Ваших тренировок:</string>
 </resources>

@@ -2,7 +2,6 @@ package com.example.samsungschoolproject.noificator;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,7 +17,7 @@ import com.example.samsungschoolproject.R;
 
 import java.util.Calendar;
 
-public class ExampleNotificator {
+public class TodayWorkoutNotificator {
     public static final String CHANNEL_ID = "ASAFADF";
 
     public static void scheduleNotification(Context context){
@@ -72,7 +71,7 @@ public class ExampleNotificator {
     public static class NotificationReciever extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent){
-            ExampleNotificator.scheduleNotification(context);
+            TodayWorkoutNotificator.scheduleNotification(context);
             sendNotification(context);
         }
     }

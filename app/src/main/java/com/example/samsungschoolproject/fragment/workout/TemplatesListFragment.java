@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
@@ -23,6 +24,7 @@ import java.util.List;
 
 public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener {
     private Button createNewTemplateButton;
+    private TextView templatesListInfoTV;
     private WorkoutHelperDatabase database;
     private List<WorkoutTemplate> workoutTemplates;
     private RecyclerView workoutTemplatesRecycler;
@@ -53,6 +55,7 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
 
     private void initWidgets(View view){
         createNewTemplateButton = view.findViewById(R.id.addNewWorkoutTemplate);
+        templatesListInfoTV = view.findViewById(R.id.templatesListInfo);
         workoutTemplatesRecycler = view.findViewById(R.id.workoutTemplatesRecycler);
     }
 
@@ -74,6 +77,7 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
             return;
         }
 
+        templatesListInfoTV.setText(getResources().getString(R.string.templates_list_info));
         setWorkoutTemplatesRecycler();
     }
 
