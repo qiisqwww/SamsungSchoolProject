@@ -33,7 +33,7 @@ public class WorkoutListUtils {
                 continue;
             }
 
-            workoutLength += Integer.valueOf(exercise.get(1)) * Integer.valueOf(exercise.get(2)) * 2 + Integer.valueOf(exercise.get(1))*70;
+            workoutLength += Integer.valueOf(exercise.get(1)) * Integer.valueOf(exercise.get(2)) * 4 + Integer.valueOf(exercise.get(1))*70;
         }
 
         return workoutLength/60;
