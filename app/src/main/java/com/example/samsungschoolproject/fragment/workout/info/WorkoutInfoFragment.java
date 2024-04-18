@@ -6,11 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
@@ -19,6 +22,7 @@ import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.view_adapter.workout.info.TemplateInfoAdapter;
 import com.example.samsungschoolproject.view_adapter.workout.info.WorkoutInfoAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutTemplateListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
@@ -27,11 +31,11 @@ public class WorkoutInfoFragment extends BottomSheetDialogFragment {
     public static String TAG;
     private WorkoutInfoAdapter workoutInfoAdapter;
     private WorkoutInfo workoutInfo;
-    private PlannedWorkout plannedWorkout;
     private RecyclerView workoutInfoRecycler;
+    private Button backButton;
 
-    public WorkoutInfoFragment(PlannedWorkout plannedWorkout){
-        this.plannedWorkout = plannedWorkout;
+    public WorkoutInfoFragment(WorkoutInfo workoutInfo){
+        this.workoutInfo = workoutInfo;
     }
 
     @Override
@@ -48,5 +52,28 @@ public class WorkoutInfoFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        initWidgets(view);
+        initButtonListeners();
+        setWorkoutInfoRecycler();
+    }
+
+    private void initWidgets(View view){
+        backButton = view.findViewById(R.id.back);
+        workoutInfoRecycler = view.findViewById(R.id.workoutInfoRecycler);
+    }
+
+    private void initButtonListeners(){
+        backButton.setOnClickListener( v -> {
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().remove(this).commit();
+        });
+    }
+
+    private void setWorkoutInfoRecycler(){
+        workoutInfoAdapter = new WorkoutInfoAdapter(workoutInfo);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        workoutInfoRecycler.setLayoutManager(layoutManager);
+        workoutInfoRecycler.setAdapter(workoutInfoAdapter);
     }
 }

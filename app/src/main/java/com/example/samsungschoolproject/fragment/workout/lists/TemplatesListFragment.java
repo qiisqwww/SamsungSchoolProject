@@ -15,9 +15,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.samsungschoolproject.DTO.ExerciseInfo;
+import com.example.samsungschoolproject.DTO.TemplateInfo;
+import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
+import com.example.samsungschoolproject.database.model.Exercise;
+import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
+import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 import com.example.samsungschoolproject.fragment.workout.builder.TemplatesBuilderFragment;
 import com.example.samsungschoolproject.fragment.workout.info.TemplateInfoFragment;
 import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment;
@@ -98,7 +104,12 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     public void onWorkoutItemClick(int position) {
         WorkoutTemplate workoutTemplate = workoutTemplateListAdapter.getItemByPosition(position);
 
-        TemplateInfoFragment templateInfoFragment = new TemplateInfoFragment(workoutTemplate);
+        List<Exercise> exercises = database.getExerciseDAO().getAllExercises();
+        List<WorkoutTemplateExercise> workoutTemplateExercises = database.getWorkoutTemplateExerciseDAO().getWorkoutTemplateExercisesByWorkoutTemplateId(workoutTemplate.id);
+
+        TemplateInfo templateInfo = new TemplateInfo(workoutTemplate, ExerciseInfo.toExerciseInfoListForTemplate(exercises, workoutTemplateExercises));
+
+        TemplateInfoFragment templateInfoFragment = new TemplateInfoFragment(templateInfo);
         TemplateInfoFragment.TAG = "New Instance"; // idk if this name is important
 
         templateInfoFragment.show(getActivity().getSupportFragmentManager(), TemplateInfoFragment.TAG);

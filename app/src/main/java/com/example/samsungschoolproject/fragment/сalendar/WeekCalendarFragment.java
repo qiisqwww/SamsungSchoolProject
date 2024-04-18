@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.example.samsungschoolproject.DTO.ExerciseInfo;
+import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
+import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
+import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 
+import com.example.samsungschoolproject.fragment.workout.info.WorkoutInfoFragment;
 import com.example.samsungschoolproject.fragment.workout.lists.WorkoutFromTemplateListFragment;
 import com.example.samsungschoolproject.fragment.workout.builder.WorkoutsBuilderFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
@@ -190,7 +196,18 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     // TODO: Добавить вывод информации о тренировке по нажатии на нее
     @Override
     public void onWorkoutItemClick(int position) {
+        PlannedWorkout plannedWorkout = workoutListAdapter.getItemByPosition(position);
+        Log.d("GG", plannedWorkout.name);
 
+        List<Exercise> exercises = database.getExerciseDAO().getAllExercises();
+        List<PlannedWorkoutExercise> plannedWorkoutExercises = database.getPlannedWorkoutExerciseDAO().getPlannedWorkoutExercisesByWorkoutId(plannedWorkout.id);
+
+        WorkoutInfo workoutInfo = new WorkoutInfo(plannedWorkout, ExerciseInfo.toExerciseInfoListForPlanned(exercises, plannedWorkoutExercises));
+
+        WorkoutInfoFragment workoutInfoFragment = new WorkoutInfoFragment(workoutInfo);
+        WorkoutInfoFragment.TAG = "New Instance"; // idk if this name is important
+
+        workoutInfoFragment.show(getActivity().getSupportFragmentManager(), WorkoutInfoFragment.TAG);
     }
 
     @Override

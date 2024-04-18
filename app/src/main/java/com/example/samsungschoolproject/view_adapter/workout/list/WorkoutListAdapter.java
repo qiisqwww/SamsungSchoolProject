@@ -70,6 +70,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
             super(itemView);
             workoutItemBinding = WorkoutItemBinding.bind(itemView);
             this.onWorkoutItemListener = onWorkoutItemListener;
+            itemView.setOnClickListener(this);
         }
 
         public void bind(PlannedWorkout plannedWorkout){
