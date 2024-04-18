@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.view_adapter.workout;
+package com.example.samsungschoolproject.view_adapter.workout.builder;
 
 import android.view.LayoutInflater;
 import android.view.View;

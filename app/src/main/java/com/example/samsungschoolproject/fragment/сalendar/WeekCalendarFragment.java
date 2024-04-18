@@ -25,7 +25,7 @@ import com.example.samsungschoolproject.fragment.workout.lists.WorkoutFromTempla
 import com.example.samsungschoolproject.fragment.workout.builder.WorkoutsBuilderFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.calendar.CalendarAdapter;
-import com.example.samsungschoolproject.view_adapter.workout.WorkoutListAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.time.LocalDate;

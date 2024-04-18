@@ -1,4 +1,4 @@
-package com.example.samsungschoolproject.view_adapter.workout;
+package com.example.samsungschoolproject.view_adapter.workout.list;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.fragment.workout.builder.TemplatesBuilderFragment;
-import com.example.samsungschoolproject.view_adapter.workout.WorkoutTemplateListAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutTemplateListAdapter;
 
 import java.util.List;
 
@@ -95,6 +94,7 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     // TODO: Добавить вывод информации о шаблоне по нажатии на нее
     @Override
     public void onWorkoutItemClick(int position) {
-        Log.d("GG", String.valueOf(position));
+        WorkoutTemplate workoutTemplate = workoutTemplateListAdapter.getItemByPosition(position);
+
     }
 }

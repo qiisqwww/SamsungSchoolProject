@@ -24,8 +24,8 @@ import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
-import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
-import com.example.samsungschoolproject.view_adapter.workout.WorkoutListAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.builder.WorkoutBuilderAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;

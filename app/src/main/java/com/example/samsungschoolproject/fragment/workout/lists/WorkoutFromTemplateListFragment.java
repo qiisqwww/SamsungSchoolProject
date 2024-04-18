@@ -21,8 +21,8 @@ import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 import com.example.samsungschoolproject.utils.CalendarUtils;
-import com.example.samsungschoolproject.view_adapter.workout.WorkoutListAdapter;
-import com.example.samsungschoolproject.view_adapter.workout.WorkoutTemplateListAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutListAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutTemplateListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;

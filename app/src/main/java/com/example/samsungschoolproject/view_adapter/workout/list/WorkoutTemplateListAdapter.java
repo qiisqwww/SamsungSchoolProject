@@ -1,6 +1,5 @@
-package com.example.samsungschoolproject.view_adapter.workout;
+package com.example.samsungschoolproject.view_adapter.workout.list;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +43,10 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
     @Override
     public int getItemCount() {
         return workoutTemplates.size();
+    }
+
+    public WorkoutTemplate getItemByPosition(int position){
+        return workoutTemplates.get(position);
     }
 
     public interface OnWorkoutItemListener {

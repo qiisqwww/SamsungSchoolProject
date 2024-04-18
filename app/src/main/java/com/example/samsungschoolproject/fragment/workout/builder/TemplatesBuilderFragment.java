@@ -24,7 +24,7 @@ import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 import com.example.samsungschoolproject.fragment.workout.lists.TemplatesListFragment;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
-import com.example.samsungschoolproject.view_adapter.workout.WorkoutBuilderAdapter;
+import com.example.samsungschoolproject.view_adapter.workout.builder.WorkoutBuilderAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
