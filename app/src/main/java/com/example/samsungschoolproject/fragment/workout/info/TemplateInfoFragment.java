@@ -20,9 +20,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.util.List;
 
 public class TemplateInfoFragment extends BottomSheetDialogFragment {
+    public static String TAG;
     private TemplateInfoAdapter templateInfoAdapter;
     private TemplateInfo templateInfo;
+    private WorkoutTemplate workoutTemplate;
     private RecyclerView templateInfoRecycler;
+
+    public TemplateInfoFragment(WorkoutTemplate workoutTemplate){
+        this.workoutTemplate = workoutTemplate;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

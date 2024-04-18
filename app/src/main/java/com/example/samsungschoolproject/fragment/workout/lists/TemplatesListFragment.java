@@ -19,6 +19,8 @@ import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.fragment.workout.builder.TemplatesBuilderFragment;
+import com.example.samsungschoolproject.fragment.workout.info.TemplateInfoFragment;
+import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment;
 import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutTemplateListAdapter;
 
 import java.util.List;
@@ -96,5 +98,9 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     public void onWorkoutItemClick(int position) {
         WorkoutTemplate workoutTemplate = workoutTemplateListAdapter.getItemByPosition(position);
 
+        TemplateInfoFragment templateInfoFragment = new TemplateInfoFragment(workoutTemplate);
+        TemplateInfoFragment.TAG = "New Instance"; // idk if this name is important
+
+        templateInfoFragment.show(getActivity().getSupportFragmentManager(), TemplateInfoFragment.TAG);
     }
 }

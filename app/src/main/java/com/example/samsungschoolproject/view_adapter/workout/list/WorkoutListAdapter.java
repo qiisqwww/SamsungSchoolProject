@@ -50,6 +50,10 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         updateRecycler.updateRecycler();
     }
 
+    public PlannedWorkout getItemByPosition(int position){
+        return plannedWorkouts.get(position);
+    }
+
     public interface OnWorkoutItemListener {
         void onWorkoutItemClick(int position);
     }

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
+import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.view_adapter.workout.info.TemplateInfoAdapter;
 import com.example.samsungschoolproject.view_adapter.workout.info.WorkoutInfoAdapter;
@@ -23,9 +24,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.util.List;
 
 public class WorkoutInfoFragment extends BottomSheetDialogFragment {
+    public static String TAG;
     private WorkoutInfoAdapter workoutInfoAdapter;
     private WorkoutInfo workoutInfo;
+    private PlannedWorkout plannedWorkout;
     private RecyclerView workoutInfoRecycler;
+
+    public WorkoutInfoFragment(PlannedWorkout plannedWorkout){
+        this.plannedWorkout = plannedWorkout;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

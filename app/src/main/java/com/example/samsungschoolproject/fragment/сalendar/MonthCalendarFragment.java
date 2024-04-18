@@ -21,6 +21,8 @@ import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
+import com.example.samsungschoolproject.fragment.workout.info.TemplateInfoFragment;
+import com.example.samsungschoolproject.fragment.workout.info.WorkoutInfoFragment;
 import com.example.samsungschoolproject.fragment.workout.lists.WorkoutFromTemplateListFragment;
 import com.example.samsungschoolproject.fragment.workout.builder.WorkoutsBuilderFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
@@ -218,7 +220,12 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         // TODO: Добавить вывод информации о тренировке по нажатии на нее
         @Override
         public void onWorkoutItemClick(int position) {
+            PlannedWorkout plannedWorkout = workoutListAdapter.getItemByPosition(position);
 
+            WorkoutInfoFragment workoutInfoFragment = new WorkoutInfoFragment(plannedWorkout);
+            WorkoutInfoFragment.TAG = "New Instance"; // idk if this name is important
+
+            workoutInfoFragment.show(getActivity().getSupportFragmentManager(), WorkoutInfoFragment.TAG);
         }
 
         @Override
