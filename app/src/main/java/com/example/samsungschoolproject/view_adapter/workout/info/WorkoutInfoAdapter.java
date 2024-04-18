@@ -1,19 +1,21 @@
 package com.example.samsungschoolproject.view_adapter.workout.info;
 
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
 
 import java.util.List;
 
 public class WorkoutInfoAdapter extends RecyclerView.Adapter {
-    private List<PlannedWorkout> plannedWorkouts;
+    private WorkoutInfo workoutInfo;
 
-    public WorkoutInfoAdapter(List<PlannedWorkout> plannedWorkouts){
-        this.plannedWorkouts = plannedWorkouts;
+    public WorkoutInfoAdapter(WorkoutInfo workoutInfo){
+        this.workoutInfo = workoutInfo;
     }
 
     @NonNull
@@ -29,6 +31,13 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return 1 + workoutInfo.exercisesInfo.size(); // Поле для названия + количество упражнений
+    }
+
+    public static class PlannedWorkoutViewHolder extends RecyclerView.ViewHolder{
+
+        public PlannedWorkoutViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
     }
 }

@@ -1,19 +1,21 @@
 package com.example.samsungschoolproject.view_adapter.workout.info;
 
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.samsungschoolproject.DTO.TemplateInfo;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 
 import java.util.List;
 
 public class TemplateInfoAdapter extends RecyclerView.Adapter {
-    private List<WorkoutTemplate> workoutTemplates;
+    private TemplateInfo templateInfo;
 
-    public TemplateInfoAdapter(List<WorkoutTemplate> workoutTemplates){
-        this.workoutTemplates = workoutTemplates;
+    public TemplateInfoAdapter(TemplateInfo templateInfo){
+        this.templateInfo = templateInfo;
     }
 
     @NonNull
@@ -29,6 +31,13 @@ public class TemplateInfoAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return 1 + templateInfo.exercisesInfo.size(); // Поле для названия + количество упражнений
+    }
+
+    public static class TemplateViewHolder extends RecyclerView.ViewHolder{
+
+        public TemplateViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
     }
 }
