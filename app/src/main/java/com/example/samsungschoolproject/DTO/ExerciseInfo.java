@@ -28,9 +28,15 @@ public class ExerciseInfo {
         ArrayList<ExerciseInfo> exercisesInfo = new ArrayList<>();
         for (int i = 0; i < plannedWorkoutExercises.size(); i++){
             PlannedWorkoutExercise plannedWorkoutExercise = plannedWorkoutExercises.get(i);
-            Exercise exercise = exercises.get(plannedWorkoutExercise.exercise_id);
 
-            exercisesInfo.add(new ExerciseInfo(exercise, plannedWorkoutExercise));
+            Exercise exercise;
+            for (int j = 0; j < exercises.size(); j++){
+                if (exercises.get(j).id == plannedWorkoutExercise.exercise_id){
+                    exercise = exercises.get(j);
+                    exercisesInfo.add(new ExerciseInfo(exercise, plannedWorkoutExercise));
+                    break;
+                }
+            }
         }
 
         return exercisesInfo;
@@ -40,9 +46,15 @@ public class ExerciseInfo {
         ArrayList<ExerciseInfo> exercisesInfo = new ArrayList<>();
         for (int i = 0; i < workoutTemplateExercises.size(); i++){
             WorkoutTemplateExercise workoutTemplateExercise = workoutTemplateExercises.get(i);
-            Exercise exercise = exercises.get(workoutTemplateExercise.exercise_id);
 
-            exercisesInfo.add(new ExerciseInfo(exercise, workoutTemplateExercise));
+            Exercise exercise;
+            for (int j = 0; j < exercises.size(); j++){
+                if (exercises.get(j).id == workoutTemplateExercise.exercise_id){
+                    exercise = exercises.get(j);
+                    exercisesInfo.add(new ExerciseInfo(exercise, workoutTemplateExercise));
+                    break;
+                }
+            }
         }
 
         return exercisesInfo;
