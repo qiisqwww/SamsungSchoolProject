@@ -7,11 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.DTO.WorkoutInfo;
-import com.example.samsungschoolproject.database.model.PlannedWorkout;
 
-import java.util.List;
-
-public class WorkoutInfoAdapter extends RecyclerView.Adapter {
+public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.PlannedWorkoutViewHolder> {
     private WorkoutInfo workoutInfo;
 
     public WorkoutInfoAdapter(WorkoutInfo workoutInfo){
@@ -20,12 +17,12 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PlannedWorkoutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlannedWorkoutViewHolder holder, int position) {
 
     }
 

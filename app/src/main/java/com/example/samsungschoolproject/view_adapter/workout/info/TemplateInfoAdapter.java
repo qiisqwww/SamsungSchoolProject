@@ -7,11 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.DTO.TemplateInfo;
-import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 
-import java.util.List;
-
-public class TemplateInfoAdapter extends RecyclerView.Adapter {
+public class TemplateInfoAdapter extends RecyclerView.Adapter<TemplateInfoAdapter.TemplateViewHolder> {
     private TemplateInfo templateInfo;
 
     public TemplateInfoAdapter(TemplateInfo templateInfo){
@@ -20,12 +17,12 @@ public class TemplateInfoAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TemplateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TemplateViewHolder holder, int position) {
 
     }
 
