@@ -14,17 +14,23 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
+import com.example.samsungschoolproject.database.model.PlannedWorkout;
 
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.List;
 
 public class TodayWorkoutNotificator {
-    public static final String CHANNEL_ID = "ASAFADF";
+    public static final String CHANNEL_ID = "1";
 
     public static void scheduleNotification(Context context){
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
 
-        Intent intent = new Intent(context, NotificationReciever.class);
+        Intent intent = new Intent(context, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
@@ -32,24 +38,21 @@ public class TodayWorkoutNotificator {
 
         if (alarmManager != null){
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    60*1000, pendingIntent);
-            Log.d("BACK_TASK", "ALARM_MANAGER");
+                    AlarmManager.INTERVAL_DAY, pendingIntent); // Будет повторяться каждый день в 12:00
         }
     }
 
     public static void createNotificationChannel(Context context){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            CharSequence name = context.getString(R.string.channel_name);
-            String description = context.getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        CharSequence name = context.getString(R.string.channel_name);
+        String description = context.getString(R.string.channel_description);
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
+        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+        channel.setDescription(description);
 
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (notificationManager != null){
-                notificationManager.createNotificationChannel(channel);
-            }
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null){
+            notificationManager.createNotificationChannel(channel);
         }
     }
 
@@ -59,8 +62,8 @@ public class TodayWorkoutNotificator {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("УВЕДОМЛЕНИЕ")
-                .setContentText("БЛА БЛА БЛА")
+                .setContentTitle("Планировщик тренировок")
+                .setContentText("У вас еще запланировано несколько тренировок на сегодня!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManager notificationManager = (NotificationManager) context.
@@ -68,11 +71,17 @@ public class TodayWorkoutNotificator {
         notificationManager.notify(0, builder.build());
     }
 
-    public static class NotificationReciever extends BroadcastReceiver{
+    public static class NotificationReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent){
             TodayWorkoutNotificator.scheduleNotification(context);
-            sendNotification(context);
+
+            // Необходимо проверить, что на сегодня тренировки запланированы - тогда отправить уведомление
+            WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(context);
+            List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(LocalDate.now().toString());
+            if (!plannedWorkouts.isEmpty()){
+                sendNotification(context);
+            }
         }
     }
 }
