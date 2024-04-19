@@ -127,9 +127,11 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public void addToViewItems(ArrayList<String> template){
+        // Если адаптер на стадии создания, то вьюшка добавляется в конец
         if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING){
             viewItems.add(template);
         }
+        // Если адаптер уже создан, то это создание Exercise и оно добавляется перед кнопками
         if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_CREATED){
             viewItems.add(length-3, template);
         }

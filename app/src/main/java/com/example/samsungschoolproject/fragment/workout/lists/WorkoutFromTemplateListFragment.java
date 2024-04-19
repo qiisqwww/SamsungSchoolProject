@@ -77,6 +77,7 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
     private void loadTemplates(){
         workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
 
+        // Если не создано шаблонов, нужно изменить текст в TV
         if (workoutTemplates.isEmpty()){
             headInfoTV.setText(getResources().getString(R.string.no_templates_yet));
             return;

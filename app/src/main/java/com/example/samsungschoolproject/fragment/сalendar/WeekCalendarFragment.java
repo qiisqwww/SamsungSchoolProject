@@ -193,7 +193,6 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
         }
     }
 
-    // TODO: Добавить вывод информации о тренировке по нажатии на нее
     @Override
     public void onWorkoutItemClick(int position) {
         PlannedWorkout plannedWorkout = workoutListAdapter.getItemByPosition(position);

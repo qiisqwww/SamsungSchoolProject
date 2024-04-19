@@ -52,6 +52,7 @@ public class TemplateInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             workoutName.setText("Название шаблона: " + templateInfo.name);
         }
         if (position != 0){
+            // .get() по position-1 т.к. по 0 индекс это название тренировки
             ExerciseInfo exerciseInfo = templateInfo.exercisesInfo.get(position-1);
             TextView exerciseName = holder.itemView.findViewById(R.id.exerciseName);
             TextView approaches = holder.itemView.findViewById(R.id.approaches);

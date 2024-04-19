@@ -8,8 +8,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -21,11 +19,12 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 
-public class TodayWorkoutNotificator {
-    public static final String CHANNEL_ID = "1";
+public class PlannedWorkoutNotificator {
+    public static final String CHANNEL_ID = "1"; // TODO: я не знаю, зачем это нужно
 
     public static void scheduleNotification(Context context){
         Calendar calendar = Calendar.getInstance();
+        // Устанавливается время рассылки: 12:00 каждого дня
         calendar.set(Calendar.HOUR_OF_DAY, 12);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -36,13 +35,15 @@ public class TodayWorkoutNotificator {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
+        // Установка дневного интервала между рассылками
         if (alarmManager != null){
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY, pendingIntent); // Будет повторяться каждый день в 12:00
+                    AlarmManager.INTERVAL_DAY, pendingIntent);
         }
     }
 
     public static void createNotificationChannel(Context context){
+        // TODO: я не знаю, на что влияют название и описание канала
         CharSequence name = context.getString(R.string.channel_name);
         String description = context.getString(R.string.channel_description);
         int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -74,7 +75,7 @@ public class TodayWorkoutNotificator {
     public static class NotificationReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent){
-            TodayWorkoutNotificator.scheduleNotification(context);
+            PlannedWorkoutNotificator.scheduleNotification(context);
 
             // Необходимо проверить, что на сегодня тренировки запланированы - тогда отправить уведомление
             WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(context);

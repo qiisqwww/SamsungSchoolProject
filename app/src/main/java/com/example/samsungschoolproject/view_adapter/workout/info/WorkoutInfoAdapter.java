@@ -53,6 +53,7 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             workoutName.setText("Название тренировки: " + workoutInfo.name);
         }
         if (position != 0){
+            // .get() по position-1 т.к. по 0 индекс это название тренировки
             ExerciseInfo exerciseInfo = workoutInfo.exercisesInfo.get(position-1);
             TextView exerciseName = holder.itemView.findViewById(R.id.exerciseName);
             TextView approaches = holder.itemView.findViewById(R.id.approaches);
