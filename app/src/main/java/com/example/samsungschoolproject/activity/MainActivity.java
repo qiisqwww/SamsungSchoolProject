@@ -1,12 +1,16 @@
 package com.example.samsungschoolproject.activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.IntentFilter;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.View;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
@@ -31,7 +35,13 @@ public class MainActivity extends AppCompatActivity {
         initPagerAdapter();
         connectWidgetsWithAdapter();
         initDatabase();
-        initReceiver();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+        initNotificator(context);
+        return super.onCreateView(name, context, attrs);
     }
 
     private void initWidgets(){
@@ -64,8 +74,7 @@ public class MainActivity extends AppCompatActivity {
         mainViewPager.setCurrentItem(1); // Устанавливает MainMenuFragment при открытии MainActivity
     }
 
-    private void initReceiver(){
-        PlannedWorkoutNotificator.NotificationReceiver notificationReceiver = new PlannedWorkoutNotificator.NotificationReceiver();
-        registerReceiver(notificationReceiver, new IntentFilter("planned_workout_notificator"));
+    private void initNotificator(Context context){
+        PlannedWorkoutNotificator.scheduleNotification(context);
     }
 }

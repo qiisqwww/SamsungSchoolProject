@@ -26,6 +26,8 @@ import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutTemplat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener {
     public static String TAG;
@@ -75,7 +77,12 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
 
     // Загружает список из WorkoutTemplate's из БД
     private void loadTemplates(){
-        workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
+        CompletableFuture<List<WorkoutTemplate>> future = CompletableFuture.supplyAsync(() -> database.getWorkoutTemplateDAO().getAllWorkoutTemplates());
+        try {
+            workoutTemplates = future.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         // Если не создано шаблонов, нужно изменить текст в TV
         if (workoutTemplates.isEmpty()){
@@ -98,36 +105,48 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
     public void onWorkoutItemClick(int position) {
         WorkoutTemplate workoutTemplate = workoutTemplates.get(position);
 
-        // Необходимо проверить, не пытается ли человек запланировать одинаковый шаблон дважды на один и тот же день
-        List<PlannedWorkout> alreadyPlannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
-        for (int i = 0; i < alreadyPlannedWorkouts.size(); i++){
-            Log.d("GG", alreadyPlannedWorkouts.get(i).name + " " + workoutTemplate.name);
-            if (alreadyPlannedWorkouts.get(i).name.equals(workoutTemplate.name)){
-                Toast.makeText(getContext(), R.string.already_planned_today, Toast.LENGTH_LONG).show();
-                return;
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+            // Необходимо проверить, не пытается ли человек запланировать одинаковый шаблон дважды на один и тот же день
+            List<PlannedWorkout> alreadyPlannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
+            for (int i = 0; i < alreadyPlannedWorkouts.size(); i++){
+                Log.d("GG", alreadyPlannedWorkouts.get(i).name + " " + workoutTemplate.name);
+                if (alreadyPlannedWorkouts.get(i).name.equals(workoutTemplate.name)){
+                    Toast.makeText(getContext(), R.string.already_planned_today, Toast.LENGTH_LONG).show();
+                    return "false";
+                }
             }
+
+            // Добавляем запись в таблицу planned_workouts
+            PlannedWorkout newPlannedWorkout = new PlannedWorkout(workoutTemplate.name, workoutTemplate.approximate_length, "False", CalendarUtils.selectedDate.toString());
+            long newPlannedWorkoutID = database.getPlannedWorkoutDAO().addPlannedWorkout(newPlannedWorkout);
+            int plannedWorkoutID = Math.toIntExact(newPlannedWorkoutID);
+
+            // Добавляем связанные записи в таблицу planned_workout_exercises
+            List<WorkoutTemplateExercise> workoutTemplateExercises = database.getWorkoutTemplateExerciseDAO().getWorkoutTemplateExercisesByWorkoutTemplateId(workoutTemplate.id);
+            for (int i = 0; i < workoutTemplateExercises.size(); i++){
+                WorkoutTemplateExercise workoutTemplateExercise = workoutTemplateExercises.get(i);
+                database.getPlannedWorkoutExerciseDAO().addPlannedWorkoutExercise(new PlannedWorkoutExercise(
+                        plannedWorkoutID,
+                        workoutTemplateExercise.exercise_id,
+                        workoutTemplateExercise.repeats,
+                        workoutTemplateExercise.approaches,
+                        workoutTemplateExercise.number_in_query
+                ));
+            }
+
+            return "true";
+        });
+
+
+        try {
+            if (future.get().equals("true")){
+                // Закрыть текущий фрагмент после выбора
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().remove(this).commit();
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
-        // Добавляем запись в таблицу planned_workouts
-        PlannedWorkout newPlannedWorkout = new PlannedWorkout(workoutTemplate.name, workoutTemplate.approximate_length, "False", CalendarUtils.selectedDate.toString());
-        long newPlannedWorkoutID = database.getPlannedWorkoutDAO().addPlannedWorkout(newPlannedWorkout);
-        int plannedWorkoutID = Math.toIntExact(newPlannedWorkoutID);
-
-        // Добавляем связанные записи в таблицу planned_workout_exercises
-        List<WorkoutTemplateExercise> workoutTemplateExercises = database.getWorkoutTemplateExerciseDAO().getWorkoutTemplateExercisesByWorkoutTemplateId(workoutTemplate.id);
-        for (int i = 0; i < workoutTemplateExercises.size(); i++){
-            WorkoutTemplateExercise workoutTemplateExercise = workoutTemplateExercises.get(i);
-            database.getPlannedWorkoutExerciseDAO().addPlannedWorkoutExercise(new PlannedWorkoutExercise(
-                    plannedWorkoutID,
-                    workoutTemplateExercise.exercise_id,
-                    workoutTemplateExercise.repeats,
-                    workoutTemplateExercise.approaches,
-                    workoutTemplateExercise.number_in_query
-                    ));
-        }
-
-        // Закрыть текущий фрагмент после выбора
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().remove(this).commit();
     }
 }

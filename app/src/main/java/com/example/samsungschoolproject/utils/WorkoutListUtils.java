@@ -1,11 +1,6 @@
 package com.example.samsungschoolproject.utils;
 
-import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.model.PlannedWorkout;
-import com.example.samsungschoolproject.database.model.WorkoutTemplate;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class WorkoutListUtils {
     private static String parseLengthTime(int length){
@@ -33,7 +28,7 @@ public class WorkoutListUtils {
                 continue;
             }
 
-            workoutLength += Integer.valueOf(exercise.get(1)) * Integer.valueOf(exercise.get(2)) * 4 + Integer.valueOf(exercise.get(1))*70;
+            workoutLength += Integer.parseInt(exercise.get(1)) * Integer.parseInt(exercise.get(2)) * 4 + Integer.parseInt(exercise.get(1))*70;
         }
 
         return workoutLength/60;

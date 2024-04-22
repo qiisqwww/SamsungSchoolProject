@@ -1,5 +1,6 @@
 package com.example.samsungschoolproject.fragment.workout.builder;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
+import com.example.samsungschoolproject.database.model.WorkoutTemplate;
+import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
@@ -30,6 +33,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implements WorkoutBuilderAdapter.LoadJustCreated {
     public static String TAG;
@@ -85,13 +90,14 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
         });
     }
 
-    private List<Exercise> getAllExercises(){
-        List<Exercise> exercises = database.getExerciseDAO().getAllExercises();
-        return exercises;
-    }
-
     private void setWorkoutBuilderRecycler(){
-        List<String> stringExercises = ExerciseListUtils.parseExerciseToStrings(getAllExercises());
+       CompletableFuture<List<Exercise>> future = CompletableFuture.supplyAsync(() -> database.getExerciseDAO().getAllExercises());
+       List<String> stringExercises = null;
+        try {
+            stringExercises = ExerciseListUtils.parseExerciseToStrings(future.get());
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, workoutBuilderRecycler, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
@@ -104,33 +110,42 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
     public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises) {
         PlannedWorkout plannedWorkout = new PlannedWorkout(name, WorkoutListUtils.countWorkoutLength(exercises), "False", CalendarUtils.selectedDate.toString());
 
-        // Необходимо проверить, что тренировка с таким же именем еще не запланирована на сегодня
-        List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
-        for (int i = 0; i < plannedWorkouts.size(); i++){
-            if(plannedWorkout.name.equals(plannedWorkouts.get(i).name)){
-                Toast.makeText(getContext(), R.string.workout_already_exists, Toast.LENGTH_LONG).show();
-                return;
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+            // Необходимо проверить, что тренировка с таким же именем еще не запланирована на сегодня
+            List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
+            for (int i = 0; i < plannedWorkouts.size(); i++){
+                if(plannedWorkout.name.equals(plannedWorkouts.get(i).name)){
+                    Toast.makeText(requireContext().getApplicationContext(),  R.string.workout_already_exists, Toast.LENGTH_LONG).show();
+                    return "false";
+                }
             }
+
+            // Добавляем новую запись в таблицу planned_workouts
+            long newPlannedWorkoutID = database.getPlannedWorkoutDAO().addPlannedWorkout(plannedWorkout);
+            int plannedWorkoutID = Math.toIntExact(newPlannedWorkoutID);
+
+            // Добавляем связанные записи в таблицу planned_workout_exercises
+            for (int i = 0; i < exercises.size(); i++){
+                ArrayList<String> exerciseInfo = exercises.get(i);
+                Exercise exercise = database.getExerciseDAO().getExerciseByName(exerciseInfo.get(0));
+                database.getPlannedWorkoutExerciseDAO().addPlannedWorkoutExercise(new PlannedWorkoutExercise(
+                        plannedWorkoutID,
+                        exercise.id,
+                        Integer.parseInt(exerciseInfo.get(1)),
+                        Integer.parseInt(exerciseInfo.get(2)),
+                        i+1
+                ));
+            }
+
+            return "true";
+        });
+
+        try {
+            if (future.get().equals("true"))
+                startPreviousFragment();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
-
-        // Добавляем новую запись в таблицу planned_workouts
-        long newPlannedWorkoutID = database.getPlannedWorkoutDAO().addPlannedWorkout(plannedWorkout);
-        int plannedWorkoutID = Math.toIntExact(newPlannedWorkoutID);
-
-        // Добавляем связанные записи в таблицу planned_workout_exercises
-        for (int i = 0; i < exercises.size(); i++){
-            ArrayList<String> exerciseInfo = exercises.get(i);
-            Exercise exercise = database.getExerciseDAO().getExerciseByName(exerciseInfo.get(0));
-            database.getPlannedWorkoutExerciseDAO().addPlannedWorkoutExercise(new PlannedWorkoutExercise(
-                    plannedWorkoutID,
-                    exercise.id,
-                    Integer.valueOf(exerciseInfo.get(1)),
-                    Integer.valueOf(exerciseInfo.get(2)),
-                    i+1
-            ));
-        }
-
-        startPreviousFragment();
     }
 
     // Запускает предыдущий фрагмент исходя из состояния BackFragmentForBuilderStates

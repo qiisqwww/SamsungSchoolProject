@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,12 +15,8 @@ import android.widget.Button;
 
 import com.example.samsungschoolproject.DTO.TemplateInfo;
 import com.example.samsungschoolproject.R;
-import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.view_adapter.workout.info.TemplateInfoAdapter;
-import com.example.samsungschoolproject.view_adapter.workout.info.WorkoutInfoAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import java.util.List;
 
 public class TemplateInfoFragment extends BottomSheetDialogFragment {
     public static String TAG;

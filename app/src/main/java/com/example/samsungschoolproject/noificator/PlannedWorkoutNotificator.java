@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -18,16 +19,17 @@ import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class PlannedWorkoutNotificator {
-    public static final String CHANNEL_ID = "1"; // TODO: я не знаю, зачем это нужно
+    public static final String CHANNEL_ID = "ASAFADF"; // TODO: я не знаю, зачем это нужно
 
     public static void scheduleNotification(Context context){
         Calendar calendar = Calendar.getInstance();
         // Устанавливается время рассылки: 12:00 каждого дня
         calendar.set(Calendar.HOUR_OF_DAY, 12);
         calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
 
         Intent intent = new Intent(context, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
@@ -69,7 +71,7 @@ public class PlannedWorkoutNotificator {
 
         NotificationManager notificationManager = (NotificationManager) context.
                 getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, builder.build());
+        notificationManager.notify(1, builder.build());
     }
 
     public static class NotificationReceiver extends BroadcastReceiver{
@@ -77,10 +79,20 @@ public class PlannedWorkoutNotificator {
         public void onReceive(Context context, Intent intent){
             PlannedWorkoutNotificator.scheduleNotification(context);
 
+            Log.d("GG", "xd0");
             // Необходимо проверить, что на сегодня тренировки запланированы - тогда отправить уведомление
             WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(context);
-            List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(LocalDate.now().toString());
+
+            CompletableFuture<List<PlannedWorkout>> future = CompletableFuture.supplyAsync(() -> database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(LocalDate.now().toString()));
+            List<PlannedWorkout> plannedWorkouts = null;
+            try {
+                plannedWorkouts = future.get();
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
             if (!plannedWorkouts.isEmpty()){
+                Log.d("GG", "xd");
                 sendNotification(context);
             }
         }

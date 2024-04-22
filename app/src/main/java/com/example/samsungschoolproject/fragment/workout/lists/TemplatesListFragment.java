@@ -30,6 +30,8 @@ import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment
 import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutTemplateListAdapter;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener {
     private Button createNewTemplateButton;
@@ -81,7 +83,12 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
 
     // Загружает список из WorkoutTemplate's из БД
     private void loadTemplatesList() {
-        workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
+        CompletableFuture<List<WorkoutTemplate>> future = CompletableFuture.supplyAsync(() -> database.getWorkoutTemplateDAO().getAllWorkoutTemplates());
+        try {
+            workoutTemplates = future.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         if (workoutTemplates.isEmpty()) {
             return;
@@ -100,12 +107,25 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
 
     @Override
     public void onWorkoutItemClick(int position) {
-        WorkoutTemplate workoutTemplate = workoutTemplateListAdapter.getItemByPosition(position);
+        CompletableFuture<TemplateInfo> future = CompletableFuture.supplyAsync(() -> {
+            WorkoutTemplate workoutTemplate = workoutTemplateListAdapter.getItemByPosition(position);
+            List<Exercise> exercises = database.getExerciseDAO().getAllExercises();
+            List<WorkoutTemplateExercise> workoutTemplateExercises = database.getWorkoutTemplateExerciseDAO().getWorkoutTemplateExercisesByWorkoutTemplateId(workoutTemplate.id);
 
-        List<Exercise> exercises = database.getExerciseDAO().getAllExercises();
-        List<WorkoutTemplateExercise> workoutTemplateExercises = database.getWorkoutTemplateExerciseDAO().getWorkoutTemplateExercisesByWorkoutTemplateId(workoutTemplate.id);
+            return new TemplateInfo(
+                    workoutTemplate,
+                    ExerciseInfo.toExerciseInfoListForTemplate(
+                            exercises,
+                            workoutTemplateExercises)
+            );
+        });
 
-        TemplateInfo templateInfo = new TemplateInfo(workoutTemplate, ExerciseInfo.toExerciseInfoListForTemplate(exercises, workoutTemplateExercises));
+        TemplateInfo templateInfo = null;
+        try {
+            templateInfo = future.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         TemplateInfoFragment templateInfoFragment = new TemplateInfoFragment(templateInfo);
         TemplateInfoFragment.TAG = "New Instance"; // idk if this name is important

@@ -1,5 +1,6 @@
 package com.example.samsungschoolproject.fragment.workout.builder;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,8 @@ import com.example.samsungschoolproject.view_adapter.workout.builder.WorkoutBuil
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 
 public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilderAdapter.LoadJustCreated {
@@ -54,8 +57,7 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
 
         initWidgets(view);
         initButtonListeners();
-
-        setWorkoutBuilderRecycler();
+        setTemplateBuilderRecycler();
     }
 
     private void initWidgets(View view){
@@ -75,13 +77,15 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
         });
     }
 
-    private List<Exercise> getAllExercises(){
-        List<Exercise> exercises = database.getExerciseDAO().getAllExercises();
-        return exercises;
-    }
+    private void setTemplateBuilderRecycler(){
+        CompletableFuture<List<Exercise>> future = CompletableFuture.supplyAsync(() -> database.getExerciseDAO().getAllExercises());
 
-    private void setWorkoutBuilderRecycler(){
-        List<String> stringExercises = ExerciseListUtils.parseExerciseToStrings(getAllExercises());
+        List<String> stringExercises = null;
+        try {
+            stringExercises = ExerciseListUtils.parseExerciseToStrings(future.get());
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         WorkoutBuilderAdapter workoutBuilderAdapter = new WorkoutBuilderAdapter(stringExercises, templateBuilderRecycler, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
@@ -92,35 +96,42 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
     // Загружает в БД только что созданную тренировку
     @Override
     public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises) {
-        WorkoutTemplate workoutTemplate = new WorkoutTemplate(name, WorkoutListUtils.countWorkoutLength(exercises));
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+            WorkoutTemplate workoutTemplate = new WorkoutTemplate(name, WorkoutListUtils.countWorkoutLength(exercises));
 
-        // Необходимо проверить, что шаблон с таким именем еще не существует
-        List<WorkoutTemplate> workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
-        for (int i = 0; i < workoutTemplates.size(); i++){
-            if (name.equals(workoutTemplates.get(i).name)){
-                Toast.makeText(getContext(), R.string.template_already_exists, Toast.LENGTH_LONG).show();
-                return;
+            // Необходимо проверить, что шаблон с таким именем еще не существует
+            List<WorkoutTemplate> workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
+            for (int i = 0; i < workoutTemplates.size(); i++){
+                if (name.equals(workoutTemplates.get(i).name)){
+                    Toast.makeText(requireContext().getApplicationContext(), R.string.template_already_exists, Toast.LENGTH_LONG).show();
+                    return "false";
+                }
             }
+
+            // Добавляем запись в таблицу workout_templates
+            long newWorkoutTemplateID = database.getWorkoutTemplateDAO().addWorkoutTemplate(workoutTemplate);
+            int workoutTemplateId = Math.toIntExact(newWorkoutTemplateID);
+
+            // Добавляем связанные записи в таблицу workout_template_exercises
+            for (int i = 0; i < exercises.size(); i++){
+                ArrayList<String> exerciseInfo = exercises.get(i);
+                Exercise exercise = database.getExerciseDAO().getExerciseByName(exerciseInfo.get(0));
+                database.getWorkoutTemplateExerciseDAO().addWorkoutTemplateExercise(new WorkoutTemplateExercise(
+                        workoutTemplateId,
+                        exercise.id,
+                        Integer.valueOf(exerciseInfo.get(1)),
+                        Integer.valueOf(exerciseInfo.get(2)),
+                        i+1
+                ));
+            }
+            return "true";
+        });
+
+        try {
+            if (future.get().equals("true")) startPreviousFragment();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
-
-        // Добавляем запись в таблицу workout_templates
-        long newWorkoutTemplateID = database.getWorkoutTemplateDAO().addWorkoutTemplate(workoutTemplate);
-        int workoutTemplateId = Math.toIntExact(newWorkoutTemplateID);
-
-        // Добавляем связанные записи в таблицу workout_template_exercises
-        for (int i = 0; i < exercises.size(); i++){
-            ArrayList<String> exerciseInfo = exercises.get(i);
-            Exercise exercise = database.getExerciseDAO().getExerciseByName(exerciseInfo.get(0));
-            database.getWorkoutTemplateExerciseDAO().addWorkoutTemplateExercise(new WorkoutTemplateExercise(
-                    workoutTemplateId,
-                    exercise.id,
-                    Integer.valueOf(exerciseInfo.get(1)),
-                    Integer.valueOf(exerciseInfo.get(2)),
-                    i+1
-            ));
-        }
-
-        startPreviousFragment();
     }
 
     // Запускает предыдущий фрагмент

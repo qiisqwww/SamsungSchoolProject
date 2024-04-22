@@ -37,6 +37,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnCalendarItemListener, WorkoutListAdapter.OnWorkoutItemListener, WorkoutListAdapter.UpdateRecycler{
     private CalendarAdapter calendarAdapter;
@@ -148,7 +150,12 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
     // Загружает список тренировок из БД.
     private void loadWorkouts(){
-        plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
+        CompletableFuture<List<PlannedWorkout>> future = CompletableFuture.supplyAsync(() -> database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString()));
+        try {
+            plannedWorkouts = future.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         if (plannedWorkouts.isEmpty()){ // Если нет тренировок на этот день, то нужно выйти из метода
             // Если не установлено сообщение о том, что нет тренировок, то установить его
@@ -196,10 +203,23 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     @Override
     public void onWorkoutItemClick(int position) {
         PlannedWorkout plannedWorkout = workoutListAdapter.getItemByPosition(position);
-        Log.d("GG", plannedWorkout.name);
 
-        List<Exercise> exercises = database.getExerciseDAO().getAllExercises();
-        List<PlannedWorkoutExercise> plannedWorkoutExercises = database.getPlannedWorkoutExerciseDAO().getPlannedWorkoutExercisesByWorkoutId(plannedWorkout.id);
+        CompletableFuture<List<Exercise>> future = CompletableFuture.supplyAsync(() -> database.getExerciseDAO().getAllExercises());
+
+        List<Exercise> exercises = null;
+        try {
+            exercises = future.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        CompletableFuture<List<PlannedWorkoutExercise>> future1 = CompletableFuture.supplyAsync(() -> database.getPlannedWorkoutExerciseDAO().getPlannedWorkoutExercisesByWorkoutId(plannedWorkout.id));
+        List<PlannedWorkoutExercise> plannedWorkoutExercises = null;
+        try {
+            plannedWorkoutExercises = future1.get();
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         WorkoutInfo workoutInfo = new WorkoutInfo(plannedWorkout, ExerciseInfo.toExerciseInfoListForPlanned(exercises, plannedWorkoutExercises));
 
