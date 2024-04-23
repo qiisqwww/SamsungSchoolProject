@@ -61,7 +61,7 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
     }
 
     private void initWidgets(View view){
-        goBackButton = view.findViewById(R.id.goBack);
+        goBackButton = view.findViewById(R.id.back);
 
         templateBuilderRecycler = view.findViewById(R.id.templateBuilderRecycler);
     }

@@ -5,13 +5,7 @@
     android:background="@color/darkThemeBackgroundColor"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/goBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="@string/back"
-        android:backgroundTint="@color/additionalButtonsColor"/>
+    <include layout="@layout/back_button"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/templateBuilderRecycler"

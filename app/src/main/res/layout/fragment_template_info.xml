@@ -7,15 +7,7 @@
     android:background="@color/darkThemeStatusBarColor"
     tools:context=".fragment.workout.info.TemplateInfoFragment">
 
-    <Button
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:backgroundTint="@color/additionalButtonsColor"
-        android:text="@string/back"
-        android:layout_margin="15dp"/>
+    <include layout="@layout/back_button"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/templateInfoRecycler"

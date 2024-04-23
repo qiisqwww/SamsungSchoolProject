@@ -79,7 +79,7 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
     }
 
     private void initWidgets(View view){
-        goBackButton = view.findViewById(R.id.goBack);
+        goBackButton = view.findViewById(R.id.back);
 
         workoutBuilderRecycler = view.findViewById(R.id.workoutBuilderRecycler);
     }
