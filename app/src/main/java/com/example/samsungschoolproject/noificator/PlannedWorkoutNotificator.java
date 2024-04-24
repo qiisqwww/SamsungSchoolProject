@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
+import com.example.samsungschoolproject.enums.ScheduleNotificatorStates;
 
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -29,7 +30,6 @@ public class PlannedWorkoutNotificator {
         Calendar calendar = Calendar.getInstance();
         // Устанавливается время рассылки: 12:00 каждого дня
         calendar.set(Calendar.HOUR_OF_DAY, 12);
-        calendar.set(Calendar.MINUTE, 0);
 
         Intent intent = new Intent(context, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
@@ -39,9 +39,10 @@ public class PlannedWorkoutNotificator {
 
         // Установка дневного интервала между рассылками
         if (alarmManager != null){
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, pendingIntent);
         }
+        PlannedWorkoutNotificator.NotificationReceiver.isScheduled = ScheduleNotificatorStates.IS_SCHEDULED;
     }
 
     public static void createNotificationChannel(Context context){
@@ -66,7 +67,7 @@ public class PlannedWorkoutNotificator {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Планировщик тренировок")
-                .setContentText("У вас еще запланировано несколько тренировок на сегодня!")
+                .setContentText("На сегодня есть запланированные тренировки!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManager notificationManager = (NotificationManager) context.
@@ -75,10 +76,9 @@ public class PlannedWorkoutNotificator {
     }
 
     public static class NotificationReceiver extends BroadcastReceiver{
+        public static ScheduleNotificatorStates isScheduled = ScheduleNotificatorStates.IS_NOT_SCHEDULED;
         @Override
         public void onReceive(Context context, Intent intent){
-            PlannedWorkoutNotificator.scheduleNotification(context);
-
             Log.d("GG", "xd0");
             // Необходимо проверить, что на сегодня тренировки запланированы - тогда отправить уведомление
             WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(context);
@@ -92,7 +92,6 @@ public class PlannedWorkoutNotificator {
             }
 
             if (!plannedWorkouts.isEmpty()){
-                Log.d("GG", "xd");
                 sendNotification(context);
             }
         }

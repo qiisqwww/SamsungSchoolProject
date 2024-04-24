@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
+import com.example.samsungschoolproject.enums.ScheduleNotificatorStates;
 import com.example.samsungschoolproject.fragment.сalendar.CalendarFragment;
 import com.example.samsungschoolproject.noificator.PlannedWorkoutNotificator;
 import com.example.samsungschoolproject.view_adapter.main.MainFragmentsAdapter;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initNotificator(Context context){
+        if (PlannedWorkoutNotificator.NotificationReceiver.isScheduled.equals(ScheduleNotificatorStates.IS_SCHEDULED)) return;
         PlannedWorkoutNotificator.scheduleNotification(context);
     }
 }
