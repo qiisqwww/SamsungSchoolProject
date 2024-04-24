@@ -41,5 +41,6 @@
     <string name="templates_list_info">Шаблоны Ваших тренировок:</string>
     <string name="tap_on_template_asking">Нажмите, чтобы получить информацию о шаблоне</string>
     <string name="tap_on_workout_asking">Нажмите, чтобы получить информацию о тренировке</string>
-    <string name="mark_completed">Отметить выполненной</string>
+    <string name="mark_completed">Выполнить</string>
+    <string name="completed">Выполнено</string>
 </resources>

@@ -3,9 +3,12 @@ package com.example.samsungschoolproject.view_adapter.workout.list;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
@@ -71,6 +74,12 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
             workoutItemBinding = WorkoutItemBinding.bind(itemView);
             this.onWorkoutItemListener = onWorkoutItemListener;
             itemView.setOnClickListener(this);
+
+            Button markCompletedButton = itemView.findViewById(R.id.markCompleted);
+            markCompletedButton.setOnClickListener(v -> { // TODO: Подумать над цветом и добавить логику подгрузки из БД
+                markCompletedButton.setText(itemView.getContext().getString(R.string.completed));
+                markCompletedButton.setBackgroundColor(itemView.getContext().getColor(R.color.additionalButtonsColor));
+            });
         }
 
         public void bind(PlannedWorkout plannedWorkout){
