@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
-import com.example.samsungschoolproject.fragment.workout.info.TemplateInfoFragment;
 import com.example.samsungschoolproject.fragment.workout.info.WorkoutInfoFragment;
 import com.example.samsungschoolproject.fragment.workout.lists.WorkoutFromTemplateListFragment;
 import com.example.samsungschoolproject.fragment.workout.builder.WorkoutsBuilderFragment;
@@ -266,8 +264,13 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         }
 
         @Override
-        public void setWorkoutMarked() {
+        public void setWorkoutMarked(PlannedWorkout plannedWorkout) {
+            CompletableFuture.supplyAsync(() -> {
+                plannedWorkout.is_completed = "true";
+                database.getPlannedWorkoutDAO().updatePlannedWorkout(plannedWorkout);
 
+                return null;
+            });
         }
     }
 }

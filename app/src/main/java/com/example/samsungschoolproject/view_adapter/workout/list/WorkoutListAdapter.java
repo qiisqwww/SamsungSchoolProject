@@ -75,7 +75,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
     }
 
     public interface SetWorkoutMarked{
-        void setWorkoutMarked();
+        void setWorkoutMarked(PlannedWorkout plannedWorkout);
     }
 
     public static class WorkoutViewHolder extends RecyclerView.ViewHolder{
@@ -115,7 +115,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
                     markCompletedButton.setText(itemView.getContext().getString(R.string.completed));
                     markCompletedButton.setBackgroundColor(itemView.getContext().getColor(R.color.additionalButtonsColor));
 
-                    setWorkoutMarked.setWorkoutMarked();
+                    setWorkoutMarked.setWorkoutMarked(plannedWorkout);
                 });
             }
 

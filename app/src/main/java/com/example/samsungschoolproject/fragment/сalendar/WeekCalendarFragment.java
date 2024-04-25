@@ -239,7 +239,12 @@ public class WeekCalendarFragment extends Fragment implements
     }
 
     @Override
-    public void setWorkoutMarked() {
+    public void setWorkoutMarked(PlannedWorkout plannedWorkout) {
+        CompletableFuture.supplyAsync(() -> {
+            plannedWorkout.is_completed = "true";
+            database.getPlannedWorkoutDAO().updatePlannedWorkout(plannedWorkout);
 
+            return null;
+        });
     }
 }

@@ -79,7 +79,6 @@ public class PlannedWorkoutNotificator {
         public void onReceive(Context context, Intent intent){
             PlannedWorkoutNotificator.scheduleNotification(context);
 
-            Log.d("GG", "xd0");
             // Необходимо проверить, что на сегодня тренировки запланированы - тогда отправить уведомление
             WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(context);
 
@@ -92,7 +91,6 @@ public class PlannedWorkoutNotificator {
             }
 
             if (!plannedWorkouts.isEmpty()){
-                Log.d("GG", "xd");
                 sendNotification(context);
             }
         }
