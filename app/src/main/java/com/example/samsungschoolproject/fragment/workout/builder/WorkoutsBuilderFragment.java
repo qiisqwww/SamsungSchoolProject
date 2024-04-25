@@ -108,7 +108,7 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
     // Загружает в БД только что созданную тренировку
     @Override
     public void loadJustCreated(String name, ArrayList<ArrayList<String>> exercises) {
-        PlannedWorkout plannedWorkout = new PlannedWorkout(name, WorkoutListUtils.countWorkoutLength(exercises), "False", CalendarUtils.selectedDate.toString());
+        PlannedWorkout plannedWorkout = new PlannedWorkout(name, WorkoutListUtils.countWorkoutLength(exercises), "false", CalendarUtils.selectedDate.toString());
 
         CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
             // Необходимо проверить, что тренировка с таким же именем еще не запланирована на сегодня

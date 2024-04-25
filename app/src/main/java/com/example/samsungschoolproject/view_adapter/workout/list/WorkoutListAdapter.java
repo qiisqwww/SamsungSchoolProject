@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +17,24 @@ import com.example.samsungschoolproject.databinding.WorkoutItemBinding;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 
 import java.util.List;
+import java.util.Set;
 
 public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.WorkoutViewHolder> {
     private final List<PlannedWorkout> plannedWorkouts;
     private final UpdateRecycler updateRecycler;
     private final OnWorkoutItemListener onWorkoutItemListener;
+    private final SetWorkoutMarked setWorkoutMarked;
 
-    public WorkoutListAdapter(List<PlannedWorkout> items, OnWorkoutItemListener onWorkoutItemListener, UpdateRecycler updateRecycler) {
+    public WorkoutListAdapter(
+            List<PlannedWorkout> items,
+            OnWorkoutItemListener onWorkoutItemListener,
+            UpdateRecycler updateRecycler,
+            SetWorkoutMarked setWorkoutMarked) {
         plannedWorkouts = items;
         this.onWorkoutItemListener = onWorkoutItemListener;
         this.updateRecycler = updateRecycler;
+        this.setWorkoutMarked = setWorkoutMarked;
+
     }
 
     @NonNull
@@ -36,7 +45,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
                 parent,
                 false
         );
-        return new WorkoutViewHolder(view, onWorkoutItemListener);
+        return new WorkoutViewHolder(view, onWorkoutItemListener, setWorkoutMarked);
     }
 
     @Override
@@ -65,32 +74,51 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         void updateRecycler();
     }
 
-    public static class WorkoutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public interface SetWorkoutMarked{
+        void setWorkoutMarked();
+    }
+
+    public static class WorkoutViewHolder extends RecyclerView.ViewHolder{
+        private final View itemView;
         private final WorkoutItemBinding workoutItemBinding;
         private final OnWorkoutItemListener onWorkoutItemListener;
+        private final SetWorkoutMarked setWorkoutMarked;
 
-        public WorkoutViewHolder(@NonNull View itemView, OnWorkoutItemListener onWorkoutItemListener) {
+        public WorkoutViewHolder(@NonNull View itemView, OnWorkoutItemListener onWorkoutItemListener, SetWorkoutMarked setWorkoutMarked) {
             super(itemView);
             workoutItemBinding = WorkoutItemBinding.bind(itemView);
-            this.onWorkoutItemListener = onWorkoutItemListener;
-            itemView.setOnClickListener(this);
 
-            Button markCompletedButton = itemView.findViewById(R.id.markCompleted);
-            markCompletedButton.setOnClickListener(v -> { // TODO: Подумать над цветом и добавить логику подгрузки из БД
-                markCompletedButton.setText(itemView.getContext().getString(R.string.completed));
-                markCompletedButton.setBackgroundColor(itemView.getContext().getColor(R.color.additionalButtonsColor));
-            });
+            this.itemView = itemView;
+            this.onWorkoutItemListener = onWorkoutItemListener;
+            this.setWorkoutMarked = setWorkoutMarked;
         }
 
         public void bind(PlannedWorkout plannedWorkout){
             String fieldText = "Название: " + plannedWorkout.name;
             workoutItemBinding.name.setText(fieldText);
             workoutItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(plannedWorkout.approximate_length));
+
+            if (plannedWorkout.is_completed.equals("true")){
+                workoutItemBinding.markCompleted.setText(itemView.getContext().getString(R.string.completed));
+                workoutItemBinding.markCompleted.setBackgroundColor(itemView.getContext().getColor(R.color.additionalButtonsColor));
+            }
+
+            initOnClickListeners(plannedWorkout);
         }
 
-        @Override
-        public void onClick(View v) {
-            onWorkoutItemListener.onWorkoutItemClick(getAdapterPosition());
+        private void initOnClickListeners(PlannedWorkout plannedWorkout){
+            itemView.setOnClickListener(v -> onWorkoutItemListener.onWorkoutItemClick(getAdapterPosition()));
+
+            if (plannedWorkout.is_completed.equals("false")){
+                Button markCompletedButton = itemView.findViewById(R.id.markCompleted);
+                markCompletedButton.setOnClickListener(v -> { // TODO: Подумать над цветом и добавить логику подгрузки из БД
+                    markCompletedButton.setText(itemView.getContext().getString(R.string.completed));
+                    markCompletedButton.setBackgroundColor(itemView.getContext().getColor(R.color.additionalButtonsColor));
+
+                    setWorkoutMarked.setWorkoutMarked();
+                });
+            }
+
         }
     }
 }

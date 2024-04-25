@@ -134,7 +134,10 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         initBottomSheetFragment();
     }
 
-    public static class ModalBottomSheetFragment extends BottomSheetDialogFragment implements WorkoutListAdapter.OnWorkoutItemListener, WorkoutListAdapter.UpdateRecycler{
+    public static class ModalBottomSheetFragment extends BottomSheetDialogFragment implements
+            WorkoutListAdapter.OnWorkoutItemListener,
+            WorkoutListAdapter.UpdateRecycler,
+            WorkoutListAdapter.SetWorkoutMarked{
         public static String TAG;
         private WorkoutHelperDatabase database;
         private RecyclerView workoutsRecycler;
@@ -157,7 +160,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
             // TODO: возможно, это костыль. Необходимо переделать.
             // Код ниже необходим для корректной работы "обновления" данных после создания новой тренировки.
-            workoutListAdapter = new WorkoutListAdapter(new ArrayList<>(), this, this);
+            workoutListAdapter = new WorkoutListAdapter(new ArrayList<>(), this, this, this);
 
             initWidgets(view);
             loadWorkouts(); // Загружает список тренировок из базы данных
@@ -223,7 +226,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         }
 
         private void setWorkoutsRecycler(){
-            workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this);
+            workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this, this);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
             workoutsRecycler.setLayoutManager(layoutManager);
             workoutsRecycler.setAdapter(workoutListAdapter);
@@ -260,6 +263,11 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         @Override
         public void updateRecycler() {
             loadWorkouts();
+        }
+
+        @Override
+        public void setWorkoutMarked() {
+
         }
     }
 }

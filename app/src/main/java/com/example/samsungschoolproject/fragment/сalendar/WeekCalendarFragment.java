@@ -40,7 +40,11 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class WeekCalendarFragment extends Fragment implements CalendarAdapter.OnCalendarItemListener, WorkoutListAdapter.OnWorkoutItemListener, WorkoutListAdapter.UpdateRecycler{
+public class WeekCalendarFragment extends Fragment implements
+        CalendarAdapter.OnCalendarItemListener,
+        WorkoutListAdapter.OnWorkoutItemListener,
+        WorkoutListAdapter.UpdateRecycler,
+        WorkoutListAdapter.SetWorkoutMarked{
     private CalendarAdapter calendarAdapter;
     private WorkoutListAdapter workoutListAdapter;
     private TextView monthYearTV;
@@ -71,7 +75,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
 
         // TODO: возможно, это костыль. Необходимо переделать.
         // Код ниже необходим для корректной работы "обновления" данных после создания новой тренировки.
-        workoutListAdapter = new WorkoutListAdapter(new ArrayList<>(), this, this);
+        workoutListAdapter = new WorkoutListAdapter(new ArrayList<>(), this, this, this);
 
 
         initWidgets(view);
@@ -174,7 +178,7 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     }
 
     private void setWorkoutsRecycler(){
-        workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this);
+        workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutsRecycler.setLayoutManager(layoutManager);
         workoutsRecycler.setAdapter(workoutListAdapter);
@@ -232,5 +236,10 @@ public class WeekCalendarFragment extends Fragment implements CalendarAdapter.On
     @Override
     public void updateRecycler() {
         loadWorkouts();
+    }
+
+    @Override
+    public void setWorkoutMarked() {
+
     }
 }

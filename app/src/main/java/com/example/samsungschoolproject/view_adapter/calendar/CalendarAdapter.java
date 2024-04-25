@@ -74,20 +74,24 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         void onItemClick(int position, String dayText);
     }
 
-    public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class CalendarViewHolder extends RecyclerView.ViewHolder{
+        private final View itemView;
         private final TextView day;
         private final OnCalendarItemListener onCalendarItemListener;
 
         public CalendarViewHolder(@NonNull View itemView, OnCalendarItemListener onCalendarItemListener) {
             super(itemView);
-            day = itemView.findViewById(R.id.day);
+            this.itemView = itemView;
             this.onCalendarItemListener = onCalendarItemListener;
-            itemView.setOnClickListener(this);
+            day = itemView.findViewById(R.id.day);
+
+            setOnClickListeners();
         }
 
-        @Override
-        public void onClick(View view){
-            onCalendarItemListener.onItemClick(getAdapterPosition(), (String) day.getText());
+        private void setOnClickListeners(){
+            itemView.setOnClickListener(v -> {
+                onCalendarItemListener.onItemClick(getAdapterPosition(), (String) day.getText());
+            });
         }
     }
 }

@@ -53,15 +53,19 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
         void onWorkoutItemClick(int position);
     }
 
-    public static class WorkoutTemplateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class WorkoutTemplateViewHolder extends RecyclerView.ViewHolder{
+        private final View itemView;
         private final TemplateItemBinding templateItemBinding;
         private final OnWorkoutItemListener onWorkoutItemListener;
 
         public WorkoutTemplateViewHolder(@NonNull View itemView, OnWorkoutItemListener onWorkoutItemListener) {
             super(itemView);
-            templateItemBinding = TemplateItemBinding.bind(itemView);
+            this.itemView = itemView;
             this.onWorkoutItemListener = onWorkoutItemListener;
-            itemView.setOnClickListener(this);
+
+            templateItemBinding = TemplateItemBinding.bind(itemView);
+
+            setOnClickListeners();
         }
 
         public void bind(WorkoutTemplate workoutTemplate){
@@ -70,9 +74,8 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
             templateItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutTemplate.approximate_length));
         }
 
-        @Override
-        public void onClick(View v) {
-            onWorkoutItemListener.onWorkoutItemClick(getAdapterPosition());
+        private void setOnClickListeners(){
+            itemView.setOnClickListener(v -> onWorkoutItemListener.onWorkoutItemClick(getAdapterPosition()));
         }
     }
 }
