@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import com.example.samsungschoolproject.activity.SettingsMenuActivity;
 
 public class MainMenuFragment extends Fragment {
     Button toSettingsButton;
+    Button getMotivationButton;
+    RecyclerView statisticsRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,13 +44,19 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void initWidgets(View view){
-        toSettingsButton = (Button) view.findViewById(R.id.toSettings);
+        toSettingsButton = view.findViewById(R.id.toSettings);
+        getMotivationButton = view.findViewById(R.id.getMotivation);
+        statisticsRecyclerView = view.findViewById(R.id.statisticsRecycler); // TODO: Сделать сбор статистики + адаптер
     }
 
     private void initButtonListeners(){
         toSettingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), SettingsMenuActivity.class);
             startActivity(intent);
+        });
+
+        getMotivationButton.setOnClickListener(v -> {
+            // TODO: работа с медиа
         });
     }
 }
