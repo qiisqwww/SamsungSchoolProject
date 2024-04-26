@@ -117,7 +117,7 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
             }
 
             // Добавляем запись в таблицу planned_workouts
-            PlannedWorkout newPlannedWorkout = new PlannedWorkout(workoutTemplate.name, workoutTemplate.approximate_length, "False", CalendarUtils.selectedDate.toString());
+            PlannedWorkout newPlannedWorkout = new PlannedWorkout(workoutTemplate.name, workoutTemplate.approximate_length, "false", CalendarUtils.selectedDate.toString());
             long newPlannedWorkoutID = database.getPlannedWorkoutDAO().addPlannedWorkout(newPlannedWorkout);
             int plannedWorkoutID = Math.toIntExact(newPlannedWorkoutID);
 
