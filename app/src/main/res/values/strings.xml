@@ -45,4 +45,6 @@
     <string name="completed">Выполнено</string>
     <string name="template_info">Информация о шаблоне:</string>
     <string name="workout_info">Информация о тренировке:</string>
+    <string name="get_motivation">Получить заряд мотивации</string>
+    <string name="your_statistics">Ваша статистика за все время:</string>
 </resources>
