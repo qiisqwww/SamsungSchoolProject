@@ -94,10 +94,12 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         }
 
         public void bind(PlannedWorkout plannedWorkout){
+            // Установить тенировке название
             String fieldText = "Название: " + plannedWorkout.name;
             workoutItemBinding.name.setText(fieldText);
             workoutItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(plannedWorkout.approximate_length));
 
+            // Если тренировка "выполнена", нужно сразу установить соответствующее состояние
             if (plannedWorkout.is_completed.equals("true")){
                 workoutItemBinding.markCompleted.setText(itemView.getContext().getString(R.string.completed));
                 workoutItemBinding.markCompleted.setBackgroundColor(itemView.getContext().getColor(R.color.additionalButtonsColor));
@@ -109,9 +111,11 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         private void initOnClickListeners(PlannedWorkout plannedWorkout){
             itemView.setOnClickListener(v -> onWorkoutItemListener.onWorkoutItemClick(getAdapterPosition()));
 
+            // Если тренировка не "выполнена", то ее можно "выполнить" (т.е. нужно создать слушатель на кнопку
             if (plannedWorkout.is_completed.equals("false")){
                 Button markCompletedButton = itemView.findViewById(R.id.markCompleted);
-                markCompletedButton.setOnClickListener(v -> { // TODO: Подумать над цветом и добавить логику подгрузки из БД
+                markCompletedButton.setOnClickListener(v -> {
+                    // Изменить текст на "выполненный" и заменить цвет кнопки
                     markCompletedButton.setText(itemView.getContext().getString(R.string.completed));
                     markCompletedButton.setBackgroundColor(itemView.getContext().getColor(R.color.additionalButtonsColor));
 
