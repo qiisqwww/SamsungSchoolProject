@@ -32,7 +32,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
 
         // Задает размер для "месячного" режима (в нем количество дней > 15)
         if (days.size() > 15){
-            layoutParams.height = (int) (parent.getHeight() * 0.166666666);
+            layoutParams.height = (int) (parent.getHeight() * 0.14);
         }
         // Задает размер для "недельного" режима
         else{

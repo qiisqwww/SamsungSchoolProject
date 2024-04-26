@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Планировщик тренировок</string>
     <string name="settings_button">Настройки</string>
-    <string name="back">Назад</string>
+    <string name="back">&lt;-</string>
     <string name="get_previous_month">&lt;-</string>
     <string name="get_next_month">-&gt;</string>
     <string name="calendar">Календарь</string>
@@ -18,7 +18,7 @@
     <string name="SUN">ВС</string>
     <string name="channel_name">Название канала</string>
     <string name="channel_description">Описание канала</string>
-    <string name="load_from_templates_button">Загрузить из шаблонов</string>
+    <string name="load_from_templates_button">Использовать шаблон</string>
     <string name="add_new_workout">Добавить тренировку</string>
     <string name="add_workout_template">Создать шаблон тренировки</string>
     <string name="no_planned_workouts">На этот день нет запланированных тренировок</string>
@@ -43,4 +43,6 @@
     <string name="tap_on_workout_asking">Нажмите, чтобы получить информацию о тренировке</string>
     <string name="mark_completed">Выполнить</string>
     <string name="completed">Выполнено</string>
+    <string name="template_info">Информация о шаблоне:</string>
+    <string name="workout_info">Информация о тренировке:</string>
 </resources>

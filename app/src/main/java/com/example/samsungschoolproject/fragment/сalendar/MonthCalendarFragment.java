@@ -177,6 +177,11 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         private void initButtonListeners(){
             loadFromTemplatesButton.setOnClickListener(v -> {
+                if (CalendarUtils.selectedDate.isBefore(LocalDate.now())){
+                    Toast.makeText(addNewWorkoutButton.getContext(), R.string.unable_to_create_workout, Toast.LENGTH_SHORT).show(); // TODO: поработать над визуалом
+                    return;
+                }
+
                 WorkoutFromTemplateListFragment workoutFromTemplateListFragment = new WorkoutFromTemplateListFragment(workoutListAdapter);
                 WorkoutFromTemplateListFragment.TAG = "New Instance"; // idk if this name is important
 
@@ -185,7 +190,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
             addNewWorkoutButton.setOnClickListener(v -> {
                 if (CalendarUtils.selectedDate.isBefore(LocalDate.now())){
-                    Toast.makeText(addNewWorkoutButton.getContext(), R.string.unable_to_create_workout, Toast.LENGTH_LONG).show(); // TODO: поработать над визуалом
+                    Toast.makeText(addNewWorkoutButton.getContext(), R.string.unable_to_create_workout, Toast.LENGTH_SHORT).show(); // TODO: поработать над визуалом
                     return;
                 }
 

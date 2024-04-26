@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.example.samsungschoolproject.DTO.ExerciseInfo;
@@ -112,6 +113,11 @@ public class WeekCalendarFragment extends Fragment implements
         });
 
         loadFromTemplatesButton.setOnClickListener(v -> {
+            if (CalendarUtils.selectedDate.isBefore(LocalDate.now())){
+                Toast.makeText(addNewWorkoutButton.getContext(), R.string.unable_to_create_workout, Toast.LENGTH_SHORT).show(); // TODO: поработать над визуалом
+                return;
+            }
+
             WorkoutFromTemplateListFragment workoutFromTemplateListFragment = new WorkoutFromTemplateListFragment(workoutListAdapter);
             WorkoutFromTemplateListFragment.TAG = "New Instance"; // idk if this name is important
 
@@ -119,6 +125,11 @@ public class WeekCalendarFragment extends Fragment implements
         });
 
         addNewWorkoutButton.setOnClickListener(v -> {
+            if (CalendarUtils.selectedDate.isBefore(LocalDate.now())){
+                Toast.makeText(addNewWorkoutButton.getContext(), R.string.unable_to_create_workout, Toast.LENGTH_SHORT).show(); // TODO: поработать над визуалом
+                return;
+            }
+
             workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilderStates.BACK_TO_WEEK_FRAGMENT, workoutListAdapter);
             WorkoutsBuilderFragment.TAG = "Another Instance"; // idk if this name is important
 
