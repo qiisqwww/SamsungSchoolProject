@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -19,10 +20,7 @@ import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.activity.SettingsMenuActivity;
 
 
-public class MainMenuFragment extends Fragment {
-    Button toSettingsButton;
-    Button getMotivationButton;
-    RecyclerView statisticsRecyclerView;
+public class MainMenuFragment extends Fragment implements MainMenuInfoFragment.OpenMainMenuVideoFragment, MainMenuVideoFragment.OpenMainMenuInfoFragment{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,24 +37,22 @@ public class MainMenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initWidgets(view);
-        initButtonListeners();
+        openMainMenuInfoFragment();
     }
 
-    private void initWidgets(View view){
-        toSettingsButton = view.findViewById(R.id.toSettings);
-        getMotivationButton = view.findViewById(R.id.getMotivation);
-        statisticsRecyclerView = view.findViewById(R.id.statisticsRecycler); // TODO: Сделать сбор статистики + адаптер
+    @Override
+    public void openMainMenuInfoFragment(){
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.mainMenuContainer, new MainMenuInfoFragment(this))
+                .commit();
     }
 
-    private void initButtonListeners(){
-        toSettingsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), SettingsMenuActivity.class);
-            startActivity(intent);
-        });
-
-        getMotivationButton.setOnClickListener(v -> {
-            // TODO: работа с медиа
-        });
+    @Override
+    public void openMainMenuVideoFragment() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.mainMenuContainer, new MainMenuVideoFragment(this))
+                .commit();
     }
 }
