@@ -85,9 +85,7 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
     }
 
     private void initButtonListeners(){
-        goBackButton.setOnClickListener(v -> {
-            startPreviousFragment();
-        });
+        goBackButton.setOnClickListener(v -> startPreviousFragment());
     }
 
     private void setWorkoutBuilderRecycler(){

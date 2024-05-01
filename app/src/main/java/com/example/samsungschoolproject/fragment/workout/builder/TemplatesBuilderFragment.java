@@ -136,9 +136,8 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
 
     // Запускает предыдущий фрагмент
     public void startPreviousFragment() {
-        TemplatesListFragment templatesListFragment = new TemplatesListFragment();
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.remove(new TemplatesListFragment());
-        fragmentTransaction.replace(R.id.workoutTemplatesContainer, templatesListFragment).commit();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.popBackStack();
+        fragmentManager.beginTransaction().replace(R.id.workoutTemplatesContainer, new TemplatesListFragment()).commit();
     }
 }

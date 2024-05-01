@@ -14,11 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.samsungschoolproject.R;
-import com.example.samsungschoolproject.activity.SettingsMenuActivity;
-import com.example.samsungschoolproject.enums.MainMenuInfoOpenedStates;
 
 
 public class MainMenuFragment extends Fragment implements MainMenuInfoFragment.OpenMainMenuVideoFragment, MainMenuVideoFragment.OpenMainMenuInfoFragment{
@@ -38,21 +35,16 @@ public class MainMenuFragment extends Fragment implements MainMenuInfoFragment.O
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        openMainMenuInfoFragment(MainMenuInfoOpenedStates.FRAGMENT_FIRST_OPENED);
+        openMainMenuInfoFragment();
     }
 
     @Override
-    public void openMainMenuInfoFragment(MainMenuInfoOpenedStates mainMenuInfoOpenedStates){
-        if (mainMenuInfoOpenedStates.equals(MainMenuInfoOpenedStates.FRAGMENT_FIRST_OPENED)){
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.mainMenuContainer, new MainMenuInfoFragment(this))
-                    .commit();
-        }
-        if (mainMenuInfoOpenedStates.equals(MainMenuInfoOpenedStates.FRAGMENT_OPENED_FROM_VIDEO)){
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            fragmentManager.beginTransaction().remove(this).commit();
-        }
+    public void openMainMenuInfoFragment(){
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.popBackStack();
+        fragmentManager.beginTransaction()
+                .replace(R.id.mainMenuContainer, new MainMenuInfoFragment(this))
+                .commit();
     }
 
     @Override

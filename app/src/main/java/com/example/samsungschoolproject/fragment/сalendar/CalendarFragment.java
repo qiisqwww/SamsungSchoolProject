@@ -39,7 +39,7 @@ public class CalendarFragment extends Fragment implements SwitchModeView{
         super.onViewCreated(view, savedInstanceState);
 
         initWidgets(view);
-        setOnclickListeners();
+        initButtonListeners();
 
         startMonthFragment();
     }
@@ -48,7 +48,7 @@ public class CalendarFragment extends Fragment implements SwitchModeView{
         switchModeButton = view.findViewById(R.id.switchMode);
     }
 
-    private void setOnclickListeners(){
+    private void initButtonListeners(){
         switchModeButton.setOnClickListener(v -> switchCalendarMode());
     }
 

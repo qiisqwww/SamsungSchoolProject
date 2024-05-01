@@ -68,7 +68,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         super.onViewCreated(view, savedInstanceState);
 
         initWidgets(view);
-        setButtonListeners();
+        initButtonListeners();
 
         setCurrentState();
         setMonthView();
@@ -82,7 +82,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         monthNextButton = view.findViewById(R.id.monthNext);
     }
 
-    private void setButtonListeners(){
+    private void initButtonListeners(){
         monthBackButton.setOnClickListener(v -> {
             CalendarUtils.dateToScroll = CalendarUtils.dateToScroll.minusMonths(1);
             setMonthView();

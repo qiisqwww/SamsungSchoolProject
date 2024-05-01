@@ -3,6 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkThemeBackgroundColor"
     tools:context=".fragment.main.MainMenuVideoFragment">
+
+    <include
+        layout="@layout/back_button"/>
+
+    <VideoView
+        android:id="@+id/motivationVideo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="75dp"/>
 
 </FrameLayout>
