@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.enums.MainMenuInfoOpenedStates;
 
 public class MainMenuVideoFragment extends Fragment {
     OpenMainMenuInfoFragment openMainMenuInfoFragment;
@@ -29,6 +30,6 @@ public class MainMenuVideoFragment extends Fragment {
     }
 
     public interface OpenMainMenuInfoFragment{
-        void openMainMenuInfoFragment();
+        void openMainMenuInfoFragment(MainMenuInfoOpenedStates mainMenuInfoOpenedStates);
     }
 }

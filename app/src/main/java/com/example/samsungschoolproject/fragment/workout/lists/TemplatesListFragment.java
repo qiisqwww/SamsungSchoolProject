@@ -72,11 +72,11 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
 
     private void initButtonListeners(){
         createNewTemplateButton.setOnClickListener(v -> {
-            TemplatesBuilderFragment templatesListFragment = new TemplatesBuilderFragment();
+            TemplatesBuilderFragment templatesBuilderFragment = new TemplatesBuilderFragment();
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.workoutTemplatesContainer, templatesListFragment)
-                    .addToBackStack("templates_list_fragment")
+                    .replace(R.id.workoutTemplatesContainer, templatesBuilderFragment)
+                    .addToBackStack("TemplatesListFragment")
                     .commit();
         });
     }

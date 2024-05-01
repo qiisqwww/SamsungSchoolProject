@@ -45,8 +45,6 @@
     <string name="completed">Выполнено</string>
     <string name="template_info">Информация о шаблоне:</string>
     <string name="workout_info">Информация о тренировке:</string>
-    <string name="get_motivation">Получить заряд мотивации</string>
+    <string name="get_motivation">Зарядиться вайбом</string>
     <string name="your_statistics">Ваша статистика за все время:</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

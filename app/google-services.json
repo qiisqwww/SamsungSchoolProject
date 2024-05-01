@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "2927123820",
+    "project_id": "workout-planner-applicat-f8087",
+    "storage_bucket": "workout-planner-applicat-f8087.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2927123820:android:affd4d6021b25b2816a749",
+        "android_client_info": {
+          "package_name": "com.example.samsungschoolproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-brgP76zmgkxflJMAgkpYetWzf7LUWxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
