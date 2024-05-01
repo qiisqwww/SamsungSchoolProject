@@ -46,6 +46,11 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     private ModalBottomSheetFragment modalBottomSheet;
     private RecyclerView calendarRecycler;
     private Button monthBackButton, monthNextButton;
+    private SwitchModeView switchModeView;
+
+    public MonthCalendarFragment(SwitchModeView switchModeView){
+        this.switchModeView = switchModeView;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +106,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
         }
 
-        CalendarFragment.setViewToMonthly(getResources().getString(R.string.month));
+        switchModeView.setViewToMonthly();
     }
 
     // Отрисовка "месячного" режима календаря

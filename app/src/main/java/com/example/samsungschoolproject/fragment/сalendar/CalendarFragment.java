@@ -15,13 +15,13 @@ import android.widget.Button;
 
 import com.example.samsungschoolproject.R;
 
-public class CalendarFragment extends Fragment {
-    private static Button switchModeButton;
-
+public class CalendarFragment extends Fragment implements SwitchModeView{
     // nextFragment содержит фрагмент, который необходимо открыть следующим
     // при нажатии switchModeButton
-    private static Fragment nextFragment;
+    private Fragment nextFragment;
 
+    // switchModeButton содержит слово, обозначающее режим календаря ("Месяц" или "Неделя")
+    private Button switchModeButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,26 +49,26 @@ public class CalendarFragment extends Fragment {
     }
 
     private void setOnclickListeners(){
-        switchModeButton.setOnClickListener(v -> {
-            switchCalendarMode();
-        });
+        switchModeButton.setOnClickListener(v -> switchCalendarMode());
     }
 
     private void startMonthFragment(){
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.container, new MonthCalendarFragment());
+        transaction.add(R.id.container, new MonthCalendarFragment(this));
         transaction.commit();
     }
 
-    public static void setViewToWeekly(String week){
-        nextFragment = new MonthCalendarFragment();
-        switchModeButton.setText(week);
+    @Override
+    public void setViewToWeekly(){
+        nextFragment = new MonthCalendarFragment(this);
+        switchModeButton.setText(getResources().getString(R.string.week));
     }
 
-    public static void setViewToMonthly(String month){
-        nextFragment = new WeekCalendarFragment();
-        switchModeButton.setText(month);
+    @Override
+    public void setViewToMonthly(){
+        nextFragment = new WeekCalendarFragment(this);
+        switchModeButton.setText(getResources().getString(R.string.month));
     }
 
     private void switchCalendarMode(){

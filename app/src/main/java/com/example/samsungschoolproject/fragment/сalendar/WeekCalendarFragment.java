@@ -56,6 +56,11 @@ public class WeekCalendarFragment extends Fragment implements
     private ViewSwitcher viewSwitcher;
     private WorkoutHelperDatabase database;
     private List<PlannedWorkout> plannedWorkouts;
+    private SwitchModeView switchModeView;
+
+    public WeekCalendarFragment(SwitchModeView switchModeView){
+        this.switchModeView = switchModeView;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,7 +154,7 @@ public class WeekCalendarFragment extends Fragment implements
             CalendarUtils.selectedDate = CalendarUtils.dateToScroll;
         }
 
-        CalendarFragment.setViewToWeekly(getResources().getString(R.string.week));
+        switchModeView.setViewToWeekly();
     }
 
     // Отрисовка "недельного" режима календаря
