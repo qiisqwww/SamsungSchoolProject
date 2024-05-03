@@ -1,7 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Base.Theme.SamsungSchoolProject" parent="Theme.Material3.Light.NoActionBar">
+    <!-- Основная тема приложения -->
+    <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/darkThemeStatusBarColor</item>
     </style>
+
+    <!-- Кастомная AppTheme.Launcher. Устанавливает в качестве фона вашу drawable -->
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget" tools:override="true">
         <item name="tabBackground">@drawable/tab_background</item>
     </style>

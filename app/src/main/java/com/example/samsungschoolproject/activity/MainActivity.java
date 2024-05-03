@@ -15,7 +15,7 @@ import android.view.View;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.fragment.сalendar.CalendarFragment;
-import com.example.samsungschoolproject.noificator.PlannedWorkoutNotificator;
+import com.example.samsungschoolproject.notificator.PlannedWorkoutNotificator;
 import com.example.samsungschoolproject.view_adapter.main.MainFragmentsAdapter;
 import com.example.samsungschoolproject.fragment.main.MainMenuFragment;
 import com.example.samsungschoolproject.fragment.workout.TemplatesFragment;
@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
