@@ -6,7 +6,7 @@
 
     <!-- Кастомная AppTheme.Launcher. Устанавливает в качестве фона вашу drawable -->
     <style name="AppTheme.Launcher">
-        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="android:windowBackground">@drawable/app_logo</item>
     </style>
 
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget" tools:override="true">
