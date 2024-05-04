@@ -3,7 +3,7 @@ package com.example.samsungschoolproject.utils;
 import java.util.ArrayList;
 
 public class WorkoutListUtils {
-    private static String parseLengthTime(int length){
+    public static String parseLengthTime(int length){
         if (length%100 >= 5 && length%100 <= 20){
             return " минут";
         }

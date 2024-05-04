@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.example.samsungschoolproject.DTO.ExerciseInfo;
 import com.example.samsungschoolproject.DTO.TemplateInfo;
@@ -24,6 +25,7 @@ import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
+import com.example.samsungschoolproject.enums.TemplatesListStates;
 import com.example.samsungschoolproject.fragment.workout.builder.TemplatesBuilderFragment;
 import com.example.samsungschoolproject.fragment.workout.info.TemplateInfoFragment;
 import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment;
@@ -35,11 +37,12 @@ import java.util.concurrent.ExecutionException;
 
 public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener {
     private Button createNewTemplateButton;
-    private TextView templatesListInfoTV;
     private WorkoutHelperDatabase database;
     private List<WorkoutTemplate> workoutTemplates;
     private RecyclerView workoutTemplatesRecycler;
     private WorkoutTemplateListAdapter workoutTemplateListAdapter;
+    private ViewSwitcher templatesListSwitcher;
+    private TemplatesListStates templatesListStates = TemplatesListStates.LIST_EMPTY_SHOWN;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,8 +69,8 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
 
     private void initWidgets(View view){
         createNewTemplateButton = view.findViewById(R.id.addNewWorkoutTemplate);
-        templatesListInfoTV = view.findViewById(R.id.templatesListInfo);
         workoutTemplatesRecycler = view.findViewById(R.id.workoutTemplatesRecycler);
+        templatesListSwitcher = view.findViewById(R.id.templatesListSwitcher);
     }
 
     private void initButtonListeners(){
@@ -91,10 +94,15 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
         }
 
         if (workoutTemplates.isEmpty()) {
+            if (templatesListStates.equals(TemplatesListStates.LIST_NOT_EMPTY_SHOWN))
+                templatesListStates = TemplatesListStates.LIST_EMPTY_SHOWN;
             return;
         }
 
-        templatesListInfoTV.setText(getResources().getString(R.string.templates_list_info));
+        if (templatesListStates.equals(TemplatesListStates.LIST_EMPTY_SHOWN)){
+            templatesListSwitcher.showNext();
+            templatesListStates = TemplatesListStates.LIST_NOT_EMPTY_SHOWN;
+        }
         setWorkoutTemplatesRecycler();
     }
 
@@ -120,7 +128,7 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
             );
         });
 
-        TemplateInfo templateInfo = null;
+        TemplateInfo templateInfo;
         try {
             templateInfo = future.get();
         } catch (ExecutionException | InterruptedException e) {

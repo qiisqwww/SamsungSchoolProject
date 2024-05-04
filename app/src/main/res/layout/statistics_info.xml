@@ -6,29 +6,56 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingStart="15dp"
         android:paddingBottom="20dp"
         android:paddingEnd="15dp"
-        android:paddingTop="20dp"
+        android:paddingTop="15dp"
         android:background="@color/additionalButtonsColor"
+        android:orientation="vertical"
         tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/yourStatistics"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:text="@string/your_statistics"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/statisticsRecycler"
+        <TextView
+            android:id="@+id/workoutsCount"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="@string/workouts_count"/>
 
+        <TextView
+            android:id="@+id/completedWorkoutsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="@string/completed_workouts_count"/>
+
+        <TextView
+            android:id="@+id/completedWorkoutsLength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="@string/completed_workouts_length"/>
     </LinearLayout>
 
 </RelativeLayout>

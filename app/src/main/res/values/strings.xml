@@ -46,5 +46,8 @@
     <string name="template_info">Информация о шаблоне:</string>
     <string name="workout_info">Информация о тренировке:</string>
     <string name="get_motivation">Зарядиться вайбом</string>
-    <string name="your_statistics">Ваша статистика за все время:</string>
+    <string name="your_statistics">Ваша статистика за все время: </string>
+    <string name="workouts_count">Общее количество запланированных тренировок: </string>
+    <string name="completed_workouts_count">Количество выполненных\nтренировок: </string>
+    <string name="completed_workouts_length">Общая длительность\nтренировок: </string>
 </resources>

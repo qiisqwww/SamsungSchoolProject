@@ -13,20 +13,20 @@ import java.util.List;
 @Dao
 public interface WorkoutTemplateDAO {
     @Insert
-    public long addWorkoutTemplate(WorkoutTemplate workoutTemplate);
+    long addWorkoutTemplate(WorkoutTemplate workoutTemplate);
 
     @Update
-    public void updateWorkoutTemplate(WorkoutTemplate workoutTemplate);
+    void updateWorkoutTemplate(WorkoutTemplate workoutTemplate);
 
     @Delete
-    public void deleteWorkoutTemplate(WorkoutTemplate workoutTemplate);
+    void deleteWorkoutTemplate(WorkoutTemplate workoutTemplate);
 
     @Query("SELECT * FROM workout_templates")
-    public List<WorkoutTemplate> getAllWorkoutTemplates();
+    List<WorkoutTemplate> getAllWorkoutTemplates();
 
     @Query("SELECT * FROM workout_templates WHERE name==:name")
-    public WorkoutTemplate getWorkoutTemplateByName(String name);
+    WorkoutTemplate getWorkoutTemplateByName(String name);
 
     @Query("SELECT * FROM workout_templates WHERE id==:id")
-    public WorkoutTemplate getWorkoutTemplatesById(int id);
+    WorkoutTemplate getWorkoutTemplatesById(int id);
 }

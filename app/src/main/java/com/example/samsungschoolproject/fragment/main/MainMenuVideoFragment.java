@@ -24,7 +24,7 @@ import com.google.firebase.storage.StreamDownloadTask;
 public class MainMenuVideoFragment extends Fragment {
     private Button backButton;
     private VideoView motivationVideoView;
-    OpenMainMenuInfoFragment openMainMenuInfoFragment;
+    private final OpenMainMenuInfoFragment openMainMenuInfoFragment;
 
     public MainMenuVideoFragment(OpenMainMenuInfoFragment openMainMenuInfoFragment){
         this.openMainMenuInfoFragment = openMainMenuInfoFragment;
@@ -47,6 +47,7 @@ public class MainMenuVideoFragment extends Fragment {
 
         initWidgets(view);
         initButtonListeners();
+        initVideoConfig();
         loadVideo();
     }
 
@@ -59,10 +60,14 @@ public class MainMenuVideoFragment extends Fragment {
         backButton.setOnClickListener(v -> openMainMenuInfoFragment.openMainMenuInfoFragment());
     }
 
+    private void initVideoConfig(){
+        motivationVideoView.setOnCompletionListener(v -> openMainMenuInfoFragment.openMainMenuInfoFragment());
+    }
+
     private void loadVideo(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        StorageReference firstVideo = storageRef.child("workout_motivation_videos/calm_motivation_edit.mp4");
+        StorageReference firstVideo = storageRef.child("workout_motivation_videos/calm_edit.mp4");
 
         firstVideo.getDownloadUrl().addOnSuccessListener(uri -> {
             motivationVideoView.setVideoURI(uri);
@@ -70,6 +75,7 @@ public class MainMenuVideoFragment extends Fragment {
         });
     }
 
+    // Открытие фрагмента, содержащего интерфейс (реализация вынесена в MainMenuFragment)
     public interface OpenMainMenuInfoFragment{
         void openMainMenuInfoFragment();
     }

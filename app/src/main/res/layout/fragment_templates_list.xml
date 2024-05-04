@@ -4,28 +4,58 @@
     android:layout_height="match_parent"
     android:background="@color/darkThemeBackgroundColor">
 
-    <TextView
-        android:id="@+id/templatesListInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:layout_marginTop="35dp"
-        android:layout_gravity="top|center"
-        android:text="@string/templates_list_empty_info"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/workoutTemplatesRecycler"
+    <ViewSwitcher
+        android:id="@+id/templatesListSwitcher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_below="@id/templatesListInfo"
-        android:layout_above="@id/addNewWorkoutTemplate"/>
+        android:layout_height="match_parent"
+        android:layout_above="@id/addNewWorkoutTemplate">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/templatesListEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="35dp"
+                android:layout_centerInParent="true"
+                android:text="@string/templates_list_empty_info"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/templatesListInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="45dp"
+                android:layout_gravity="top|center"
+                android:text="@string/templates_list_info"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/workoutTemplatesRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_centerVertical="true"
+                android:layout_below="@id/templatesListInfo"
+                />
+
+        </RelativeLayout>
+    </ViewSwitcher>
 
     <Button
         android:id="@+id/addNewWorkoutTemplate"

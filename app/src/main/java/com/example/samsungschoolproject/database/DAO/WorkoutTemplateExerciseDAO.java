@@ -13,15 +13,15 @@ import java.util.List;
 @Dao
 public interface WorkoutTemplateExerciseDAO {
     @Insert
-    public void addWorkoutTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise);
+    void addWorkoutTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise);
 
     @Update
-    public void updateWorkoutTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise);
+    void updateWorkoutTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise);
 
     @Delete
-    public void deleteWorkoutTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise);
+    void deleteWorkoutTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise);
 
 
     @Query("SELECT * FROM workout_template_exercises WHERE workout_template_id==:workoutTemplateId")
-    public List<WorkoutTemplateExercise> getWorkoutTemplateExercisesByWorkoutTemplateId(int workoutTemplateId);
+    List<WorkoutTemplateExercise> getWorkoutTemplateExercisesByWorkoutTemplateId(int workoutTemplateId);
 }

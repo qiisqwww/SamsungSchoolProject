@@ -13,20 +13,20 @@ import java.util.List;
 @Dao
 public interface ExerciseDAO {
     @Insert
-    public void addExercise(Exercise exercise);
+    void addExercise(Exercise exercise);
 
     @Update
-    public void updateExercise(Exercise exercise);
+    void updateExercise(Exercise exercise);
 
     @Delete
-    public void deleteExercise(Exercise exercise);
+    void deleteExercise(Exercise exercise);
 
     @Query("SELECT * FROM exercises")
-    public List<Exercise> getAllExercises();
+    List<Exercise> getAllExercises();
 
     @Query("SELECT * FROM exercises WHERE id==:exerciseId")
-    public Exercise getExerciseById(int exerciseId);
+    Exercise getExerciseById(int exerciseId);
 
     @Query("SELECT * FROM exercises WHERE name==:name")
-    public Exercise getExerciseByName(String name);
+    Exercise getExerciseByName(String name);
 }
