@@ -13,29 +13,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.example.samsungschoolproject.DTO.ExerciseInfo;
 import com.example.samsungschoolproject.DTO.TemplateInfo;
-import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.Exercise;
-import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 import com.example.samsungschoolproject.enums.TemplatesListStates;
 import com.example.samsungschoolproject.fragment.workout.builder.TemplatesBuilderFragment;
 import com.example.samsungschoolproject.fragment.workout.info.TemplateInfoFragment;
-import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment;
 import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutTemplateListAdapter;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener {
+public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener, WorkoutTemplateListAdapter.DeleteWorkoutTemplateListener {
     private Button createNewTemplateButton;
     private WorkoutHelperDatabase database;
     private List<WorkoutTemplate> workoutTemplates;
@@ -107,7 +103,7 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     }
 
     private void setWorkoutTemplatesRecycler(){
-        workoutTemplateListAdapter = new WorkoutTemplateListAdapter(workoutTemplates, this);
+        workoutTemplateListAdapter = new WorkoutTemplateListAdapter(workoutTemplates, this, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutTemplatesRecycler.setLayoutManager(layoutManager);
         workoutTemplatesRecycler.setAdapter(workoutTemplateListAdapter);
@@ -139,5 +135,10 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
         TemplateInfoFragment.TAG = "New Instance"; // idk if this name is important
 
         templateInfoFragment.show(getActivity().getSupportFragmentManager(), TemplateInfoFragment.TAG);
+    }
+
+    @Override
+    public void onDeleteButtonClick(int position) {
+        // TODO
     }
 }

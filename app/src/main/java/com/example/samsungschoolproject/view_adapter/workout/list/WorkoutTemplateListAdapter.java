@@ -18,10 +18,12 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
 
     private final List<WorkoutTemplate> workoutTemplates;
     private final OnWorkoutItemListener onWorkoutItemListener;
+    private final DeleteWorkoutTemplateListener deleteWorkoutTemplateListener;
 
-    public WorkoutTemplateListAdapter(List<WorkoutTemplate> items, OnWorkoutItemListener onWorkoutItemListener) {
+    public WorkoutTemplateListAdapter(List<WorkoutTemplate> items, OnWorkoutItemListener onWorkoutItemListener, DeleteWorkoutTemplateListener deleteWorkoutTemplateListener) {
         workoutTemplates = items;
         this.onWorkoutItemListener = onWorkoutItemListener;
+        this.deleteWorkoutTemplateListener = deleteWorkoutTemplateListener;
     }
 
     @NonNull
@@ -32,7 +34,7 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
                 parent,
                 false
         );
-        return new WorkoutTemplateViewHolder(view, onWorkoutItemListener);
+        return new WorkoutTemplateViewHolder(view, onWorkoutItemListener, deleteWorkoutTemplateListener);
     }
 
     @Override
@@ -53,19 +55,26 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
         void onWorkoutItemClick(int position);
     }
 
+    public interface DeleteWorkoutTemplateListener {
+        void onDeleteButtonClick(int position);
+    }
+
     public static class WorkoutTemplateViewHolder extends RecyclerView.ViewHolder{
         private final View itemView;
         private final TemplateItemBinding templateItemBinding;
         private final OnWorkoutItemListener onWorkoutItemListener;
+        private final DeleteWorkoutTemplateListener deleteWorkoutTemplateListener;
 
-        public WorkoutTemplateViewHolder(@NonNull View itemView, OnWorkoutItemListener onWorkoutItemListener) {
+        public WorkoutTemplateViewHolder(@NonNull View itemView, OnWorkoutItemListener onWorkoutItemListener, DeleteWorkoutTemplateListener deleteWorkoutTemplateListener) {
             super(itemView);
             this.itemView = itemView;
             this.onWorkoutItemListener = onWorkoutItemListener;
+            this.deleteWorkoutTemplateListener = deleteWorkoutTemplateListener;
 
             templateItemBinding = TemplateItemBinding.bind(itemView);
 
-            setOnClickListeners();
+            initOnClickListeners();
+            initButtonListeners();
         }
 
         public void bind(WorkoutTemplate workoutTemplate){
@@ -74,8 +83,12 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
             templateItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutTemplate.approximate_length));
         }
 
-        private void setOnClickListeners(){
+        private void initOnClickListeners(){
             itemView.setOnClickListener(v -> onWorkoutItemListener.onWorkoutItemClick(getAdapterPosition()));
+        }
+
+        private void initButtonListeners(){
+            itemView.findViewById(R.id.deleteTemplate).setOnClickListener(v -> deleteWorkoutTemplateListener.onDeleteButtonClick(getAdapterPosition()));
         }
     }
 }

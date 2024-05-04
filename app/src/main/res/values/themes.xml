@@ -4,7 +4,7 @@
         <item name="colorPrimaryDark">@color/darkThemeStatusBarColor</item>
     </style>
 
-    <!-- Кастомная AppTheme.Launcher. Устанавливает в качестве фона вашу drawable -->
+    <!-- Тема для загрузочного экрана -->
     <style name="AppTheme.Launcher">
         <item name="android:windowBackground">@drawable/app_logo</item>
     </style>

@@ -21,20 +21,20 @@ import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 import com.example.samsungschoolproject.utils.CalendarUtils;
+import com.example.samsungschoolproject.view_adapter.workout.list.TemplatesForWorkoutListAdapter;
 import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutListAdapter;
-import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutTemplateListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener {
+public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment implements TemplatesForWorkoutListAdapter.OnTemplateForWorkoutItemListener {
     public static String TAG;
     private WorkoutHelperDatabase database;
     private RecyclerView workoutTemplatesRecycler;
     private TextView headInfoTV;
-    private WorkoutTemplateListAdapter workoutTemplateListAdapter;
+    private TemplatesForWorkoutListAdapter templatesForWorkoutListAdapter;
     private final WorkoutListAdapter workoutListAdapter;
     private List<WorkoutTemplate> workoutTemplates;
 
@@ -94,10 +94,10 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
     }
 
     private void setWorkoutTemplatesRecycler(){
-        workoutTemplateListAdapter = new WorkoutTemplateListAdapter(workoutTemplates, this);
+        templatesForWorkoutListAdapter = new TemplatesForWorkoutListAdapter(workoutTemplates, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutTemplatesRecycler.setLayoutManager(layoutManager);
-        workoutTemplatesRecycler.setAdapter(workoutTemplateListAdapter);
+        workoutTemplatesRecycler.setAdapter(templatesForWorkoutListAdapter);
     }
 
     // Отрабатывает при нажатии на WorkoutTemplate (т.е. при выборе шаблона, по которому нужно создать тренировку)

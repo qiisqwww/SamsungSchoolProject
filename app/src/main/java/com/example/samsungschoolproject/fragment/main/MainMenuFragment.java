@@ -28,14 +28,13 @@ public class MainMenuFragment extends Fragment implements MainMenuInfoFragment.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_main_menu, container, false);
-        openMainMenuInfoFragment();
-        return view;
+        return inflater.inflate(R.layout.fragment_main_menu, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        openMainMenuInfoFragment();
     }
 
     @Override
