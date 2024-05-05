@@ -20,6 +20,7 @@ import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
+import com.example.samsungschoolproject.fragment.main.MainMenuInfoFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.view_adapter.workout.list.TemplatesForWorkoutListAdapter;
 import com.example.samsungschoolproject.view_adapter.workout.list.WorkoutListAdapter;
@@ -140,6 +141,11 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
 
         try {
             if (future.get().equals("true")){
+                // Обновить статистику
+                MainMenuInfoFragment.loadStatisticsData(requireContext().getApplicationContext(),
+                        getResources().getString(R.string.workouts_count),
+                        getResources().getString(R.string.completed_workouts_count),
+                        getResources().getString(R.string.completed_workouts_length));
                 // Закрыть текущий фрагмент после выбора
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().remove(this).commit();

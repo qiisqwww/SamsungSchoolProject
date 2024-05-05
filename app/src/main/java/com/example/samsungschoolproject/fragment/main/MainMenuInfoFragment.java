@@ -1,5 +1,6 @@
 package com.example.samsungschoolproject.fragment.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -24,10 +25,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class MainMenuInfoFragment extends Fragment {
-    private WorkoutHelperDatabase database;
-    private Button toSettingsButton, getMotivationButton, updateStatisticsButton;
-    private TextView workoutsCountTV, completedWorkoutsCountTV, completedWorkoutsLengthTV;
-    private int workoutsCount, completedWorkoutsCount, completedWorkoutsLength;
+    private Button toSettingsButton, getMotivationButton;
+    private static TextView workoutsCountTV, completedWorkoutsCountTV, completedWorkoutsLengthTV;
+    private static int workoutsCount, completedWorkoutsCount, completedWorkoutsLength;
     private final OpenMainMenuVideoFragment openMainMenuVideoFragment;
 
     public MainMenuInfoFragment(OpenMainMenuVideoFragment openMainMenuVideoFragment){
@@ -48,11 +48,12 @@ public class MainMenuInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        database = WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext());
-
         initWidgets(view);
         initButtonListeners();
-        loadStatisticsData();
+        loadStatisticsData(requireContext().getApplicationContext(),
+                getResources().getString(R.string.workouts_count),
+                getResources().getString(R.string.completed_workouts_count),
+                getResources().getString(R.string.completed_workouts_length));
     }
 
     private void initWidgets(View view){
@@ -71,8 +72,9 @@ public class MainMenuInfoFragment extends Fragment {
     }
 
     // Подгрузить статистику пользователя из БД
-    private void loadStatisticsData(){
+    public static void loadStatisticsData(Context context, String workoutsCountS, String completedWorkoutsCountS, String completedWorkoutsLengthS){
         CompletableFuture<Hashtable<String, Integer>> future = CompletableFuture.supplyAsync(() -> {
+            WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(context);
             Hashtable<String, Integer> statistics = new Hashtable<>();
 
             workoutsCount = database.getPlannedWorkoutDAO().getPlannedWorkoutsCount();
@@ -87,19 +89,19 @@ public class MainMenuInfoFragment extends Fragment {
 
         try {
             Hashtable<String, Integer> statistics = future.get();
-            setStatistics(statistics);
+            setStatistics(statistics ,workoutsCountS, completedWorkoutsCountS, completedWorkoutsLengthS);
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
     // Установить статистику пользователя в необходимые поля
-    private void setStatistics(Hashtable<String, Integer> statistics){
-        workoutsCountTV.setText(getResources().getString(R.string.workouts_count) + " "
+    public static void setStatistics(Hashtable<String, Integer> statistics, String workoutsCountS, String completedWorkoutsCountS, String completedWorkoutsLengthS){
+        workoutsCountTV.setText(workoutsCountS + " "
                 + statistics.get("workoutsCount"));
-        completedWorkoutsCountTV.setText(getResources().getString(R.string.completed_workouts_count) + " "
+        completedWorkoutsCountTV.setText(completedWorkoutsCountS + " "
                 + statistics.get("completedWorkoutsCount"));
-        completedWorkoutsLengthTV.setText(getResources().getString(R.string.completed_workouts_length) + " "
+        completedWorkoutsLengthTV.setText(completedWorkoutsLengthS + " "
                 + statistics.get("completedWorkoutsLength") + WorkoutListUtils.parseLengthTime(completedWorkoutsLength));
     }
 
