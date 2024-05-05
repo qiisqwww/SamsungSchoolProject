@@ -182,6 +182,7 @@ public class WeekCalendarFragment extends Fragment implements
         setCorrectState(plannedWorkouts);
     }
 
+    // Устанавливает корректное отображение (2 случая: тренировки есть или их нет вообще)
     private void setCorrectState(List<PlannedWorkout> plannedWorkouts){
         if (plannedWorkouts.isEmpty()){ // Если нет тренировок на этот день, то нужно выйти из метода
             // Если не установлено сообщение о том, что нет тренировок, то установить его
@@ -222,12 +223,14 @@ public class WeekCalendarFragment extends Fragment implements
             CalendarUtils.selectedDate = LocalDate.of(CalendarUtils.dateToScroll.getYear(), CalendarUtils.dateToScroll.getMonth().plus(shift), Integer.parseInt(dayText));
             calendarAdapter.resetBacklitItem(position);
 
+            // Загрузить Workouts на нынешний день
             loadWorkouts();
         }
     }
 
     @Override
     public void onWorkoutItemClick(int position) {
+        // Загрузить информацию о Workout
         PlannedWorkout plannedWorkout = workoutListAdapter.getItemByPosition(position);
 
         CompletableFuture<List<Exercise>> future = CompletableFuture.supplyAsync(() -> database.getExerciseDAO().getAllExercises());
@@ -249,9 +252,9 @@ public class WeekCalendarFragment extends Fragment implements
 
         WorkoutInfo workoutInfo = new WorkoutInfo(plannedWorkout, ExerciseInfo.toExerciseInfoListForPlanned(exercises, plannedWorkoutExercises));
 
+        // Открыть фрагмент, отображающий информацию о Workout
         WorkoutInfoFragment workoutInfoFragment = new WorkoutInfoFragment(workoutInfo);
         WorkoutInfoFragment.TAG = "New Instance"; // idk if this name is important
-
         workoutInfoFragment.show(getActivity().getSupportFragmentManager(), WorkoutInfoFragment.TAG);
     }
 
@@ -262,6 +265,7 @@ public class WeekCalendarFragment extends Fragment implements
 
     @Override
     public void setWorkoutMarked(PlannedWorkout plannedWorkout) {
+        // Установить для Workout значение true в поле "выполнено"
         CompletableFuture.supplyAsync(() -> {
             plannedWorkout.is_completed = "true";
             database.getPlannedWorkoutDAO().updatePlannedWorkout(plannedWorkout);
@@ -286,8 +290,17 @@ public class WeekCalendarFragment extends Fragment implements
         });
 
         try {
+            // Удалить Workout из отображения
             List<PlannedWorkout> plannedWorkouts1 = future.get();
+            workoutListAdapter.removeWorkoutByPosition(position);
+            workoutListAdapter.notifyItemRemoved(position);
             setCorrectState(plannedWorkouts1);
+
+            // Обновить статистику
+            MainMenuInfoFragment.loadStatisticsData(requireContext().getApplicationContext(),
+                    getResources().getString(R.string.workouts_count),
+                    getResources().getString(R.string.completed_workouts_count),
+                    getResources().getString(R.string.completed_workouts_length));
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }

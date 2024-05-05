@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.WorkoutViewHolder> {
-    private final List<PlannedWorkout> plannedWorkouts;
+    private List<PlannedWorkout> plannedWorkouts;
     private final UpdateRecycler updateRecycler;
     private final OnWorkoutItemListener onWorkoutItemListener;
     private final SetWorkoutMarked setWorkoutMarked;
@@ -78,6 +78,10 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
 
     public interface SetWorkoutMarked{
         void setWorkoutMarked(PlannedWorkout plannedWorkout);
+    }
+
+    public void removeWorkoutByPosition(int position){
+        plannedWorkouts.remove(position);
     }
 
     public interface DeleteWorkoutListener {

@@ -102,7 +102,7 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
             // Необходимо проверить, что шаблон с таким именем еще не существует
             List<WorkoutTemplate> workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
             for (int i = 0; i < workoutTemplates.size(); i++){
-                if (name.equals(workoutTemplates.get(i).name)){
+                if (workoutTemplate.name.equals(workoutTemplates.get(i).name)){
                     Toast.makeText(requireContext().getApplicationContext(), R.string.template_already_exists, Toast.LENGTH_LONG).show();
                     return "false";
                 }
@@ -119,8 +119,8 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
                 database.getWorkoutTemplateExerciseDAO().addWorkoutTemplateExercise(new WorkoutTemplateExercise(
                         workoutTemplateId,
                         exercise.id,
-                        Integer.valueOf(exerciseInfo.get(1)),
-                        Integer.valueOf(exerciseInfo.get(2)),
+                        Integer.parseInt(exerciseInfo.get(1)),
+                        Integer.parseInt(exerciseInfo.get(2)),
                         i+1
                 ));
             }

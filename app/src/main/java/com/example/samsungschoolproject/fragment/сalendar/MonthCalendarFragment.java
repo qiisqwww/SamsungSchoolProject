@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -202,9 +203,9 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
                     return;
                 }
 
+                // Открыть фрагмент в Builder'ом
                 WorkoutsBuilderFragment workoutsBuilderFragment = new WorkoutsBuilderFragment(BackFragmentForBuilderStates.BACK_TO_WEEK_FRAGMENT, workoutListAdapter);
                 WorkoutsBuilderFragment.TAG = "Another Instance"; // idk if this name is important
-
                 workoutsBuilderFragment.show(getActivity().getSupportFragmentManager(), WorkoutsBuilderFragment.TAG);
             });
         }
@@ -249,6 +250,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         @Override
         public void onWorkoutItemClick(int position) {
+            // Загрузить информацию о Workout
             PlannedWorkout plannedWorkout = workoutListAdapter.getItemByPosition(position);
 
             CompletableFuture<List<Exercise>> future = CompletableFuture.supplyAsync(() -> database.getExerciseDAO().getAllExercises());
@@ -269,9 +271,13 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
             WorkoutInfo workoutInfo = new WorkoutInfo(plannedWorkout, ExerciseInfo.toExerciseInfoListForPlanned(exercises, plannedWorkoutExercises));
 
+            // Закрыть фрагмент, содержащий информацию о тренировках месяца
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().remove(this).commit();
+
+            // Открыть фрагмент, отображающий информацию о Workout
             WorkoutInfoFragment workoutInfoFragment = new WorkoutInfoFragment(workoutInfo);
             WorkoutInfoFragment.TAG = "New Instance"; // idk if this name is important
-
             workoutInfoFragment.show(getActivity().getSupportFragmentManager(), WorkoutInfoFragment.TAG);
         }
 
@@ -282,6 +288,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         @Override
         public void setWorkoutMarked(PlannedWorkout plannedWorkout) {
+            // Установить для Workout значение true в поле "выполнено"
             CompletableFuture.supplyAsync(() -> {
                 plannedWorkout.is_completed = "true";
                 database.getPlannedWorkoutDAO().updatePlannedWorkout(plannedWorkout);
@@ -306,8 +313,17 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             });
 
             try {
+                // Удалить Workout из отображения
                 List<PlannedWorkout> plannedWorkouts1 = future.get();
+                workoutListAdapter.removeWorkoutByPosition(position);
+                workoutListAdapter.notifyItemRemoved(position);
                 setCorrectState(plannedWorkouts1);
+
+                // Обновить статистику
+                MainMenuInfoFragment.loadStatisticsData(requireContext().getApplicationContext(),
+                        getResources().getString(R.string.workouts_count),
+                        getResources().getString(R.string.completed_workouts_count),
+                        getResources().getString(R.string.completed_workouts_length));
             } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }

@@ -110,8 +110,6 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void deleteExercise(int position){
         length--;
         viewItems.remove(position);
-        Log.d("GG", String.valueOf(position));
-        workoutBuilderRecycler.removeViewAt(position);
         notifyItemRemoved(position);
     }
 
@@ -203,9 +201,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         private void initButtonListeners(){
-            deleteExerciseButton.setOnClickListener(v -> {
-                workoutBuilderAdapter.deleteExercise(getBindingAdapterPosition());
-            });
+            deleteExerciseButton.setOnClickListener(v -> workoutBuilderAdapter.deleteExercise(getBindingAdapterPosition()));
         }
 
         private void setSpinnerAdapters(){

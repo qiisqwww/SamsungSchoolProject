@@ -118,6 +118,7 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
 
     @Override
     public void onWorkoutItemClick(int position) {
+        // Загрузить информацию о Template
         CompletableFuture<TemplateInfo> future = CompletableFuture.supplyAsync(() -> {
             WorkoutTemplate workoutTemplate = workoutTemplateListAdapter.getItemByPosition(position);
             List<Exercise> exercises = database.getExerciseDAO().getAllExercises();
@@ -138,9 +139,9 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
             throw new RuntimeException(e);
         }
 
+        // Запустить фрагмент, отображающий информацию о Template
         TemplateInfoFragment templateInfoFragment = new TemplateInfoFragment(templateInfo);
         TemplateInfoFragment.TAG = "New Instance"; // idk if this name is important
-
         templateInfoFragment.show(getActivity().getSupportFragmentManager(), TemplateInfoFragment.TAG);
     }
 
@@ -154,7 +155,10 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
         });
 
         try {
+            // Удалить Template из отображения
             List<WorkoutTemplate> workoutTemplates1 = future.get();
+            workoutTemplateListAdapter.removeTemplateByPosition(position);
+            workoutTemplateListAdapter.notifyItemRemoved(position);
             setCorrectState(workoutTemplates1);
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
