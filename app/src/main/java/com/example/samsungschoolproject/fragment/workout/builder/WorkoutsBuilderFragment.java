@@ -23,6 +23,7 @@ import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
+import com.example.samsungschoolproject.fragment.main.MainMenuInfoFragment;
 import com.example.samsungschoolproject.fragment.сalendar.MonthCalendarFragment;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 import com.example.samsungschoolproject.utils.ExerciseListUtils;
@@ -140,7 +141,14 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
 
         try {
             if (future.get().equals("true"))
+            {
+                MainMenuInfoFragment.loadStatisticsData(requireContext().getApplicationContext(),
+                        getResources().getString(R.string.workouts_count),
+                        getResources().getString(R.string.completed_workouts_count),
+                        getResources().getString(R.string.completed_workouts_length));
                 startPreviousFragment();
+            }
+
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }

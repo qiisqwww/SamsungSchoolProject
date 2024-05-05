@@ -25,6 +25,7 @@ import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
+import com.example.samsungschoolproject.fragment.main.MainMenuInfoFragment;
 import com.example.samsungschoolproject.fragment.workout.info.WorkoutInfoFragment;
 import com.example.samsungschoolproject.fragment.workout.lists.WorkoutFromTemplateListFragment;
 import com.example.samsungschoolproject.fragment.workout.builder.WorkoutsBuilderFragment;
@@ -281,6 +282,12 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
                 return null;
             });
+
+            // Обновить статистику
+            MainMenuInfoFragment.loadStatisticsData(requireContext().getApplicationContext(),
+                    getResources().getString(R.string.workouts_count),
+                    getResources().getString(R.string.completed_workouts_count),
+                    getResources().getString(R.string.completed_workouts_length));
         }
     }
 }
