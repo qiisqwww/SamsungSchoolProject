@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,9 +90,15 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
             throw new RuntimeException(e);
         }
 
+        setCorrectState(workoutTemplates);
+    }
+
+    private void setCorrectState(List<WorkoutTemplate> workoutTemplates){
         if (workoutTemplates.isEmpty()) {
-            if (templatesListStates.equals(TemplatesListStates.LIST_NOT_EMPTY_SHOWN))
+            if (templatesListStates.equals(TemplatesListStates.LIST_NOT_EMPTY_SHOWN)){
+                templatesListSwitcher.showNext();
                 templatesListStates = TemplatesListStates.LIST_EMPTY_SHOWN;
+            }
             return;
         }
 
@@ -139,6 +146,18 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
 
     @Override
     public void onDeleteButtonClick(int position) {
-        // TODO
+        // Удалить workout template
+        CompletableFuture<List<WorkoutTemplate>> future = CompletableFuture.supplyAsync(() -> {
+            WorkoutTemplate workoutTemplate = workoutTemplateListAdapter.getItemByPosition(position);
+            database.getWorkoutTemplateDAO().deleteWorkoutTemplate(workoutTemplate);
+            return database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
+        });
+
+        try {
+            List<WorkoutTemplate> workoutTemplates1 = future.get();
+            setCorrectState(workoutTemplates1);
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

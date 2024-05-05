@@ -16,7 +16,7 @@ import java.util.List;
 
 public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemplateListAdapter.WorkoutTemplateViewHolder> {
 
-    private final List<WorkoutTemplate> workoutTemplates;
+    private List<WorkoutTemplate> workoutTemplates;
     private final OnWorkoutItemListener onWorkoutItemListener;
     private final DeleteWorkoutTemplateListener deleteWorkoutTemplateListener;
 
@@ -49,6 +49,15 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
 
     public WorkoutTemplate getItemByPosition(int position){
         return workoutTemplates.get(position);
+    }
+
+    public void removeTemplateByPosition(int position){
+        workoutTemplates.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public List<WorkoutTemplate> getTemplatesList(){
+        return workoutTemplates;
     }
 
     public interface OnWorkoutItemListener {
@@ -88,7 +97,7 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
         }
 
         private void initButtonListeners(){
-            itemView.findViewById(R.id.deleteTemplate).setOnClickListener(v -> deleteWorkoutTemplateListener.onDeleteButtonClick(getAdapterPosition()));
+            itemView.findViewById(R.id.deleteTemplate).setOnClickListener(v -> deleteWorkoutTemplateListener.onDeleteButtonClick(getBindingAdapterPosition()));
         }
     }
 }
