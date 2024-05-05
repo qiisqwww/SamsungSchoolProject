@@ -97,7 +97,7 @@ public class WorkoutTemplateListAdapter extends RecyclerView.Adapter<WorkoutTemp
         }
 
         private void initButtonListeners(){
-            itemView.findViewById(R.id.deleteTemplate).setOnClickListener(v -> deleteWorkoutTemplateListener.onDeleteButtonClick(getBindingAdapterPosition()));
+            itemView.findViewById(R.id.delete).setOnClickListener(v -> deleteWorkoutTemplateListener.onDeleteButtonClick(getBindingAdapterPosition()));
         }
     }
 }

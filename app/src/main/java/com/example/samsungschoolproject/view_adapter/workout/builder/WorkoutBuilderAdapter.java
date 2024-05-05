@@ -190,7 +190,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             this.exercises = exercises;
             this.workoutBuilderAdapter = workoutBuilderAdapter;
 
-            deleteExerciseButton = itemView.findViewById(R.id.deleteExercise);
+            deleteExerciseButton = itemView.findViewById(R.id.delete);
             exerciseListSpinner = itemView.findViewById(R.id.exerciseList);
             approachesListSpinner = itemView.findViewById(R.id.approachesList);
             repeatsListSpinner = itemView.findViewById(R.id.repeatsList);
