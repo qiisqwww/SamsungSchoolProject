@@ -50,4 +50,5 @@
     <string name="workouts_count">Общее количество запланированных тренировок: </string>
     <string name="completed_workouts_count">Количество выполненных\nтренировок: </string>
     <string name="completed_workouts_length">Общая длительность\nтренировок: </string>
+    <string name="update_statistics">Обновить статистику</string>
 </resources>

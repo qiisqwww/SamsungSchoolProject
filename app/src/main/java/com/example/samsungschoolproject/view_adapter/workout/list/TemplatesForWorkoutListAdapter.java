@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.model.WorkoutTemplate;
+import com.example.samsungschoolproject.databinding.TemplateForWorkoutItemBinding;
 import com.example.samsungschoolproject.databinding.TemplateItemBinding;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 
@@ -55,7 +56,7 @@ public class TemplatesForWorkoutListAdapter extends RecyclerView.Adapter<Templat
 
     public static class TemplateForWorkoutViewHolder extends RecyclerView.ViewHolder{
         private final View itemView;
-        private final TemplateItemBinding templateItemBinding;
+        private final TemplateForWorkoutItemBinding templateForWorkoutItemBinding;
         private final OnTemplateForWorkoutItemListener onTemplateForWorkoutItemListener;
 
         public TemplateForWorkoutViewHolder(@NonNull View itemView, OnTemplateForWorkoutItemListener onTemplateForWorkoutItemListener) {
@@ -63,15 +64,15 @@ public class TemplatesForWorkoutListAdapter extends RecyclerView.Adapter<Templat
             this.itemView = itemView;
             this.onTemplateForWorkoutItemListener = onTemplateForWorkoutItemListener;
 
-            templateItemBinding = TemplateItemBinding.bind(itemView);
+            templateForWorkoutItemBinding = TemplateForWorkoutItemBinding.bind(itemView);
 
             initOnClickListeners();
         }
 
         public void bind(WorkoutTemplate workoutTemplate){
             String fieldText = "Название: " + workoutTemplate.name;
-            templateItemBinding.name.setText(fieldText);
-            templateItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutTemplate.approximate_length));
+            templateForWorkoutItemBinding.name.setText(fieldText);
+            templateForWorkoutItemBinding.approximateLength.setText(WorkoutListUtils.configureWorkoutLengthInfo(workoutTemplate.approximate_length));
         }
 
         private void initOnClickListeners(){

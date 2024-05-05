@@ -1,5 +1,6 @@
 package com.example.samsungschoolproject.view_adapter.workout.builder;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,6 +110,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void deleteExercise(int position){
         length--;
         viewItems.remove(position);
+        Log.d("GG", String.valueOf(position));
         workoutBuilderRecycler.removeViewAt(position);
         notifyItemRemoved(position);
     }

@@ -21,11 +21,11 @@ import com.example.samsungschoolproject.utils.WorkoutListUtils;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class MainMenuInfoFragment extends Fragment {
     private WorkoutHelperDatabase database;
-    private Button toSettingsButton;
-    private Button getMotivationButton;
+    private Button toSettingsButton, getMotivationButton, updateStatisticsButton;
     private TextView workoutsCountTV, completedWorkoutsCountTV, completedWorkoutsLengthTV;
     private int workoutsCount, completedWorkoutsCount, completedWorkoutsLength;
     private final OpenMainMenuVideoFragment openMainMenuVideoFragment;
@@ -83,8 +83,14 @@ public class MainMenuInfoFragment extends Fragment {
             statistics.put("completedWorkoutsLength", completedWorkoutsLength);
 
             return statistics;
-        }).thenApply(statistics -> {setStatistics(statistics); return null;
         });
+
+        try {
+            Hashtable<String, Integer> statistics = future.get();
+            setStatistics(statistics);
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Установить статистику пользователя в необходимые поля
