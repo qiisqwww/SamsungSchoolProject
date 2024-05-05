@@ -36,16 +36,34 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/markCompleted"
-            android:layout_width="150dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/darkThemeBackgroundColor"
-            android:textSize="14sp"
-            android:text="@string/mark_completed"
-            android:textColor="@color/white"
-            android:layout_gravity="end"
-            android:typeface="normal"/>
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/deleteWorkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/additionalButtonsColor"
+                android:text="@string/delete_exercise"
+                android:layout_marginStart="60dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+
+            <Button
+                android:id="@+id/markCompleted"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/darkThemeBackgroundColor"
+                android:textSize="14sp"
+                android:text="@string/mark_completed"
+                android:textColor="@color/white"
+                android:layout_below="@id/deleteWorkout"
+                android:layout_gravity="end"
+                android:typeface="normal"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

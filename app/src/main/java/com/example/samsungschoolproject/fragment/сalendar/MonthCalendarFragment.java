@@ -23,6 +23,7 @@ import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
+import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.fragment.main.MainMenuInfoFragment;
@@ -141,7 +142,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
     public static class ModalBottomSheetFragment extends BottomSheetDialogFragment implements
             WorkoutListAdapter.OnWorkoutItemListener,
             WorkoutListAdapter.UpdateRecycler,
-            WorkoutListAdapter.SetWorkoutMarked{
+            WorkoutListAdapter.SetWorkoutMarked,
+            WorkoutListAdapter.DeleteWorkoutListener{
         public static String TAG;
         private WorkoutHelperDatabase database;
         private RecyclerView workoutsRecycler;
@@ -164,7 +166,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
             // TODO: возможно, это костыль. Необходимо переделать.
             // Код ниже необходим для корректной работы "обновления" данных после создания новой тренировки.
-            workoutListAdapter = new WorkoutListAdapter(new ArrayList<>(), this, this, this);
+            workoutListAdapter = new WorkoutListAdapter(new ArrayList<>(), this, this, this, this);
 
             initWidgets(view);
             loadWorkouts(); // Загружает список тренировок из базы данных
@@ -216,6 +218,10 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
                 throw new RuntimeException(e);
             }
 
+            setCorrectState(plannedWorkouts);
+        }
+
+        private void setCorrectState(List<PlannedWorkout> plannedWorkouts){
             if (plannedWorkouts.isEmpty()){/*
                  Если нет тренировок на этот день, то нужно выйти из метода
                  Если не установлено сообщение о том, что нет тренировок, то установить его
@@ -235,7 +241,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         }
 
         private void setWorkoutsRecycler(){
-            workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this, this);
+            workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this, this, this);
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
             workoutsRecycler.setLayoutManager(layoutManager);
             workoutsRecycler.setAdapter(workoutListAdapter);
@@ -288,6 +294,23 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
                     getResources().getString(R.string.workouts_count),
                     getResources().getString(R.string.completed_workouts_count),
                     getResources().getString(R.string.completed_workouts_length));
+        }
+
+        @Override
+        public void onDeleteButtonClick(int position) {
+            // Удалить planned workout
+            CompletableFuture<List<PlannedWorkout>> future = CompletableFuture.supplyAsync(() -> {
+                PlannedWorkout plannedWorkout = workoutListAdapter.getItemByPosition(position);
+                database.getPlannedWorkoutDAO().deletePlannedWorkout(plannedWorkout);
+                return database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
+            });
+
+            try {
+                List<PlannedWorkout> plannedWorkouts1 = future.get();
+                setCorrectState(plannedWorkouts1);
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

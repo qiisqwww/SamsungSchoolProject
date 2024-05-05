@@ -46,7 +46,8 @@ public class WeekCalendarFragment extends Fragment implements
         CalendarAdapter.OnCalendarItemListener,
         WorkoutListAdapter.OnWorkoutItemListener,
         WorkoutListAdapter.UpdateRecycler,
-        WorkoutListAdapter.SetWorkoutMarked{
+        WorkoutListAdapter.SetWorkoutMarked,
+        WorkoutListAdapter.DeleteWorkoutListener{
     private CalendarAdapter calendarAdapter;
     private WorkoutListAdapter workoutListAdapter;
     private TextView monthYearTV;
@@ -82,7 +83,7 @@ public class WeekCalendarFragment extends Fragment implements
 
         // TODO: возможно, это костыль. Необходимо переделать.
         // Код ниже необходим для корректной работы "обновления" данных после создания новой тренировки.
-        workoutListAdapter = new WorkoutListAdapter(new ArrayList<>(), this, this, this);
+        workoutListAdapter = new WorkoutListAdapter(new ArrayList<>(), this, this, this, this);
 
 
         initWidgets(view);
@@ -178,6 +179,10 @@ public class WeekCalendarFragment extends Fragment implements
             throw new RuntimeException(e);
         }
 
+        setCorrectState(plannedWorkouts);
+    }
+
+    private void setCorrectState(List<PlannedWorkout> plannedWorkouts){
         if (plannedWorkouts.isEmpty()){ // Если нет тренировок на этот день, то нужно выйти из метода
             // Если не установлено сообщение о том, что нет тренировок, то установить его
             if (viewSwitcher.getCurrentView() != noPlannedWorkouts){
@@ -195,7 +200,7 @@ public class WeekCalendarFragment extends Fragment implements
     }
 
     private void setWorkoutsRecycler(){
-        workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this, this);
+        workoutListAdapter = new WorkoutListAdapter(plannedWorkouts, this, this, this, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
         workoutsRecycler.setLayoutManager(layoutManager);
         workoutsRecycler.setAdapter(workoutListAdapter);
@@ -269,5 +274,22 @@ public class WeekCalendarFragment extends Fragment implements
                 getResources().getString(R.string.workouts_count),
                 getResources().getString(R.string.completed_workouts_count),
                 getResources().getString(R.string.completed_workouts_length));
+    }
+
+    @Override
+    public void onDeleteButtonClick(int position) {
+        // Удалить planned workout
+        CompletableFuture<List<PlannedWorkout>> future = CompletableFuture.supplyAsync(() -> {
+            PlannedWorkout plannedWorkout = workoutListAdapter.getItemByPosition(position);
+            database.getPlannedWorkoutDAO().deletePlannedWorkout(plannedWorkout);
+            return database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
+        });
+
+        try {
+            List<PlannedWorkout> plannedWorkouts1 = future.get();
+            setCorrectState(plannedWorkouts1);
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

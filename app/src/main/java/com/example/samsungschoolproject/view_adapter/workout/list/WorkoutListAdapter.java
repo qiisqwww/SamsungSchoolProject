@@ -24,17 +24,19 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
     private final UpdateRecycler updateRecycler;
     private final OnWorkoutItemListener onWorkoutItemListener;
     private final SetWorkoutMarked setWorkoutMarked;
+    private final DeleteWorkoutListener deleteWorkoutListener;
 
     public WorkoutListAdapter(
             List<PlannedWorkout> items,
             OnWorkoutItemListener onWorkoutItemListener,
             UpdateRecycler updateRecycler,
-            SetWorkoutMarked setWorkoutMarked) {
+            SetWorkoutMarked setWorkoutMarked,
+            DeleteWorkoutListener deleteWorkoutListener) {
         plannedWorkouts = items;
         this.onWorkoutItemListener = onWorkoutItemListener;
         this.updateRecycler = updateRecycler;
         this.setWorkoutMarked = setWorkoutMarked;
-
+        this.deleteWorkoutListener = deleteWorkoutListener;
     }
 
     @NonNull
@@ -45,7 +47,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
                 parent,
                 false
         );
-        return new WorkoutViewHolder(view, onWorkoutItemListener, setWorkoutMarked);
+        return new WorkoutViewHolder(view, onWorkoutItemListener, setWorkoutMarked, deleteWorkoutListener);
     }
 
     @Override
@@ -78,19 +80,28 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
         void setWorkoutMarked(PlannedWorkout plannedWorkout);
     }
 
+    public interface DeleteWorkoutListener {
+        void onDeleteButtonClick(int position);
+    }
+
     public static class WorkoutViewHolder extends RecyclerView.ViewHolder{
         private final View itemView;
         private final WorkoutItemBinding workoutItemBinding;
         private final OnWorkoutItemListener onWorkoutItemListener;
         private final SetWorkoutMarked setWorkoutMarked;
+        private final DeleteWorkoutListener deleteWorkoutListener;
 
-        public WorkoutViewHolder(@NonNull View itemView, OnWorkoutItemListener onWorkoutItemListener, SetWorkoutMarked setWorkoutMarked) {
+        public WorkoutViewHolder(@NonNull View itemView,
+                                 OnWorkoutItemListener onWorkoutItemListener,
+                                 SetWorkoutMarked setWorkoutMarked,
+                                 DeleteWorkoutListener deleteWorkoutListener) {
             super(itemView);
             workoutItemBinding = WorkoutItemBinding.bind(itemView);
 
             this.itemView = itemView;
             this.onWorkoutItemListener = onWorkoutItemListener;
             this.setWorkoutMarked = setWorkoutMarked;
+            this.deleteWorkoutListener = deleteWorkoutListener;
         }
 
         public void bind(PlannedWorkout plannedWorkout){
@@ -123,6 +134,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
                 });
             }
 
+            itemView.findViewById(R.id.deleteWorkout).setOnClickListener(v -> deleteWorkoutListener.onDeleteButtonClick(getBindingAdapterPosition()));
         }
     }
 }
