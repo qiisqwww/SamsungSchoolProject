@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:backgroundTint="@color/additionalButtonsColor"
-        android:text="@string/save_workout_template"
+        android:text="@string/save"
         android:textColor="@color/white"/>
 
 </LinearLayout>

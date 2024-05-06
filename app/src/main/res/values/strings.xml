@@ -23,7 +23,7 @@
     <string name="add_workout_template">Создать шаблон тренировки</string>
     <string name="no_planned_workouts">На этот день нет запланированных тренировок</string>
     <string name="input_name">Введите название тренировки</string>
-    <string name="save_workout_template">Сохранить шаблон</string>
+    <string name="save">Сохранить</string>
     <string name="your_workout_name">Название тренировки</string>
     <string name="add_exercise">+</string>
     <string name="delete_exercise">×</string>
