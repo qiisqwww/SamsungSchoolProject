@@ -1,6 +1,5 @@
 package com.example.samsungschoolproject.view_adapter.workout.builder;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,9 +100,16 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     // Добавляет Exercise в отображение, но не в массив viewItems. Массив обновится, когда создатся Holder
     public void addExercise(){
         length++;
-        notifyItemChanged(length-1);
-        notifyItemChanged(length-2);
         notifyItemChanged(length-3);
+        notifyItemChanged(length-2);
+        notifyItemChanged(length-1);
+
+        ArrayList<String> template = new ArrayList<>();
+        template.add("Приседания");
+        template.add("1");
+        template.add("5");
+
+        addToViewItems(template);
     }
 
     // Удаляет Exercise из отображения и из массива viewItems
@@ -132,7 +138,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             viewItems.add(template);
         }
         // Если адаптер уже создан, то это создание Exercise и оно добавляется перед кнопками
-        if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_CREATED){
+        if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_CREATED && !template.isEmpty()){
             viewItems.add(length-3, template);
         }
     }
@@ -184,7 +190,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             template.add("1");
             template.add("5");
 
-            workoutBuilderAdapter.addToViewItems(template);
+            if (workoutBuilderAdapter.adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING) workoutBuilderAdapter.addToViewItems(template);
 
             this.itemView = itemView;
             this.exercises = exercises;

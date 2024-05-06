@@ -6,5 +6,4 @@ public enum WorkoutBuilderAdapterStates {
 
     // Состояние указывает на то, что адаптер находится на стадии создания
     ADAPTER_ON_CREATING;
-
 }
