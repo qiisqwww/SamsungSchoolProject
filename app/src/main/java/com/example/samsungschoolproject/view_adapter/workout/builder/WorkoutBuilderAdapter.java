@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    private int length = 4;
+    private int length;
     private WorkoutBuilderAdapterStates adapterCreatingState;
     private EditText name;
     private ArrayList<ArrayList<String>> viewItems;
@@ -38,7 +38,10 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.exercises = exercises;
         this.adapterCreatingState = WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING;
         this.loadJustCreated = loadJustCreated;
+
+        // Инициализация полей необходимыми значениями
         viewItems = new ArrayList<>();
+        length = 4; // т.к. стартовая длина равна четырем
     }
 
     @Override
@@ -79,6 +82,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return null;
     }
 
+    // Возвращает необходимый "тип" view в зависимости от позиции
     @Override
     public int getItemViewType(int position) {
         if (position == 0){
@@ -97,7 +101,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return viewItems.get(position);
     }
 
-    // Добавляет Exercise в отображение, но не в массив viewItems. Массив обновится, когда создатся Holder
+    // Добавляет Exercise в отображение
     public void addExercise(){
         length++;
         notifyItemChanged(length-3);
@@ -109,7 +113,20 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         template.add("1");
         template.add("5");
 
+        // Добавить новый элемент в массив viewItems
         addToViewItems(template);
+    }
+
+    // Метод добавляет новый элемент в массив viewItems, содержащий информацию о view
+    public void addToViewItems(ArrayList<String> template){
+        // Если адаптер на стадии создания, то вьюшка добавляется в конец
+        if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING){
+            viewItems.add(template);
+        }
+        // Если адаптер уже создан, то это создание Exercise и оно добавляется перед кнопками
+        if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_CREATED && !template.isEmpty()){
+            viewItems.add(length-3, template);
+        }
     }
 
     // Удаляет Exercise из отображения и из массива viewItems
@@ -117,6 +134,11 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         length--;
         viewItems.remove(position);
         notifyItemRemoved(position);
+    }
+
+    // Возвращает текущее состояние адаптера
+    public WorkoutBuilderAdapterStates getState(){
+        return adapterCreatingState;
     }
 
     // Устанавливает состояние о том, что адаптер был полностью создан
@@ -130,17 +152,6 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public String getName(){
         return name.getText().toString();
-    }
-
-    public void addToViewItems(ArrayList<String> template){
-        // Если адаптер на стадии создания, то вьюшка добавляется в конец
-        if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING){
-            viewItems.add(template);
-        }
-        // Если адаптер уже создан, то это создание Exercise и оно добавляется перед кнопками
-        if (adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_CREATED && !template.isEmpty()){
-            viewItems.add(length-3, template);
-        }
     }
 
     public void UpdateViewItem(int position, ArrayList<String> item){
@@ -185,12 +196,14 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public ChooseExerciseViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter, List<String> exercises) {
             super(itemView);
 
+            // Необходимо предзаполнить массив значениями "упражнения" по умолчанию
             ArrayList<String> template = new ArrayList<>();
             template.add("Приседания");
             template.add("1");
             template.add("5");
 
-            if (workoutBuilderAdapter.adapterCreatingState == WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING) workoutBuilderAdapter.addToViewItems(template);
+            // Только если адаптер на стадии создания, то этот объект в список viewItems добавляется напрямую из конструктора holder'a
+            if (workoutBuilderAdapter.getState().equals(WorkoutBuilderAdapterStates.ADAPTER_ON_CREATING)) workoutBuilderAdapter.addToViewItems(template);
 
             this.itemView = itemView;
             this.exercises = exercises;
@@ -210,6 +223,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             deleteExerciseButton.setOnClickListener(v -> workoutBuilderAdapter.deleteExercise(getBindingAdapterPosition()));
         }
 
+        // Метод устанавливает содержимое для спиннеров
         private void setSpinnerAdapters(){
             SpinnerAdapter exerciseAdapter = new SpinnerAdapter(
                     itemView.getContext(),
@@ -235,6 +249,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             repeatsListSpinner.setAdapter(repeatsAdapter);
         }
 
+        // Метод устанавливает Listeners на изменение значения в спиннере, чтобы отслеживать выбранное упражнение
         private void setOnItemChangedListeners(){
             exerciseListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -256,9 +271,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
+                public void onNothingSelected(AdapterView<?> parent) {} // Нет логики
             });
 
             approachesListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -338,6 +351,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
                 ArrayList<ArrayList<String>> exercises = readExercisesFromFields();
 
+                // Загружает в БД созданную нажатием кнопки тренировки. Реализация вынесена во фрагмент
                 loadJustCreated.loadJustCreated(name, exercises);
             });
         }
@@ -351,11 +365,13 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private ArrayList<ArrayList<String>> readExercisesFromFields(){
             ArrayList<ArrayList<String>> exercises = new ArrayList<>();
 
+            // Если количество объектов равно 3, то в тренировке нет упражнений
             int length = workoutBuilderAdapter.getItemCount();
             if (length == 3){
                 return null;
             }
 
+            // Считывает данные только с "упражнений"
             for (int i = 1; i < length - 2; i++){
                 ArrayList<String> exercise = workoutBuilderAdapter.getFromViewItems(i);
                 exercises.add(exercise);

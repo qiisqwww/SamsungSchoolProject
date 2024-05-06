@@ -46,10 +46,6 @@ public class TemplatesForWorkoutListAdapter extends RecyclerView.Adapter<Templat
         return workoutTemplates.size();
     }
 
-    public WorkoutTemplate getItemByPosition(int position){
-        return workoutTemplates.get(position);
-    }
-
     public interface OnTemplateForWorkoutItemListener {
         void onWorkoutItemClick(int position);
     }
