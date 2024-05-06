@@ -5,7 +5,7 @@
     android:background="@color/darkThemeBackgroundColor"
     android:orientation="vertical">
 
-    <include layout="@layout/back_button"/>
+    <include layout="@layout/button_back"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/workoutBuilderRecycler"

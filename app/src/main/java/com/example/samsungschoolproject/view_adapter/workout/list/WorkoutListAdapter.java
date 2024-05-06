@@ -138,7 +138,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
                 });
             }
 
-            itemView.findViewById(R.id.deleteWorkout).setOnClickListener(v -> deleteWorkoutListener.onDeleteButtonClick(getBindingAdapterPosition()));
+            itemView.findViewById(R.id.delete).setOnClickListener(v -> deleteWorkoutListener.onDeleteButtonClick(getBindingAdapterPosition()));
         }
     }
 }

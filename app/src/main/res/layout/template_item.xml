@@ -37,14 +37,7 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/deleteTemplate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/additionalButtonsColor"
-            android:text="@string/delete_exercise"
-            android:textSize="20sp"
-            android:textColor="@color/white"/>
+        <include layout="@layout/button_delete" />
 
     </LinearLayout>
 

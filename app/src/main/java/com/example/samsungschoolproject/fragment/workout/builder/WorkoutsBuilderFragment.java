@@ -150,7 +150,7 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
             }
 
         } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(e);
+                throw new RuntimeException(e);
         }
     }
 
