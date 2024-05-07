@@ -1,5 +1,6 @@
 package com.example.samsungschoolproject.fragment.сalendar;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -305,6 +306,19 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
 
         @Override
         public void onDeleteButtonClick(int position) {
+            // Показать AlertDialog (подтвердить удаление workout)
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Delete workout")
+                    .setMessage(getResources().getString(R.string.sure_delete_workout))
+                    .setPositiveButton(R.string.delete, (dialog, which) -> {
+                        deleteWorkout(position);
+                        dialog.cancel();
+                    })
+                    .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel())
+                    .show();
+        }
+
+        private void deleteWorkout(int position){
             // Удалить planned workout
             CompletableFuture<List<PlannedWorkout>> future = CompletableFuture.supplyAsync(() -> {
                 PlannedWorkout plannedWorkout = workoutListAdapter.getItemByPosition(position);

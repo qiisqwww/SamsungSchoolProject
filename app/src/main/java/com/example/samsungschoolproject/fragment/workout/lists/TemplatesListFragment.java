@@ -1,5 +1,7 @@
 package com.example.samsungschoolproject.fragment.workout.lists;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -147,6 +149,19 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
 
     @Override
     public void onDeleteButtonClick(int position) {
+        // Показать AlertDialog (подтвердить удаление template)
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Delete template")
+                .setMessage(getResources().getString(R.string.sure_delete_template))
+                .setPositiveButton(R.string.delete, (dialog, which) -> {
+                    deleteTemplate(position);
+                    dialog.cancel();
+                })
+                .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel())
+                .show();
+    }
+
+    private void deleteTemplate(int position){
         // Удалить workout template
         CompletableFuture<List<WorkoutTemplate>> future = CompletableFuture.supplyAsync(() -> {
             WorkoutTemplate workoutTemplate = workoutTemplateListAdapter.getItemByPosition(position);
