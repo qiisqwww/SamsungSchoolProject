@@ -285,10 +285,11 @@ public class WeekCalendarFragment extends Fragment implements
     public void onDeleteButtonClick(int position) {
         // Показать AlertDialog (подтвердить удаление workout)
         new AlertDialog.Builder(requireContext())
-                .setTitle("Delete template")
+                .setTitle(R.string.delete_workout)
                 .setMessage(getResources().getString(R.string.sure_delete_workout))
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
                     deleteWorkout(position);
+                    Toast.makeText(requireContext().getApplicationContext(), R.string.workout_deleted, Toast.LENGTH_SHORT).show();
                     dialog.cancel();
                 })
                 .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel())

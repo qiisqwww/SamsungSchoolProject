@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.example.samsungschoolproject.DTO.ExerciseInfo;
@@ -151,13 +152,16 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     public void onDeleteButtonClick(int position) {
         // Показать AlertDialog (подтвердить удаление template)
         new AlertDialog.Builder(requireContext())
-                .setTitle("Delete template")
+                .setTitle(R.string.delete_template)
                 .setMessage(getResources().getString(R.string.sure_delete_template))
                 .setPositiveButton(R.string.delete, (dialog, which) -> {
                     deleteTemplate(position);
+                    Toast.makeText(requireContext().getApplicationContext(), R.string.template_deleted, Toast.LENGTH_SHORT).show();
                     dialog.cancel();
                 })
-                .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                    dialog.cancel();
+                })
                 .show();
     }
 

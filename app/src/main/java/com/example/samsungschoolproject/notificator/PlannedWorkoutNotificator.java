@@ -16,6 +16,7 @@ import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -89,7 +90,7 @@ public class PlannedWorkoutNotificator {
                 throw new RuntimeException(e);
             }
 
-            if (!plannedWorkouts.isEmpty()){
+            if (!plannedWorkouts.isEmpty() && 11 <= LocalDateTime.now().getHour() && LocalDateTime.now().getHour() <= 13){
                 sendNotification(context);
             }
         }
