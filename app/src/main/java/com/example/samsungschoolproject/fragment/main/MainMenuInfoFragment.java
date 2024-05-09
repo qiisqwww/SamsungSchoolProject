@@ -1,7 +1,6 @@
 package com.example.samsungschoolproject.fragment.main;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,17 +14,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
-import com.example.samsungschoolproject.activity.SettingsMenuActivity;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.utils.WorkoutListUtils;
 
-import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class MainMenuInfoFragment extends Fragment {
-    private Button toSettingsButton, getMotivationButton;
+    private Button getMotivationButton;
     private static TextView workoutsCountTV, completedWorkoutsCountTV, completedWorkoutsLengthTV;
     private static int workoutsCount, completedWorkoutsCount, completedWorkoutsLength;
     private final OpenMainMenuVideoFragment openMainMenuVideoFragment;
@@ -57,7 +54,6 @@ public class MainMenuInfoFragment extends Fragment {
     }
 
     private void initWidgets(View view){
-        toSettingsButton = view.findViewById(R.id.toSettings);
         getMotivationButton = view.findViewById(R.id.getMotivation);
 
         workoutsCountTV = view.findViewById(R.id.workoutsCount);
@@ -66,8 +62,6 @@ public class MainMenuInfoFragment extends Fragment {
     }
 
     private void initButtonListeners(){
-        toSettingsButton.setOnClickListener(v -> startActivity(new Intent(v.getContext(), SettingsMenuActivity.class)));
-
         getMotivationButton.setOnClickListener(v -> openMainMenuVideoFragment.openMainMenuVideoFragment());
     }
 

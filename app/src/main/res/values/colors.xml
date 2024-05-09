@@ -7,4 +7,5 @@
     <color name="darkThemeBackgroundColor">#2e2f34</color>
     <color name="additionalButtonsColor">#3f4047</color>
     <color name="startAlarmButtonColor">#d4212d</color>
+    <color name="dayWithPlanned">#98FB98</color>
 </resources>

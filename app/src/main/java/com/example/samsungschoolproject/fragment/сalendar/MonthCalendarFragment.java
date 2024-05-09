@@ -118,7 +118,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         monthYearTV.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll));
         ArrayList<LocalDate> daysInMonth = CalendarUtils.daysInMonthArray(CalendarUtils.dateToScroll);
 
-        calendarAdapter = new CalendarAdapter(daysInMonth, this);
+        calendarAdapter = new CalendarAdapter(daysInMonth, this, WorkoutHelperDatabase.getInstance(requireContext().getApplicationContext()));
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecycler.setLayoutManager(layoutManager);
         calendarRecycler.setAdapter(calendarAdapter);

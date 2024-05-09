@@ -165,7 +165,7 @@ public class WeekCalendarFragment extends Fragment implements
         monthYearTV.setText(CalendarUtils.monthYearFromDate(CalendarUtils.dateToScroll)) ;
         ArrayList<LocalDate> daysInWeek = CalendarUtils.daysInWeekArray(CalendarUtils.dateToScroll);
 
-        calendarAdapter = new CalendarAdapter(daysInWeek, this);
+        calendarAdapter = new CalendarAdapter(daysInWeek, this, database);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 7);
         calendarRecycler.setLayoutManager(layoutManager);
         calendarRecycler.setAdapter(calendarAdapter);

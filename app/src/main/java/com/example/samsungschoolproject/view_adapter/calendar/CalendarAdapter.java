@@ -10,18 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.R;
+import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.utils.CalendarUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
     private final ArrayList<LocalDate> days;
     private final OnCalendarItemListener onCalendarItemListener;
+    private final WorkoutHelperDatabase database;
 
-    public CalendarAdapter(ArrayList<LocalDate> days, OnCalendarItemListener onCalendarItemListener){
+    public CalendarAdapter(ArrayList<LocalDate> days, OnCalendarItemListener onCalendarItemListener, WorkoutHelperDatabase database){
         this.days = days;
         this.onCalendarItemListener = onCalendarItemListener;
+        this.database = database;
     }
     @NonNull
     @Override
@@ -55,7 +60,16 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 CalendarUtils.selectedDatePosition = holder.getAdapterPosition();
                 return;
             }
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT); // Очищает цвет, если элемент не должен быть подсвечен
+            CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+                if (database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(date.toString()).size() > 0) return "true";
+                return "false";
+            });
+            try {
+                if (future.get().equals("true")) holder.itemView.setBackgroundColor(Color.parseColor("#BDECB6"));
+                else holder.itemView.setBackgroundColor(Color.TRANSPARENT); // Очищает цвет, если элемент не должен быть подсвечен
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
