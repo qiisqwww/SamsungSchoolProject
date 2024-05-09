@@ -6,7 +6,7 @@
 
     <!-- Тема для загрузочного экрана -->
     <style name="AppTheme.Launcher">
-        <item name="android:windowBackground">@drawable/launcher</item>
+        <item name="android:windowBackground">@drawable/launcher_entering</item>
     </style>
 
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget" tools:override="true">
