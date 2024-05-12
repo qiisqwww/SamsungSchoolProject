@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
@@ -53,7 +54,8 @@ public class WeekCalendarFragment extends Fragment implements
     private WorkoutListAdapter workoutListAdapter;
     private TextView monthYearTV;
     private RecyclerView calendarRecycler, workoutsRecycler;
-    private Button weekBackButton, weekNextButton, loadFromTemplatesButton, addNewWorkoutButton;
+    private Button loadFromTemplatesButton, addNewWorkoutButton;
+    private ImageButton weekBackButton, weekNextButton;
     private BottomSheetDialogFragment workoutsBuilderFragment;
     private TextView noPlannedWorkouts;
     private ViewSwitcher viewSwitcher;

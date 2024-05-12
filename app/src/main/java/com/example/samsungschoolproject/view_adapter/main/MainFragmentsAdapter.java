@@ -1,10 +1,17 @@
 package com.example.samsungschoolproject.view_adapter.main;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.example.samsungschoolproject.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +47,6 @@ public class MainFragmentsAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles.get(position);
+        return null;
     }
 }

@@ -19,7 +19,8 @@
         android:background="@color/additionalButtonsColor"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        app:tabIndicatorHeight="0dp">
+        app:tabIndicatorHeight="0dp"
+        app:tabIndicatorColor="@color/white">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

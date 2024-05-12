@@ -4,46 +4,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp">
 
-        <Button
+        <ImageButton
             android:id="@+id/monthBack"
-            android:layout_width="8dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/get_previous_month"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/transparent"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="80dp"
+            android:layout_toStartOf="@id/mMonthYearTV"
+            android:background="@drawable/arrow_left"/>
 
         <TextView
             android:id="@+id/mMonthYearTV"
-            android:layout_width="8dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:textSize="20sp"
-            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/white"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/monthNext"
-            android:layout_width="8dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/get_next_month"
-            android:backgroundTint="@color/transparent"
-            android:textColor="@color/white"
-            android:background="@null"
-            android:textStyle="bold"
-            android:textSize="20sp" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="80dp"
+            android:layout_toEndOf="@id/mMonthYearTV"
+            android:background="@drawable/arrow_right"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <include layout="@layout/days_of_week"/>
 
