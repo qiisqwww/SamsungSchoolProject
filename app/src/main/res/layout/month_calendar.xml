@@ -18,7 +18,7 @@
             android:layout_weight="1"
             android:text="@string/get_previous_month"
             android:textColor="@color/white"
-            android:backgroundTint="@color/darkThemeBackgroundColor"
+            android:backgroundTint="@color/transparent"
             android:textStyle="bold"
             android:textSize="20sp"/>
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/get_next_month"
-            android:backgroundTint="@color/darkThemeBackgroundColor"
+            android:backgroundTint="@color/transparent"
             android:textColor="@color/white"
             android:background="@null"
             android:textStyle="bold"

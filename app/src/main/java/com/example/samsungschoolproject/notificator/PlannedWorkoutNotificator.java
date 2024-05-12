@@ -90,6 +90,7 @@ public class PlannedWorkoutNotificator {
                 throw new RuntimeException(e);
             }
 
+            // Проверка о том, что уведомление отправляется в нужное время (т.к. работает с багами)
             if (!plannedWorkouts.isEmpty() && 11 <= LocalDateTime.now().getHour() && LocalDateTime.now().getHour() <= 13){
                 sendNotification(context);
             }

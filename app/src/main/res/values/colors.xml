@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="full_black">#000000</color>
+    <color name="black">#33000000</color>
+    <color name="transparent">#00000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="textColor">#FFFFFFFF</color>
     <color name="darkThemeStatusBarColor">#2e2f34</color>
     <color name="darkThemeBackgroundColor">#2e2f34</color>
     <color name="additionalButtonsColor">#3f4047</color>
     <color name="startAlarmButtonColor">#d4212d</color>
-    <color name="dayWithPlanned">#98FB98</color>
+    <color name="dayWithPlanned">#6698FB98</color>
+    <color name="tabUnselected">#B3000000</color>
+    <color name="tabSelected">#66000000</color>
 </resources>

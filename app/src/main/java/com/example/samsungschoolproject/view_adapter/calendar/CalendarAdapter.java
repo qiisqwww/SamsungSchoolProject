@@ -56,7 +56,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
         else{
             holder.day.setText(String.valueOf(date.getDayOfMonth()));
             if (date.equals(CalendarUtils.selectedDate)){ // Устанавливает серый цвет, если элемент был выбран
-                holder.itemView.setBackgroundColor(Color.GRAY);
+                holder.itemView.setBackgroundColor(Color.parseColor("#B3808080"));
                 CalendarUtils.selectedDatePosition = holder.getAdapterPosition();
                 return;
             }
@@ -65,7 +65,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 return "false";
             });
             try {
-                if (future.get().equals("true")) holder.itemView.setBackgroundColor(Color.parseColor("#BDECB6"));
+                if (future.get().equals("true")) holder.itemView.setBackgroundColor(Color.parseColor("#66BDECB6"));
                 else holder.itemView.setBackgroundColor(Color.TRANSPARENT); // Очищает цвет, если элемент не должен быть подсвечен
             } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
