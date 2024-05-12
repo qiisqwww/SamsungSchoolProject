@@ -7,15 +7,13 @@
 
     <TextView
         android:id="@+id/headInfoTV"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/black"
         android:text="@string/choose_template"
         android:layout_gravity="center|top"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:layout_margin="15dp"
-        android:layout_marginStart="25dp"/>
+        android:layout_margin="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/workoutTemplatesRecycler"

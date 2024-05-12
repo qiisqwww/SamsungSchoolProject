@@ -307,7 +307,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         @Override
         public void onDeleteButtonClick(int position) {
             // Показать AlertDialog (подтвердить удаление workout)
-            new AlertDialog.Builder(requireContext())
+            new AlertDialog.Builder(requireContext(), R.style.AlertTheme)
                     .setTitle(R.string.delete_workout)
                     .setMessage(getResources().getString(R.string.sure_delete_workout))
                     .setPositiveButton(R.string.delete, (dialog, which) -> {

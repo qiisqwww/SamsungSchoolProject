@@ -151,7 +151,7 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
     @Override
     public void onDeleteButtonClick(int position) {
         // Показать AlertDialog (подтвердить удаление template)
-        new AlertDialog.Builder(requireContext())
+        new AlertDialog.Builder(requireContext(), R.style.AlertTheme)
                 .setTitle(R.string.delete_template)
                 .setMessage(getResources().getString(R.string.sure_delete_template))
                 .setPositiveButton(R.string.delete, (dialog, which) -> {

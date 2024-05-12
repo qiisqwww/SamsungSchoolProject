@@ -9,7 +9,14 @@
         <item name="android:windowBackground">@drawable/launcher_entering</item>
     </style>
 
+    <!-- Тема для Tab'a -->
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget" tools:override="true">
         <item name="tabBackground">@drawable/tab_background</item>
+    </style>
+
+    <!-- Тема для AlertDialog -->
+    <style name="AlertTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/darkThemeBackgroundColor</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>
