@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -303,7 +304,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public static class AddExerciseViewHolder extends RecyclerView.ViewHolder{
-        private final Button addExerciseButton;
+        private final ImageButton addExerciseButton;
         private final WorkoutBuilderAdapter workoutBuilderAdapter;
 
         public AddExerciseViewHolder(@NonNull View itemView, WorkoutBuilderAdapter workoutBuilderAdapter) {

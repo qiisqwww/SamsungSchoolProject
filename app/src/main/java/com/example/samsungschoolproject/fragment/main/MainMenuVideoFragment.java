@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
@@ -22,7 +23,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StreamDownloadTask;
 
 public class MainMenuVideoFragment extends Fragment {
-    private Button backButton;
+    private ImageButton backButton;
     private VideoView motivationVideoView;
     private final OpenMainMenuInfoFragment openMainMenuInfoFragment;
 

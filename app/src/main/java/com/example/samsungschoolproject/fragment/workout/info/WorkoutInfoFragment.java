@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
@@ -25,7 +26,7 @@ public class WorkoutInfoFragment extends BottomSheetDialogFragment {
     private WorkoutInfoAdapter workoutInfoAdapter;
     private WorkoutInfo workoutInfo;
     private RecyclerView workoutInfoRecycler;
-    private Button backButton;
+    private ImageButton backButton;
 
     public WorkoutInfoFragment(WorkoutInfo workoutInfo){
         this.workoutInfo = workoutInfo;

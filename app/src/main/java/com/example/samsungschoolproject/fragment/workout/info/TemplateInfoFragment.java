@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.samsungschoolproject.DTO.TemplateInfo;
 import com.example.samsungschoolproject.R;
@@ -23,7 +24,7 @@ public class TemplateInfoFragment extends BottomSheetDialogFragment {
     private TemplateInfoAdapter templateInfoAdapter;
     private TemplateInfo templateInfo;
     private RecyclerView templateInfoRecycler;
-    private Button backButton;
+    private ImageButton backButton;
 
     public TemplateInfoFragment(TemplateInfo templateInfo){
         this.templateInfo = templateInfo;

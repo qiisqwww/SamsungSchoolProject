@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
@@ -39,7 +40,7 @@ import java.util.concurrent.ExecutionException;
 
 public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implements WorkoutBuilderAdapter.LoadJustCreated {
     public static String TAG;
-    private Button goBackButton;
+    private ImageButton goBackButton;
     private BackFragmentForBuilderStates backFragmentForBuilderStates;
     private WorkoutListAdapter workoutListAdapter;
     private WorkoutHelperDatabase database;

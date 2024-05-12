@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
@@ -34,7 +35,7 @@ import java.util.concurrent.ExecutionException;
 
 
 public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilderAdapter.LoadJustCreated {
-    private Button goBackButton;
+    private ImageButton goBackButton;
     private WorkoutHelperDatabase database;
     private RecyclerView templateBuilderRecycler;
 
