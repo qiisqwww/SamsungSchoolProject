@@ -65,7 +65,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 return "false";
             });
             try {
-                if (future.get().equals("true")) holder.itemView.setBackgroundColor(Color.parseColor("#66BDECB6"));
+                if (future.get().equals("true")) holder.itemView.setBackgroundColor(Color.parseColor("#80BDECB6"));
                 else holder.itemView.setBackgroundColor(Color.TRANSPARENT); // Очищает цвет, если элемент не должен быть подсвечен
             } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);

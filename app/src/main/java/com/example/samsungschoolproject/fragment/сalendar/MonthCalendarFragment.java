@@ -25,7 +25,6 @@ import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.database.model.Exercise;
 import com.example.samsungschoolproject.database.model.PlannedWorkout;
 import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
-import com.example.samsungschoolproject.database.model.WorkoutTemplate;
 import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
 import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 import com.example.samsungschoolproject.fragment.main.MainMenuInfoFragment;
@@ -157,7 +156,7 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.day_info, container, false);
+            return inflater.inflate(R.layout.day_info_month, container, false);
         }
 
         @Override

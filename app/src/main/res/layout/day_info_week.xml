@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <ViewSwitcher
+            android:id="@+id/viewSwitcher"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.9"
+            android:inAnimation="@android:anim/slide_in_left">
+
+            <TextView
+                android:id="@+id/noPlannedWorkouts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_gravity="top|center"
+                android:text="@string/no_planned_workouts"
+                android:padding="25dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/workoutsRecycler"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@android:layout/list_content"/>
+
+        </ViewSwitcher>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="end|bottom"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <Button
+                android:id="@+id/loadFromTemplates"
+                android:layout_width="0dp"
+                android:layout_height="65dp"
+                android:layout_margin="5dp"
+                android:layout_weight="0.5"
+                android:backgroundTint="@color/black"
+                android:text="@string/load_from_templates_button"
+                android:textColor="@color/white"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/addNewWorkout"
+                android:layout_width="0dp"
+                android:layout_height="65dp"
+                android:layout_weight="0.5"
+                android:layout_margin="5dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"
+                android:text="@string/add_new_workout"
+                style="?android:attr/buttonBarButtonStyle" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
