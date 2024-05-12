@@ -2,6 +2,7 @@
 <resources>
     <color name="full_black">#000000</color>
     <color name="black">#33000000</color>
+    <color name="black_darker">#59000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="textColor">#FFFFFFFF</color>

@@ -69,10 +69,10 @@ public class MainMenuVideoFragment extends Fragment {
         StorageReference storageRef = storage.getReference();
         StorageReference firstVideo = storageRef.child("workout_motivation_videos/calm_edit.mp4");
 
-        firstVideo.getDownloadUrl().addOnSuccessListener(uri -> {
-            motivationVideoView.setVideoURI(uri);
-            motivationVideoView.start();
-        });
+        //firstVideo.getDownloadUrl().addOnSuccessListener(uri -> {
+        //    motivationVideoView.setVideoURI(uri);
+        //    motivationVideoView.start();
+        //});
     }
 
     // Открытие фрагмента, содержащего интерфейс (реализация вынесена в MainMenuFragment)

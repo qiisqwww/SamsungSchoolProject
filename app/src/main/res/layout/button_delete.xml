@@ -7,7 +7,7 @@
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/additionalButtonsColor"
+        android:backgroundTint="@color/transparent"
         android:text="@string/delete_exercise"
         android:textSize="20sp"
         android:textColor="@color/white"/>

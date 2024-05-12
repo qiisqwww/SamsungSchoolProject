@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:textColor="@color/white"
         android:textSize="14sp"
-        android:backgroundTint="@color/additionalButtonsColor"
+        android:backgroundTint="@color/transparent"
         android:text="@string/back" />
 
 </LinearLayout>

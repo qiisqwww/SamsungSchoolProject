@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkThemeBackgroundColor"
+    android:background="@drawable/under"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -49,7 +49,7 @@
                 android:layout_height="65dp"
                 android:layout_margin="5dp"
                 android:layout_weight="0.5"
-                android:backgroundTint="@color/additionalButtonsColor"
+                android:backgroundTint="@color/black"
                 android:text="@string/load_from_templates_button"
                 android:textColor="@color/white"
                 style="?android:attr/buttonBarButtonStyle" />
@@ -61,7 +61,7 @@
                 android:layout_weight="0.5"
                 android:layout_margin="5dp"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/additionalButtonsColor"
+                android:backgroundTint="@color/black"
                 android:text="@string/add_new_workout"
                 style="?android:attr/buttonBarButtonStyle" />
 

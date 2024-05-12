@@ -132,7 +132,7 @@ public class WorkoutListAdapter extends RecyclerView.Adapter<WorkoutListAdapter.
                 markCompletedButton.setOnClickListener(v -> {
                     // Изменить текст на "выполненный" и заменить цвет кнопки
                     markCompletedButton.setText(itemView.getContext().getString(R.string.completed));
-                    markCompletedButton.setBackgroundColor(itemView.getContext().getColor(R.color.additionalButtonsColor));
+
 
                     setWorkoutMarked.setWorkoutMarked(plannedWorkout);
                 });

@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
-        android:backgroundTint="@color/additionalButtonsColor"
+        android:backgroundTint="@color/black"
         android:text="@string/save"
         android:textColor="@color/white"/>
 

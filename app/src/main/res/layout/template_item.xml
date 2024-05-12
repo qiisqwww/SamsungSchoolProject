@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/additionalButtonsColor"
+    android:background="@color/black_darker"
     android:orientation="vertical"
     android:padding="10dp"
     android:layout_margin="10dp">
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:textSize="13sp"
         android:layout_margin="5dp"
-        android:textColor="@color/darkThemeStatusBarColor"
+        android:textColor="@color/white"
         android:text="@string/tap_on_template_asking"/>
 
 
