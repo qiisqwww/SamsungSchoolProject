@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/left"
+    android:background="@drawable/left_"
     tools:context=".fragment.сalendar.CalendarFragment"
     tools:ignore="MissingDefaultResource">
 
