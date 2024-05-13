@@ -42,6 +42,7 @@
     <string name="workouts_count">Общее количество запланированных тренировок: </string>
     <string name="completed_workouts_count">Количество выполненных\nтренировок: </string>
     <string name="completed_workouts_length">Общая длительность\nтренировок: </string>
+    <string name="the_most_preferred_exercise">Любимое упражнение:\n</string>
     <string name="update_statistics">Обновить статистику</string>
     <string name="sure_delete_template">Вы уверены, что хотите удалить шаблон?</string>
     <string name="sure_delete_workout">Вы уверены, что хотите удалить тренировку?</string>
@@ -51,4 +52,5 @@
     <string name="delete_workout">Удаление тренировки</string>
     <string name="template_deleted">Шаблон удален</string>
     <string name="workout_deleted">Тренировка удалена</string>
+    <string name="not_exists">отсутствует</string>
 </resources>

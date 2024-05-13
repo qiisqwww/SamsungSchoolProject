@@ -301,7 +301,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
             MainMenuInfoFragment.loadStatisticsData(requireContext().getApplicationContext(),
                     getResources().getString(R.string.workouts_count),
                     getResources().getString(R.string.completed_workouts_count),
-                    getResources().getString(R.string.completed_workouts_length));
+                    getResources().getString(R.string.completed_workouts_length),
+                    getResources().getString(R.string.the_most_preferred_exercise));
         }
 
         @Override
@@ -338,7 +339,8 @@ public class MonthCalendarFragment extends Fragment implements CalendarAdapter.O
                 MainMenuInfoFragment.loadStatisticsData(requireContext().getApplicationContext(),
                         getResources().getString(R.string.workouts_count),
                         getResources().getString(R.string.completed_workouts_count),
-                        getResources().getString(R.string.completed_workouts_length));
+                        getResources().getString(R.string.completed_workouts_length),
+                        getResources().getString(R.string.the_most_preferred_exercise));
             } catch (ExecutionException | InterruptedException e) {
                 throw new RuntimeException(e);
             }

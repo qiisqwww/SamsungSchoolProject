@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,9 @@ import java.util.concurrent.ExecutionException;
 
 public class MainMenuInfoFragment extends Fragment {
     private Button getMotivationButton;
-    private static TextView workoutsCountTV, completedWorkoutsCountTV, completedWorkoutsLengthTV;
+    private static TextView workoutsCountTV, completedWorkoutsCountTV, completedWorkoutsLengthTV, theMostPreferredExerciseTV;
     private static int workoutsCount, completedWorkoutsCount, completedWorkoutsLength;
+    private static String theMostPreferredExercise;
     private final OpenMainMenuVideoFragment openMainMenuVideoFragment;
 
     public MainMenuInfoFragment(OpenMainMenuVideoFragment openMainMenuVideoFragment){
@@ -50,7 +52,8 @@ public class MainMenuInfoFragment extends Fragment {
         loadStatisticsData(requireContext().getApplicationContext(),
                 getResources().getString(R.string.workouts_count),
                 getResources().getString(R.string.completed_workouts_count),
-                getResources().getString(R.string.completed_workouts_length));
+                getResources().getString(R.string.completed_workouts_length),
+                getResources().getString(R.string.the_most_preferred_exercise));
     }
 
     private void initWidgets(View view){
@@ -59,6 +62,7 @@ public class MainMenuInfoFragment extends Fragment {
         workoutsCountTV = view.findViewById(R.id.workoutsCount);
         completedWorkoutsCountTV = view.findViewById(R.id.completedWorkoutsCount);
         completedWorkoutsLengthTV = view.findViewById(R.id.completedWorkoutsLength);
+        theMostPreferredExerciseTV = view.findViewById(R.id.theMostPreferredExercise);
     }
 
     private void initButtonListeners(){
@@ -66,7 +70,11 @@ public class MainMenuInfoFragment extends Fragment {
     }
 
     // Подгрузить статистику пользователя из БД
-    public static void loadStatisticsData(Context context, String workoutsCountS, String completedWorkoutsCountS, String completedWorkoutsLengthS){
+    public static void loadStatisticsData(Context context,
+                                          String workoutsCountS,
+                                          String completedWorkoutsCountS,
+                                          String completedWorkoutsLengthS,
+                                          String theMostPreferredExerciseS){
         CompletableFuture<Hashtable<String, Integer>> future = CompletableFuture.supplyAsync(() -> {
             WorkoutHelperDatabase database = WorkoutHelperDatabase.getInstance(context);
             Hashtable<String, Integer> statistics = new Hashtable<>();
@@ -77,26 +85,38 @@ public class MainMenuInfoFragment extends Fragment {
             statistics.put("completedWorkoutsCount", completedWorkoutsCount);
             completedWorkoutsLength = database.getPlannedWorkoutDAO().getSummaryApproximateLength();
             statistics.put("completedWorkoutsLength", completedWorkoutsLength);
+            int theMostPreferredExerciseid = database.getPlannedWorkoutExerciseDAO().getTheMostPreferredExercise();
+
+            if (database.getExerciseDAO().getExerciseById(theMostPreferredExerciseid) != null)
+                theMostPreferredExercise = database.getExerciseDAO().getExerciseById(theMostPreferredExerciseid).name;
+            else
+                theMostPreferredExercise = context.getResources().getString(R.string.not_exists);
 
             return statistics;
         });
 
         try {
             Hashtable<String, Integer> statistics = future.get();
-            setStatistics(statistics ,workoutsCountS, completedWorkoutsCountS, completedWorkoutsLengthS);
+            setStatistics(workoutsCountS, completedWorkoutsCountS, completedWorkoutsLengthS, theMostPreferredExerciseS);
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
     // Установить статистику пользователя в необходимые поля
-    public static void setStatistics(Hashtable<String, Integer> statistics, String workoutsCountS, String completedWorkoutsCountS, String completedWorkoutsLengthS){
+    public static void setStatistics(String workoutsCountS,
+                                     String completedWorkoutsCountS,
+                                     String completedWorkoutsLengthS,
+                                     String theMostPreferredExerciseS){
         workoutsCountTV.setText(workoutsCountS + " "
-                + statistics.get("workoutsCount"));
+                + workoutsCount);
         completedWorkoutsCountTV.setText(completedWorkoutsCountS + " "
-                + statistics.get("completedWorkoutsCount"));
+                + completedWorkoutsCount);
         completedWorkoutsLengthTV.setText(completedWorkoutsLengthS + " "
-                + statistics.get("completedWorkoutsLength") + WorkoutListUtils.parseLengthTime(completedWorkoutsLength));
+                + completedWorkoutsLength + WorkoutListUtils.parseLengthTime(completedWorkoutsLength));
+
+        if (theMostPreferredExercise != null)
+            theMostPreferredExerciseTV.setText(theMostPreferredExerciseS + theMostPreferredExercise);
     }
 
     // Открытие фрагмента, содержащего видео (реализация вынесена в MainMenuFragment)

@@ -146,7 +146,8 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
                 MainMenuInfoFragment.loadStatisticsData(requireContext().getApplicationContext(),
                         getResources().getString(R.string.workouts_count),
                         getResources().getString(R.string.completed_workouts_count),
-                        getResources().getString(R.string.completed_workouts_length));
+                        getResources().getString(R.string.completed_workouts_length),
+                        getResources().getString(R.string.the_most_preferred_exercise));
                 startPreviousFragment();
             }
 

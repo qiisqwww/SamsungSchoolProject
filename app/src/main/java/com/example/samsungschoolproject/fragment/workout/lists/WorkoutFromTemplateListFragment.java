@@ -145,7 +145,8 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
                 MainMenuInfoFragment.loadStatisticsData(requireContext().getApplicationContext(),
                         getResources().getString(R.string.workouts_count),
                         getResources().getString(R.string.completed_workouts_count),
-                        getResources().getString(R.string.completed_workouts_length));
+                        getResources().getString(R.string.completed_workouts_length),
+                        getResources().getString(R.string.the_most_preferred_exercise));
                 // Закрыть текущий фрагмент после выбора
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().remove(this).commit();
