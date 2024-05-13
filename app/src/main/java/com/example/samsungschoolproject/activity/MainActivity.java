@@ -8,25 +8,19 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.fragment.сalendar.CalendarFragment;
 import com.example.samsungschoolproject.notificator.PlannedWorkoutNotificator;
-import com.example.samsungschoolproject.utils.TypefaceUtils;
 import com.example.samsungschoolproject.view_adapter.main.MainFragmentsAdapter;
 import com.example.samsungschoolproject.fragment.main.MainMenuFragment;
 import com.example.samsungschoolproject.fragment.workout.TemplatesFragment;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,19 +31,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Устанавливаетяс тема приложения
         setTheme(R.style.AppTheme);
         setContentView(R.layout.activity_main);
+
+        // Инициалиация объекта БД (singletone)
+        initDatabase();
+
+        // Инициализация view'шек и адаптеров
         initWidgets();
         initPagerAdapter();
+
+        // Соединить tab с adapter
         connectWidgetsWithAdapter();
+
+        /* Установить конфиг для TabLayout (иконки, цвета).
+        ВЫЗЫВАТЬ СТРОГО ПОСЛЕ connectWidgetsWithAdapter() (т.к. необходимо сначала инициалиировать) */
+        configureTabView();
+
+        // Переопределяется установленный для всего приложения шрифт на кастомный
         //TypefaceUtils.overrideFont(getApplicationContext(), "SANS_SERIF", "fonts/Moniqa-ExtraBoldParagraph.otf");
-        initDatabase();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+        // Инициализация шедулинга Notificator'а. Вызывается отсюда, т.к. необходим context
         initNotificator(context);
+
         return super.onCreateView(name, context, attrs);
     }
 
@@ -66,9 +76,10 @@ public class MainActivity extends AppCompatActivity {
                 FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         );
 
-        mainFragmentsAdapter.Add(new CalendarFragment() , getResources().getString(R.string.calendar));
-        mainFragmentsAdapter.Add(new MainMenuFragment(), getResources().getString(R.string.menu));
-        mainFragmentsAdapter.Add(new TemplatesFragment(), getResources().getString(R.string.templates));
+        // Добавление трех фрагментов
+        mainFragmentsAdapter.Add(new CalendarFragment());
+        mainFragmentsAdapter.Add(new MainMenuFragment());
+        mainFragmentsAdapter.Add(new TemplatesFragment());
     }
 
     // Вызов метода getInstance, чтобы создать объект БД при создании MainActivity
@@ -79,17 +90,35 @@ public class MainActivity extends AppCompatActivity {
     private void connectWidgetsWithAdapter(){
         mainViewPager.setAdapter(mainFragmentsAdapter);
         tabNavigation.setupWithViewPager(mainViewPager);
+    }
 
+    private void configureTabView(){
         // Установить соответствующие иконки для tabItem's
         tabNavigation.getTabAt(0).setIcon(R.drawable.calendar);
         tabNavigation.getTabAt(1).setIcon(R.drawable.menu);
         tabNavigation.getTabAt(2).setIcon(R.drawable.templates);
 
         // Устанавливается белый цвет для подсветки иконок
-        ColorStateList iconColorStateList = ContextCompat.getColorStateList(this, R.color.tabIconSelectedColor);
-        tabNavigation.setTabIconTint(iconColorStateList);
+        tabNavigation.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
-        mainViewPager.setCurrentItem(1); // Устанавливает MainMenuFragment при открытии MainActivity
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int tabIconSelectedColor = ContextCompat.getColor(tab.view.getContext(), R.color.tabIconSelectedColor);
+                tab.getIcon().setColorFilter(tabIconSelectedColor, PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                int tabIconUnselectedColor = ContextCompat.getColor(tab.view.getContext(), R.color.tabIconUnselectedColor);
+                tab.getIcon().setColorFilter(tabIconUnselectedColor, PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
+
+        // Устанавливает MainMenuFragment при открытии MainActivity
+        mainViewPager.setCurrentItem(1);
     }
 
     private void initNotificator(Context context){

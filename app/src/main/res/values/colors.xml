@@ -14,5 +14,5 @@
     <color name="tabBackgroundUnselected">#B3000000</color>
     <color name="tabBackgroundSelected">#66000000</color>
     <color name="tabIconSelectedColor">#FFFFFFFF</color>
-    <color name="tabIconDefaultColor">#3f4047</color>
+    <color name="tabIconUnselectedColor">#3f4047</color>
 </resources>

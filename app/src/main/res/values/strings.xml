@@ -1,12 +1,5 @@
 <resources>
     <string name="app_name">Планировщик тренировок</string>
-    <string name="settings_button">Настройки</string>
-    <string name="back">&lt;-</string>
-    <string name="get_previous_month">&lt;-</string>
-    <string name="get_next_month">-&gt;</string>
-    <string name="calendar">Календарь</string>
-    <string name="menu">Меню</string>
-    <string name="templates">Шаблоны</string>
     <string name="week">Неделя</string>
     <string name="month">Месяц</string>
     <string name="MON">ПН</string>
@@ -25,7 +18,6 @@
     <string name="input_name">Введите название тренировки</string>
     <string name="save">Сохранить</string>
     <string name="your_workout_name">Название тренировки</string>
-    <string name="add_exercise">+</string>
     <string name="delete_exercise">×</string>
     <string name="unable_to_create_workout">Вы не можете запланировать тренировку на прошедший день</string>
     <string name="choose_exercise">Выберите упражнение из списка:</string>

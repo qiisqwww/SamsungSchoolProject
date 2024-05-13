@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MainFragmentsAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> fragmentList = new ArrayList<>();
-    private List<String> titles = new ArrayList<>();
 
     public MainFragmentsAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -38,9 +37,8 @@ public class MainFragmentsAdapter extends FragmentStatePagerAdapter {
         return fragmentList.size();
     }
 
-    public void Add(Fragment fragment, String title) {
+    public void Add(Fragment fragment) {
         fragmentList.add(fragment);
-        titles.add(title);
         notifyDataSetChanged();
     }
 
