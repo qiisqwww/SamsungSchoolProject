@@ -347,7 +347,7 @@ public class WorkoutBuilderAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             saveWorkoutButton.setOnClickListener( v -> {
                 String name = readNameFromField();
                 if (name.isEmpty()){ // Отработает, если человек не ввел данные (в таком случае сохранить нельзя)
-                    Toast.makeText(saveWorkoutButton.getContext(), R.string.need_to_input_name, Toast.LENGTH_LONG).show();
+                    Toast.makeText(saveWorkoutButton.getContext(), R.string.need_to_input_name, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ArrayList<ArrayList<String>> exercises = readExercisesFromFields();

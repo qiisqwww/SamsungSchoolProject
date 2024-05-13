@@ -156,7 +156,7 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
                 startPreviousFragment();
             }
             else{
-                Toast.makeText(requireContext().getApplicationContext(),  R.string.workout_already_exists, Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext().getApplicationContext(),  R.string.workout_already_exists, Toast.LENGTH_SHORT).show();
             }
 
         } catch (ExecutionException | InterruptedException e) {

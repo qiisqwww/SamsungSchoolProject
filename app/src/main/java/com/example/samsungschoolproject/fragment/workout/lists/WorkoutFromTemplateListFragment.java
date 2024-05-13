@@ -129,7 +129,7 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
             for (int i = 0; i < alreadyPlannedWorkouts.size(); i++){
                 Log.d("GG", alreadyPlannedWorkouts.get(i).name + " " + workoutTemplate.name);
                 if (alreadyPlannedWorkouts.get(i).name.equals(workoutTemplate.name)){
-                    Toast.makeText(getContext(), R.string.already_planned_today, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.already_planned_today, Toast.LENGTH_SHORT).show();
                     return "false";
                 }
             }

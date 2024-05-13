@@ -136,7 +136,7 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
                 startPreviousFragment();
             }
             else{
-                Toast.makeText(requireContext().getApplicationContext(), R.string.template_already_exists, Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext().getApplicationContext(), R.string.template_already_exists, Toast.LENGTH_SHORT).show();
             }
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
