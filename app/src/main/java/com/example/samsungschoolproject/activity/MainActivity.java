@@ -18,6 +18,7 @@ import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
 import com.example.samsungschoolproject.fragment.сalendar.CalendarFragment;
 import com.example.samsungschoolproject.notificator.PlannedWorkoutNotificator;
+import com.example.samsungschoolproject.utils.TypefaceUtils;
 import com.example.samsungschoolproject.view_adapter.main.MainFragmentsAdapter;
 import com.example.samsungschoolproject.fragment.main.MainMenuFragment;
 import com.example.samsungschoolproject.fragment.workout.TemplatesFragment;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         configureTabView();
 
         // Переопределяется установленный для всего приложения шрифт на кастомный
-        //TypefaceUtils.overrideFont(getApplicationContext(), "SANS_SERIF", "fonts/Moniqa-ExtraBoldParagraph.otf");
+        TypefaceUtils.overrideFont(getApplicationContext(), "SANS_SERIF", "fonts/centurygothic.ttf");
     }
 
     @Nullable

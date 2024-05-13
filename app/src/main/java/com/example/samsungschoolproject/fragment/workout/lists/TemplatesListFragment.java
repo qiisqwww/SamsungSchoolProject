@@ -79,7 +79,6 @@ public class TemplatesListFragment extends Fragment implements WorkoutTemplateLi
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.workoutTemplatesContainer, templatesBuilderFragment)
-                    .addToBackStack("TemplatesListFragment")
                     .commit();
         });
     }

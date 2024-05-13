@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragmentsAdapter extends FragmentStatePagerAdapter {
-    private List<Fragment> fragmentList = new ArrayList<>();
+    private final List<Fragment> fragmentList = new ArrayList<>();
 
     public MainFragmentsAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -39,12 +39,5 @@ public class MainFragmentsAdapter extends FragmentStatePagerAdapter {
 
     public void Add(Fragment fragment) {
         fragmentList.add(fragment);
-        notifyDataSetChanged();
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return null;
     }
 }
