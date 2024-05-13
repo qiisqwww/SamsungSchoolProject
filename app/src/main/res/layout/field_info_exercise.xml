@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_margin="10dp"
     android:padding="10dp"
-    android:background="@color/black_darker">
+    android:background="@drawable/round_shape_darker">
 
     <TextView
         android:id="@+id/exerciseName"

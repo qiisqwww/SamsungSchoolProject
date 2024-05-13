@@ -104,7 +104,6 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
             List<WorkoutTemplate> workoutTemplates = database.getWorkoutTemplateDAO().getAllWorkoutTemplates();
             for (int i = 0; i < workoutTemplates.size(); i++){
                 if (workoutTemplate.name.equals(workoutTemplates.get(i).name)){
-                    Toast.makeText(requireContext().getApplicationContext(), R.string.template_already_exists, Toast.LENGTH_LONG).show();
                     return "false";
                 }
             }
@@ -129,7 +128,16 @@ public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilder
         });
 
         try {
-            if (future.get().equals("true")) startPreviousFragment();
+            if (future.get().equals("true")) {
+                // Отобразить Toast о том, что шаблон создан
+                Toast.makeText(requireContext().getApplicationContext(), R.string.template_created, Toast.LENGTH_SHORT).show();
+
+                // Запустить предыдущий фрагмент
+                startPreviousFragment();
+            }
+            else{
+                Toast.makeText(requireContext().getApplicationContext(), R.string.template_already_exists, Toast.LENGTH_LONG).show();
+            }
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }

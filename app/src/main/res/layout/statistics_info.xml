@@ -11,7 +11,7 @@
         android:paddingBottom="20dp"
         android:paddingEnd="15dp"
         android:paddingTop="15dp"
-        android:background="@color/black"
+        android:background="@drawable/round_shape_darker"
         android:orientation="vertical"
         tools:ignore="UselessParent">
 

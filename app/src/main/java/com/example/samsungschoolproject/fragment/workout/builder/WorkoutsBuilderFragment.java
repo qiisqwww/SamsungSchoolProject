@@ -115,7 +115,6 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
             List<PlannedWorkout> plannedWorkouts = database.getPlannedWorkoutDAO().getPlannedWorkoutsByDate(CalendarUtils.selectedDate.toString());
             for (int i = 0; i < plannedWorkouts.size(); i++){
                 if(plannedWorkout.name.equals(plannedWorkouts.get(i).name)){
-                    Toast.makeText(requireContext().getApplicationContext(),  R.string.workout_already_exists, Toast.LENGTH_LONG).show();
                     return "false";
                 }
             }
@@ -143,12 +142,21 @@ public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implement
         try {
             if (future.get().equals("true"))
             {
+                // Обновить статистику
                 MainMenuInfoFragment.loadStatisticsData(requireContext().getApplicationContext(),
                         getResources().getString(R.string.workouts_count),
                         getResources().getString(R.string.completed_workouts_count),
                         getResources().getString(R.string.completed_workouts_length),
                         getResources().getString(R.string.the_most_preferred_exercise));
+
+                // Отобразить Toast о том, что тренировка создана
+                Toast.makeText(requireContext().getApplicationContext(), R.string.workout_planned, Toast.LENGTH_SHORT).show();
+
+                // Вернуться в предыдущий фрагмент
                 startPreviousFragment();
+            }
+            else{
+                Toast.makeText(requireContext().getApplicationContext(),  R.string.workout_already_exists, Toast.LENGTH_LONG).show();
             }
 
         } catch (ExecutionException | InterruptedException e) {

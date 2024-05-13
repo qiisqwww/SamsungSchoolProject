@@ -11,7 +11,7 @@
     <string name="SUN">ВС</string>
     <string name="channel_name">Название канала</string>
     <string name="channel_description">Описание канала</string>
-    <string name="load_from_templates_button">Использовать шаблон</string>
+    <string name="load_from_templates_button">Загрузить из шаблона</string>
     <string name="add_new_workout">Добавить тренировку</string>
     <string name="add_workout_template">Создать шаблон тренировки</string>
     <string name="no_planned_workouts">На этот день нет запланированных тренировок</string>
@@ -19,7 +19,7 @@
     <string name="save">Сохранить</string>
     <string name="your_workout_name">Название тренировки</string>
     <string name="delete_exercise">×</string>
-    <string name="unable_to_create_workout">Вы не можете запланировать тренировку на прошедший день</string>
+    <string name="unable_to_create_workout">Этот день уже прошел</string>
     <string name="choose_exercise">Выберите упражнение из списка:</string>
     <string name="choose_approaches">Выберите количество подходов:</string>
     <string name="choose_repeats">Выберите количество повторений:</string>
@@ -28,7 +28,7 @@
     <string name="no_templates_yet">Вы еще не создали ни одного шаблона</string>
     <string name="already_planned_today">Уже запланирован на сегодня</string>
     <string name="template_already_exists">Шаблон с таким именем уже существует</string>
-    <string name="workout_already_exists">Тренировка с таким именем уже запланирована сегодня</string>
+    <string name="workout_already_exists">Тренировка с этим именем уже запланирована</string>
     <string name="templates_list_empty_info">Тут будут шаблоны Ваших тренировок</string>
     <string name="templates_list_info">Шаблоны Ваших тренировок:</string>
     <string name="tap_on_template_asking">Нажмите, чтобы получить информацию о шаблоне</string>
@@ -53,4 +53,9 @@
     <string name="template_deleted">Шаблон удален</string>
     <string name="workout_deleted">Тренировка удалена</string>
     <string name="not_exists">отсутствует</string>
+    <string name="planning_workout_from_template">Планирование тренировки</string>
+    <string name="sure_use_this_template">Запланировать тренировку, используя этот шаблон?</string>
+    <string name="plan">Запланировать</string>
+    <string name="workout_planned">Тренировка запланирована</string>
+    <string name="template_created">Шаблон создан</string>
 </resources>

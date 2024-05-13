@@ -1,5 +1,6 @@
 package com.example.samsungschoolproject.fragment.workout.lists;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -104,6 +105,22 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
     // Отрабатывает при нажатии на WorkoutTemplate (т.е. при выборе шаблона, по которому нужно создать тренировку)
     @Override
     public void onWorkoutItemClick(int position) {
+        // Показать AlertDialog (подтвердить создание workout на основе template)
+        new AlertDialog.Builder(requireContext(), R.style.AlertTheme)
+                .setTitle(R.string.planning_workout_from_template)
+                .setMessage(getResources().getString(R.string.sure_use_this_template))
+                .setPositiveButton(R.string.plan, (dialog, which) -> {
+                    createWorkoutFromTemplate(position);
+                    Toast.makeText(requireContext().getApplicationContext(), R.string.workout_planned, Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+                })
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                    dialog.cancel();
+                })
+                .show();
+    }
+
+    private void createWorkoutFromTemplate(int position){
         WorkoutTemplate workoutTemplate = workoutTemplates.get(position);
 
         CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
@@ -154,6 +171,6 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-
     }
 }
+
