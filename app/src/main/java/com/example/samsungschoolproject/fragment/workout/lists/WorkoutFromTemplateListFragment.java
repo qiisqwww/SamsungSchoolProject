@@ -146,8 +146,8 @@ public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment i
                 database.getPlannedWorkoutExerciseDAO().addPlannedWorkoutExercise(new PlannedWorkoutExercise(
                         plannedWorkoutID,
                         workoutTemplateExercise.exercise_id,
-                        workoutTemplateExercise.repeats,
                         workoutTemplateExercise.approaches,
+                        workoutTemplateExercise.repeats,
                         workoutTemplateExercise.number_in_query
                 ));
             }

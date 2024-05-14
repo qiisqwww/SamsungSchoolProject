@@ -22,10 +22,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StreamDownloadTask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainMenuVideoFragment extends Fragment {
     private ImageButton backButton;
     private VideoView motivationVideoView;
     private final OpenMainMenuInfoFragment openMainMenuInfoFragment;
+    private final ArrayList<String> videoNames = new ArrayList<>();
 
     public MainMenuVideoFragment(OpenMainMenuInfoFragment openMainMenuInfoFragment){
         this.openMainMenuInfoFragment = openMainMenuInfoFragment;
@@ -49,6 +53,7 @@ public class MainMenuVideoFragment extends Fragment {
         initWidgets(view);
         initButtonListeners();
         initVideoConfig();
+        initVideoNames();
         loadVideo();
     }
 
@@ -65,15 +70,24 @@ public class MainMenuVideoFragment extends Fragment {
         motivationVideoView.setOnCompletionListener(v -> openMainMenuInfoFragment.openMainMenuInfoFragment());
     }
 
+    private void initVideoNames(){
+        videoNames.add("keep_going.mp4");
+        videoNames.add("no_tomorrow.mp4");
+        videoNames.add("strong_weak.mp4");
+        videoNames.add("trust_me.mp4");
+    }
+
     private void loadVideo(){
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        StorageReference firstVideo = storageRef.child("workout_motivation_videos/calm_edit.mp4");
 
-        //firstVideo.getDownloadUrl().addOnSuccessListener(uri -> {
-        //    motivationVideoView.setVideoURI(uri);
-        //    motivationVideoView.start();
-        //});
+        String videoName = videoNames.get((int)(Math.random() * videoNames.size()));
+        StorageReference firstVideo = storageRef.child("workout_motivation_videos/" + videoName);
+
+        firstVideo.getDownloadUrl().addOnSuccessListener(uri -> {
+            motivationVideoView.setVideoURI(uri);
+            motivationVideoView.start();
+        });
     }
 
     // Открытие фрагмента, содержащего интерфейс (реализация вынесена в MainMenuFragment)
