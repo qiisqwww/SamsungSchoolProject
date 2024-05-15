@@ -41,7 +41,7 @@ public class CalendarFragment extends Fragment implements SwitchModeView{
         initWidgets(view);
         initButtonListeners();
 
-        startMonthFragment();
+        startWeekFragment();
     }
 
     private void initWidgets(View view){
@@ -52,10 +52,10 @@ public class CalendarFragment extends Fragment implements SwitchModeView{
         switchModeButton.setOnClickListener(v -> switchCalendarMode());
     }
 
-    private void startMonthFragment(){
+    private void startWeekFragment(){
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.container, new MonthCalendarFragment(this));
+        transaction.add(R.id.container, new WeekCalendarFragment(this));
         transaction.commit();
     }
 
