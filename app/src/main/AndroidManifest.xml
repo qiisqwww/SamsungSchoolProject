@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".model.notificator.PlannedWorkoutNotificator$NotificationReceiver"/>
+        <receiver android:name=".util.notificator.PlannedWorkoutNotificator$NotificationReceiver"/>
     </application>
 
 </manifest>

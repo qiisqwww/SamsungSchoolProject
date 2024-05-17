@@ -2,7 +2,6 @@ package com.example.samsungschoolproject.view.fragment.workout.lists;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,21 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.entity.PlannedWorkout;
-import com.example.samsungschoolproject.database.entity.PlannedWorkoutExercise;
 import com.example.samsungschoolproject.database.entity.WorkoutTemplate;
-import com.example.samsungschoolproject.database.entity.WorkoutTemplateExercise;
-import com.example.samsungschoolproject.model.repository.TemplateRepository;
-import com.example.samsungschoolproject.model.repository.WorkoutRepository;
+import com.example.samsungschoolproject.database.repository.TemplateRepository;
+import com.example.samsungschoolproject.database.repository.WorkoutRepository;
 import com.example.samsungschoolproject.view.fragment.main.MainMenuInfoFragment;
-import com.example.samsungschoolproject.model.util.CalendarUtils;
-import com.example.samsungschoolproject.model.adapter.workout.list.TemplatesForWorkoutListAdapter;
-import com.example.samsungschoolproject.model.adapter.workout.list.WorkoutListAdapter;
+import com.example.samsungschoolproject.adapter.workout.list.TemplatesForWorkoutListAdapter;
+import com.example.samsungschoolproject.adapter.workout.list.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class WorkoutFromTemplateListFragment extends BottomSheetDialogFragment implements TemplatesForWorkoutListAdapter.OnTemplateForWorkoutItemListener {
     public static String TAG;

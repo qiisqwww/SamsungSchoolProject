@@ -17,20 +17,16 @@ import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.entity.Exercise;
 import com.example.samsungschoolproject.database.entity.WorkoutTemplate;
-import com.example.samsungschoolproject.database.entity.WorkoutTemplateExercise;
-import com.example.samsungschoolproject.model.repository.ExerciseRepository;
-import com.example.samsungschoolproject.model.repository.TemplateRepository;
+import com.example.samsungschoolproject.database.repository.ExerciseRepository;
+import com.example.samsungschoolproject.database.repository.TemplateRepository;
 import com.example.samsungschoolproject.view.fragment.workout.lists.TemplatesListFragment;
-import com.example.samsungschoolproject.model.util.ExerciseListUtils;
-import com.example.samsungschoolproject.model.util.WorkoutListUtils;
-import com.example.samsungschoolproject.model.adapter.workout.builder.WorkoutBuilderAdapter;
+import com.example.samsungschoolproject.util.ExerciseListUtils;
+import com.example.samsungschoolproject.util.WorkoutListUtils;
+import com.example.samsungschoolproject.adapter.workout.builder.WorkoutBuilderAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 
 public class TemplatesBuilderFragment extends Fragment implements WorkoutBuilderAdapter.LoadJustCreated {

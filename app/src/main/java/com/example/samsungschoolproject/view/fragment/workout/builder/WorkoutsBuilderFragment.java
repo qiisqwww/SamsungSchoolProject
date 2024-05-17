@@ -16,25 +16,21 @@ import android.widget.Toast;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.entity.Exercise;
 import com.example.samsungschoolproject.database.entity.PlannedWorkout;
-import com.example.samsungschoolproject.database.entity.PlannedWorkoutExercise;
-import com.example.samsungschoolproject.model.enums.BackFragmentForBuilderStates;
-import com.example.samsungschoolproject.model.repository.ExerciseRepository;
-import com.example.samsungschoolproject.model.repository.WorkoutRepository;
+import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
+import com.example.samsungschoolproject.database.repository.ExerciseRepository;
+import com.example.samsungschoolproject.database.repository.WorkoutRepository;
 import com.example.samsungschoolproject.view.fragment.main.MainMenuInfoFragment;
 import com.example.samsungschoolproject.view.fragment.сalendar.MonthCalendarFragment;
-import com.example.samsungschoolproject.model.util.CalendarUtils;
-import com.example.samsungschoolproject.model.util.ExerciseListUtils;
-import com.example.samsungschoolproject.model.util.WorkoutListUtils;
-import com.example.samsungschoolproject.model.adapter.workout.builder.WorkoutBuilderAdapter;
-import com.example.samsungschoolproject.model.adapter.workout.list.WorkoutListAdapter;
+import com.example.samsungschoolproject.util.CalendarUtils;
+import com.example.samsungschoolproject.util.ExerciseListUtils;
+import com.example.samsungschoolproject.util.WorkoutListUtils;
+import com.example.samsungschoolproject.adapter.workout.builder.WorkoutBuilderAdapter;
+import com.example.samsungschoolproject.adapter.workout.list.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class WorkoutsBuilderFragment extends BottomSheetDialogFragment implements WorkoutBuilderAdapter.LoadJustCreated {
     public static String TAG;

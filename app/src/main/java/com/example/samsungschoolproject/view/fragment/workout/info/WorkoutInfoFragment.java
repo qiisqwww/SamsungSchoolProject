@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import com.example.samsungschoolproject.model.DTO.WorkoutInfo;
+import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
-import com.example.samsungschoolproject.model.adapter.workout.info.WorkoutInfoAdapter;
+import com.example.samsungschoolproject.adapter.workout.info.WorkoutInfoAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class WorkoutInfoFragment extends BottomSheetDialogFragment {

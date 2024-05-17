@@ -18,31 +18,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.example.samsungschoolproject.model.DTO.ExerciseInfo;
-import com.example.samsungschoolproject.model.DTO.WorkoutInfo;
+import com.example.samsungschoolproject.DTO.WorkoutInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.entity.Exercise;
 import com.example.samsungschoolproject.database.entity.PlannedWorkout;
-import com.example.samsungschoolproject.database.entity.PlannedWorkoutExercise;
-import com.example.samsungschoolproject.model.enums.BackFragmentForBuilderStates;
-import com.example.samsungschoolproject.model.enums.SwitchToWeekStates;
+import com.example.samsungschoolproject.enums.BackFragmentForBuilderStates;
+import com.example.samsungschoolproject.enums.SwitchToWeekStates;
 
-import com.example.samsungschoolproject.model.repository.WorkoutRepository;
+import com.example.samsungschoolproject.database.repository.WorkoutRepository;
 import com.example.samsungschoolproject.view.fragment.main.MainMenuInfoFragment;
 import com.example.samsungschoolproject.view.fragment.workout.info.WorkoutInfoFragment;
 import com.example.samsungschoolproject.view.fragment.workout.lists.WorkoutFromTemplateListFragment;
 import com.example.samsungschoolproject.view.fragment.workout.builder.WorkoutsBuilderFragment;
-import com.example.samsungschoolproject.model.util.CalendarUtils;
-import com.example.samsungschoolproject.model.adapter.calendar.CalendarAdapter;
-import com.example.samsungschoolproject.model.adapter.workout.list.WorkoutListAdapter;
+import com.example.samsungschoolproject.util.CalendarUtils;
+import com.example.samsungschoolproject.adapter.calendar.CalendarAdapter;
+import com.example.samsungschoolproject.adapter.workout.list.WorkoutListAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class WeekCalendarFragment extends Fragment implements
         CalendarAdapter.OnCalendarItemListener,

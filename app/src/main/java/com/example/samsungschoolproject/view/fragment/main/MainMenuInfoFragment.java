@@ -15,13 +15,11 @@ import android.widget.TextView;
 
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.model.repository.WorkoutRepository;
-import com.example.samsungschoolproject.model.util.WorkoutListUtils;
+import com.example.samsungschoolproject.database.repository.WorkoutRepository;
+import com.example.samsungschoolproject.util.WorkoutListUtils;
 
 import java.util.Hashtable;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class MainMenuInfoFragment extends Fragment {
     private Button getMotivationButton;

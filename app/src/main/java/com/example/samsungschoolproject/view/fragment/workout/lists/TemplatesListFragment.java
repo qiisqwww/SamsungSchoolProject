@@ -17,22 +17,17 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.example.samsungschoolproject.model.DTO.ExerciseInfo;
-import com.example.samsungschoolproject.model.DTO.TemplateInfo;
+import com.example.samsungschoolproject.DTO.TemplateInfo;
 import com.example.samsungschoolproject.R;
 import com.example.samsungschoolproject.database.WorkoutHelperDatabase;
-import com.example.samsungschoolproject.database.entity.Exercise;
 import com.example.samsungschoolproject.database.entity.WorkoutTemplate;
-import com.example.samsungschoolproject.database.entity.WorkoutTemplateExercise;
-import com.example.samsungschoolproject.model.enums.TemplatesListStates;
-import com.example.samsungschoolproject.model.repository.TemplateRepository;
+import com.example.samsungschoolproject.enums.TemplatesListStates;
+import com.example.samsungschoolproject.database.repository.TemplateRepository;
 import com.example.samsungschoolproject.view.fragment.workout.builder.TemplatesBuilderFragment;
 import com.example.samsungschoolproject.view.fragment.workout.info.TemplateInfoFragment;
-import com.example.samsungschoolproject.model.adapter.workout.list.WorkoutTemplateListAdapter;
+import com.example.samsungschoolproject.adapter.workout.list.WorkoutTemplateListAdapter;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class TemplatesListFragment extends Fragment implements WorkoutTemplateListAdapter.OnWorkoutItemListener, WorkoutTemplateListAdapter.DeleteWorkoutTemplateListener {
     private Button createNewTemplateButton;
