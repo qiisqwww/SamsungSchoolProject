@@ -11,11 +11,11 @@ import com.example.samsungschoolproject.database.DAO.PlannedWorkoutDAO;
 import com.example.samsungschoolproject.database.DAO.PlannedWorkoutExerciseDAO;
 import com.example.samsungschoolproject.database.DAO.WorkoutTemplateDAO;
 import com.example.samsungschoolproject.database.DAO.WorkoutTemplateExerciseDAO;
-import com.example.samsungschoolproject.database.model.Exercise;
-import com.example.samsungschoolproject.database.model.PlannedWorkout;
-import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
-import com.example.samsungschoolproject.database.model.WorkoutTemplate;
-import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
+import com.example.samsungschoolproject.database.entity.Exercise;
+import com.example.samsungschoolproject.database.entity.PlannedWorkout;
+import com.example.samsungschoolproject.database.entity.PlannedWorkoutExercise;
+import com.example.samsungschoolproject.database.entity.WorkoutTemplate;
+import com.example.samsungschoolproject.database.entity.WorkoutTemplateExercise;
 
 @Database(entities = {
         PlannedWorkout.class,

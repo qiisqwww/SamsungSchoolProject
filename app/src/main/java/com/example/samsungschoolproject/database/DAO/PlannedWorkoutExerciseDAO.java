@@ -1,12 +1,10 @@
 package com.example.samsungschoolproject.database.DAO;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
-import com.example.samsungschoolproject.database.model.PlannedWorkoutExercise;
+import com.example.samsungschoolproject.database.entity.PlannedWorkoutExercise;
 
 import java.util.List;
 
@@ -17,6 +15,9 @@ public interface PlannedWorkoutExerciseDAO {
 
     @Query("SELECT * FROM planned_workout_exercises WHERE planned_workout_id==:planned_workoutId")
     List<PlannedWorkoutExercise> getPlannedWorkoutExercisesByWorkoutId(int planned_workoutId);
+
+    @Query("DELETE FROM planned_workout_exercises WHERE planned_workout_id==:plannedWorkoutId")
+    void deletePlannedWorkoutExerciseByWorkoutId(int plannedWorkoutId);
 
     @Query("SELECT exercise_id FROM planned_workout_exercises " +
             "GROUP BY exercise_id " +

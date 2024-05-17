@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mid_"
-    tools:context=".fragment.main.MainMenuFragment">
+    tools:context=".view.fragment.main.MainMenuFragment">
 
     <RelativeLayout
         android:id="@+id/mainMenuContainer"

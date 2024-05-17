@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.samsungschoolproject.database.model.WorkoutTemplate;
+import com.example.samsungschoolproject.database.entity.WorkoutTemplate;
 
 import java.util.List;
 

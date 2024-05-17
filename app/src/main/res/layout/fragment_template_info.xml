@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/under_"
-    tools:context=".fragment.workout.info.TemplateInfoFragment">
+    tools:context=".view.fragment.workout.info.TemplateInfoFragment">
 
     <LinearLayout
         android:layout_width="wrap_content"

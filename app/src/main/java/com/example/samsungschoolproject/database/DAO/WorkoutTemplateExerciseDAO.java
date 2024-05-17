@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.samsungschoolproject.database.model.WorkoutTemplateExercise;
+import com.example.samsungschoolproject.database.entity.WorkoutTemplateExercise;
 
 import java.util.List;
 
@@ -18,8 +18,8 @@ public interface WorkoutTemplateExerciseDAO {
     @Update
     void updateWorkoutTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise);
 
-    @Delete
-    void deleteWorkoutTemplateExercise(WorkoutTemplateExercise workoutTemplateExercise);
+    @Query("DELETE FROM workout_template_exercises WHERE workout_template_id==:workoutTemplateId")
+    void deleteWorkoutTemplateExerciseByTemplateId(int workoutTemplateId);
 
 
     @Query("SELECT * FROM workout_template_exercises WHERE workout_template_id==:workoutTemplateId")
